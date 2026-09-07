@@ -78,10 +78,8 @@
         .hero-buttons { display: flex; gap: 16px; }
 
         .hero-graphic { position: relative; height: 500px; width: 100%; display: flex; align-items: center; justify-content: center; }
-        .hero-photo-box { width: 320px; height: 400px; background: var(--primary-light); border: 8px solid white; border-radius: var(--radius-lg); box-shadow: 0 20px 30px -10px rgba(15, 118, 110, 0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; text-align: center; }
+        .hero-photo-box { width: 320px; height: 400px; background: var(--primary-light); border: 8px solid white; border-radius: var(--radius-lg); box-shadow: 0 20px 30px -10px rgba(15, 118, 110, 0.15); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .hero-photo-box img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 10; }
-        .hero-photo-box .photo-placeholder { color: var(--primary-dark); font-size: 4rem; margin-bottom: 15px; z-index: 1; }
-        .hero-photo-box p { font-size: 0.9rem; font-weight: 700; color: var(--primary); position: absolute; bottom: 20px; z-index: 5; }
 
         /* Folders & Tabs Bar */
         .folders-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
@@ -115,7 +113,7 @@
 </head>
 <body>
 
-    <!-- MASTER SITE-WIDE LOCK SCREEN (Protected with 052128) -->
+    <!-- MASTER SITE-WIDE LOCK SCREEN -->
     <div id="site-lock-overlay">
         <div class="site-lock-card">
             <h3><i class="fas fa-lock" style="color: var(--primary);"></i> Protected Site</h3>
@@ -154,16 +152,14 @@
                 </div>
                 <div class="hero-graphic">
                     <div class="hero-photo-box">
-                        <!-- Profile Image restored and correctly layered -->
-                        <img src="profile.png" alt="A. Rambabu" onerror="this.style.display='none';">
-                        <i class="fas fa-user-tie photo-placeholder"></i>
-                        <p style="color: transparent;">A. Rambabu</p>
+                        <!-- Profile Image -->
+                        <img src="profile.png" alt="A. Rambabu" onerror="this.src='https://via.placeholder.com/320x400?text=Profile+Photo';">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- RESOURCE LIBRARY SECTION WITH FOLDERS -->
+        <!-- RESOURCE LIBRARY SECTION -->
         <section id="library" class="page-section">
             <div class="container">
                 <div class="section-header">
@@ -195,7 +191,7 @@
                                 <h4>Lysosomes (లైసోజోములు)</h4>
                                 <p>Interactive Video Quiz covering suicidal bags of the cell and their functions.</p>
                             </div>
-                            <!-- FIXED ONCLICK BUTTON -->
+                            <!-- CORRECTED LYSOSOMES BUTTON -->
                             <button class="btn btn-primary" style="background: #6366f1; width: 100%;" onclick="window.location.href='lysosomes.html'">Play Quiz</button>
                         </div>
                     </div>
@@ -211,7 +207,7 @@
                                 <h4>Photosynthesis Mechanism</h4>
                                 <p>Interactive Video Quiz covering light, stomata, xylem, and glucose formation.</p>
                             </div>
-                            <!-- FIXED ONCLICK BUTTON -->
+                            <!-- CORRECTED PHOTOSYNTHESIS BUTTON -->
                             <button class="btn btn-primary" style="width: 100%;" onclick="window.location.href='photosynthesis.html'">Play Quiz</button>
                         </div>
                     </div>
@@ -257,7 +253,7 @@
     </footer>
 
     <script>
-        // Site Master Lock Verification (RESTORED)
+        // Site Master Lock Verification
         function unlockSite() {
             const pass = document.getElementById('site-pass-input').value;
             if(pass === '052128') {
@@ -328,4 +324,4 @@
         });
     </script>
 </body>
-  </html>
+</html>
