@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lysosomes - Interactive Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1; /* Deep Indigo for this module */
+            --primary-light: #e0e7ff;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .lesson-container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        /* --- Header & Navigation --- */
+        .top-nav {
+            padding: 15px 20px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .btn-back {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--primary); }
+
+        /* --- Video Section --- */
+        .video-section {
+            width: 100%;
+            background-color: #000;
+            position: relative;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .video-section video {
+            width: 100%;
+            display: block;
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+        /* --- Header / Progress --- */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .q-tracker { font-weight: 700; color: var(--text-light); }
+        .score-badge { background-color: var(--primary-light); color: var(--primary); padding: 6px 16px; border-radius: 20px; font-weight: 700; }
+
+        /* Progress Bar */
+        .progress-bar-container { width: 100%; height: 6px; background-color: var(--border); }
+        .progress-bar { height: 100%; background-color: var(--primary); width: 0%; transition: width 0.4s ease; }
+
+        /* --- Quiz Content --- */
+        .quiz-content { padding: 30px; }
+
+        .question-box { margin-bottom: 25px; }
+        .question-telugu { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; display: block; line-height: 1.5; }
+        .question-english { font-size: 1rem; color: var(--text-light); font-weight: 400; display: block; }
+
+        .options-grid { display: grid; gap: 12px; }
+
+        .option-btn {
+            background-color: #f8fafc;
+            border: 2px solid var(--border);
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background-color: var(--primary-light); }
+        
+        .option-btn.correct { background-color: #dcfce7; border-color: var(--success); color: #065f46; }
+        .option-btn.wrong { background-color: #fee2e2; border-color: var(--danger); color: #991b1b; }
+        .option-btn:disabled { cursor: not-allowed; }
+
+        /* --- Feedback Area --- */
+        .feedback-area {
+            margin-top: 20px; padding: 15px 20px; border-radius: 10px;
+            display: none; font-weight: 600; align-items: flex-start; gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .feedback-area.correct-fb { display: flex; background-color: #dcfce7; border: 1px solid #bbf7d0; color: #065f46; }
+        .feedback-area.wrong-fb { display: flex; background-color: #fee2e2; border: 1px solid #fecaca; color: #991b1b; }
+        .feedback-icon { font-size: 1.5rem; margin-top: 2px; }
+
+        /* --- Controls --- */
+        .controls { margin-top: 25px; display: flex; justify-content: flex-end; }
+        .btn-next {
+            background-color: var(--primary); color: white; border: none; padding: 14px 28px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            display: none; transition: background 0.3s;
+        }
+        .btn-next:hover { background-color: #4f46e5; }
+
+        /* --- Results Screen --- */
+        .results-screen { display: none; text-align: center; padding: 50px 30px; }
+        .results-screen h2 { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 10px; }
+        
+        .final-score-circle {
+            width: 160px; height: 160px; background: var(--primary); color: white;
+            border-radius: 50%; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; margin: 30px auto; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        .final-score-circle span.big { font-size: 3.5rem; font-weight: 800; line-height: 1; }
+        
+        .btn-restart {
+            background-color: var(--text-dark); color: white; border: none; padding: 15px 30px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 20px; margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lesson-container">
+        
+        <div class="top-nav">
+            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+
+        <!-- SINGLE VIDEO PLAYER -->
+        <div class="video-section">
+            <!-- ఇక్కడ మీరు తయారు చేసిన ఫుల్ వీడియో ఫైల్ పేరు ఇవ్వండి -->
+            <video id="main-video" controls poster="">
+                <source src="lysosomes-video.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- QUIZ WORKSPACE -->
+        <div id="quiz-workspace">
+            <div class="quiz-header">
+                <span class="q-tracker" id="q-tracker">Question 1 / 5</span>
+                <span class="score-badge">Score: <span id="current-score">0</span></span>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-box">
+                    <span class="question-telugu" id="q-telugu">ప్రశ్న లోడ్ అవుతోంది...</span>
+                    <span class="question-english" id="q-english">Loading question...</span>
+                </div>
+                
+                <div class="options-grid" id="options-grid">
+                    <!-- Options injected by JS -->
+                </div>
+
+                <div class="feedback-area" id="feedback-area">
+                    <i id="feedback-icon" class="feedback-icon fas"></i>
+                    <div>
+                        <div id="feedback-title" style="font-size: 1.1rem; font-weight: 800; margin-bottom: 5px;"></div>
+                        <div id="feedback-text" style="font-size: 0.95rem; font-weight: 500;"></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn-next" id="btn-next">Next Question <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL RESULTS SCREEN -->
+        <div class="results-screen" id="results-screen">
+            <h2><i class="fas fa-microscope" style="color: var(--primary);"></i> Lesson Completed!</h2>
+            <p style="color: var(--text-light); font-size: 1.1rem;">You have successfully finished the Lysosomes interactive module.</p>
+            
+            <div class="final-score-circle">
+                <span class="big" id="final-score">0</span>
+                <span>out of 5</span>
+            </div>
+
+            <p id="performance-msg" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 30px;"></p>
+
+            <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Retake Quiz</button>
+            <button class="btn-restart" style="background: var(--primary);" onclick="window.location.href='index.html'"><i class="fas fa-home"></i> Home</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Quiz Database: 5 Questions for Lysosomes
+        const quizQuestions = [
+            {
+                qTelugu: "1. కణంలోని ఏ రేణువులలో వినాశకర ఎంజైమ్‌లు (destructive enzymes) ఉంటాయి?",
+                qEnglish: "Which granules in the cell contain destructive enzymes?",
+                options: ["A) Ribosomes / రైబోజోమ్లు", "B) Mitochondria / మైటోకాండ్రియా", "C) Lysosomes / లైసోజోములు", "D) Golgi apparatus / గాల్జీ సంక్లిష్టం"],
+                correctIndex: 2,
+                feedback: "లైసోజోములలో హానికరమైన పదార్థాలను వినాశనం చేసే ఎంజైమ్‌లు ఉంటాయి."
+            },
+            {
+                qTelugu: "2. వినాశనం కావాల్సిన పదార్థాలను జీర్ణం చేసుకునే కణ అవయవం ఏది?",
+                qEnglish: "Which cell organelle digests materials that need to be destroyed?",
+                options: ["A) Lysosomes / లైసోజోములు", "B) Nucleus / కేంద్రకం", "C) Vacuole / రిక్తిక", "D) Chloroplast / హరితరేణువు"],
+                correctIndex: 0,
+                feedback: "లైసోజోమ్ తనలోకి రవాణా చేయబడిన వ్యర్థ పదార్థాలను జీర్ణం చేసుకుంటుంది."
+            },
+            {
+                qTelugu: "3. కణం దెబ్బతిన్నప్పుడు లేదా నశించినప్పుడు, లైసోజోములు ఏమి చేస్తాయి?",
+                qEnglish: "What do lysosomes do when a cell is damaged or destroyed?",
+                options: ["A) కణాన్ని రక్షిస్తాయి (Protect cell)", "B) పగిలిపోయి కణాన్ని నాశనం చేస్తాయి (Burst & destroy cell)", "C) శక్తిని ఉత్పత్తి చేస్తాయి (Produce energy)", "D) కొత్త కణాలను ఏర్పరుస్తాయి (Form new cells)"],
+                correctIndex: 1,
+                feedback: "కణం దెబ్బతిన్నప్పుడు, లైసోజోమ్ పగిలి అందులోని ఎంజైమ్స్ విడుదలై ఆ కణాన్ని నాశనం చేస్తాయి."
+            },
+            {
+                qTelugu: "4. లైసోజోములకు ఉండే మరో పేరు ఏమిటి?",
+                qEnglish: "What is another name for lysosomes?",
+                options: ["A) Powerhouses (శక్తి కర్మాగారాలు)", "B) Suicidal bags (స్వయం విచ్ఛిత్తి సంచులు)", "C) Protein factories (ప్రోటీన్ ఫ్యాక్టరీలు)", "D) Control rooms (నియంత్రణ గదులు)"],
+                correctIndex: 1,
+                feedback: "అవి తమ సొంత కణాన్ని నాశనం చేయగలవు కాబట్టి వాటిని 'స్వయం విచ్ఛిత్తి సంచులు' అంటారు."
+            },
+            {
+                qTelugu: "5. లైసోజోములలో ఉండే ఎంజైమ్‌ల ముఖ్యమైన పని ఏమిటి?",
+                qEnglish: "What is the main function of the enzymes present in lysosomes?",
+                options: ["A) ఆహారాన్ని తయారు చేయడం", "B) కణంలోని అన్ని పదార్థాలను వినాశనం చేసే శక్తిని కలిగి ఉండటం", "C) నీటిని నిల్వ చేయడం", "D) ఆక్సిజన్‌ను రవాణా చేయడం"],
+                correctIndex: 1,
+                feedback: "ఈ ఎంజైమ్‌లకు కణంలోని అన్ని పదార్థాలను జీర్ణం చేసి, వినాశనం చేసే శక్తి ఉంటుంది."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // DOM Elements
+        const qTracker = document.getElementById('q-tracker');
+        const progressBar = document.getElementById('progress-bar');
+        const currentScoreEl = document.getElementById('current-score');
+        
+        const qTeluguEl = document.getElementById('q-telugu');
+        const qEnglishEl = document.getElementById('q-english');
+        const optionsGrid = document.getElementById('options-grid');
+        
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        
+        const btnNext = document.getElementById('btn-next');
+        const quizWorkspace = document.getElementById('quiz-workspace');
+        const resultsScreen = document.getElementById('results-screen');
+
+        function loadQuestion() {
+            feedbackArea.style.display = 'none';
+            btnNext.style.display = 'none';
+            optionsGrid.innerHTML = '';
+            
+            const currentQ = quizQuestions[currentQuestionIndex];
+            
+            qTracker.innerText = `Question ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
+            
+            qTeluguEl.innerText = currentQ.qTelugu;
+            qEnglishEl.innerText = currentQ.qEnglish;
+
+            currentQ.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${optText}</span> <i class="fas fa-circle" style="color:var(--border); font-size: 0.8rem;"></i>`;
+                btn.onclick = () => checkAnswer(index, btn, currentQ.correctIndex, currentQ.feedback);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, selectedBtn, correctIndex, feedbackMsg) {
+            const allBtns = optionsGrid.querySelectorAll('.option-btn');
+            
+            allBtns.forEach(btn => btn.disabled = true);
+            feedbackArea.style.display = 'flex';
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add('correct');
+                selectedBtn.querySelector('i').className = 'fas fa-check-circle';
+                score++;
+                currentScoreEl.innerText = score;
+                
+                feedbackArea.className = 'feedback-area correct-fb';
+                feedbackIcon.className = 'feedback-icon fas fa-check-circle';
+                feedbackTitle.innerText = "సరియైన సమాధానం! (Correct!)";
+                feedbackText.innerText = feedbackMsg;
+            } else {
+                selectedBtn.classList.add('wrong');
+                selectedBtn.querySelector('i').className = 'fas fa-times-circle';
+                
+                allBtns[correctIndex].classList.add('correct');
+                allBtns[correctIndex].querySelector('i').className = 'fas fa-check-circle';
+                
+                feedbackArea.className = 'feedback-area wrong-fb';
+                feedbackIcon.className = 'feedback-icon fas fa-times-circle';
+                feedbackTitle.innerText = "తప్పు సమాధానం (Incorrect)";
+                feedbackText.innerText = feedbackMsg;
+            }
+
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                btnNext.innerHTML = 'Next Question <i class="fas fa-arrow-right"></i>';
+            } else {
+                btnNext.innerHTML = 'View Results <i class="fas fa-flag-checkered"></i>';
+            }
+            btnNext.style.display = 'inline-block';
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            quizWorkspace.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            progressBar.style.width = '100%';
+            
+            document.getElementById('final-score').innerText = score;
+
+            const perfMsg = document.getElementById('performance-msg');
+            if(score === 5) {
+                perfMsg.innerText = "Excellent! You mastered the concept of Lysosomes! 🌟";
+                perfMsg.style.color = "var(--success)";
+            } else if(score >= 3) {
+                perfMsg.innerText = "Good Job! You have a solid understanding. 👍";
+                perfMsg.style.color = "var(--primary)";
+            } else {
+                perfMsg.innerText = "Please review the video carefully and try again. 📖";
+                perfMsg.style.color = "var(--danger)";
+            }
+        }
+
+        window.restartQuiz = function() {
+            score = 0;
+            currentQuestionIndex = 0;
+            currentScoreEl.innerText = score;
+            
+            resultsScreen.style.display = 'none';
+            quizWorkspace.style.display = 'block';
+            
+            document.getElementById('main-video').pause();
+            
+            loadQuestion();
+        }
+
+        loadQuestion();
+
+    </script>
+</body>
+</html>
