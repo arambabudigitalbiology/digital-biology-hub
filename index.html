@@ -20,18 +20,17 @@
             --text-muted: #64748b;    
             --border: #e2e8f0;
             --radius-md: 12px;
-            --radius-lg: 20px;
             --shadow-sm: 0 2px 4px rgba(15, 118, 110, 0.05);
             --shadow-md: 0 10px 25px -5px rgba(15, 118, 110, 0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
 
-        /* Master Lock Screen */
+        /* Master Lock Screen - Rebuilt for Mobile */
         #site-lock-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px);
             z-index: 99999; display: flex; align-items: center; justify-content: center;
         }
@@ -41,163 +40,132 @@
             border: 2px solid var(--primary);
         }
         .site-lock-card h2 { color: var(--text-heading); margin-bottom: 10px; font-size: 1.6rem; }
-        .site-lock-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
         .site-lock-input {
             width: 100%; padding: 15px; border: 2px solid var(--border); border-radius: 10px;
             font-size: 1.5rem; text-align: center; letter-spacing: 8px; margin-bottom: 20px; outline: none;
             font-weight: bold; color: var(--primary);
         }
         .site-lock-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+        .unlock-btn {
+            background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px;
+            font-size: 1.1rem; font-weight: 700; width: 100%; cursor: pointer; transition: 0.2s;
+        }
+        .unlock-btn:active { transform: scale(0.98); background: var(--primary-dark); }
 
-        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        .section-header { text-align: center; margin-bottom: 2.5rem; }
-        .section-header h2 { font-size: 2.2rem; color: var(--text-heading); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
-        .section-header .divider { height: 4px; width: 60px; background: var(--accent); margin: 0 auto; border-radius: 2px; }
+        /* Main Content Layout */
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .hidden-content { display: none; }
 
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); text-decoration: none; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 6px -1px rgba(15, 118, 110, 0.2); }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-
-        /* Navigation */
-        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; transition: var(--transition); box-shadow: var(--shadow-sm); }
+        /* Navbar */
+        .navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-sm); }
         .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .logo h1 { font-size: 1.3rem; color: var(--text-heading); font-weight: 800; line-height: 1.2; text-transform: uppercase;}
+        .logo h1 { font-size: 1.2rem; color: var(--text-heading); font-weight: 800; line-height: 1.2;}
         .logo h1 span { color: var(--accent); }
-        .logo p { font-size: 0.7rem; color: var(--primary); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
-
-        .nav-links { list-style: none; display: flex; gap: 4px; }
-        .nav-links li a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; padding: 8px 16px; border-radius: 6px; transition: var(--transition); cursor: pointer; }
+        .logo p { font-size: 0.7rem; color: var(--primary); font-weight: 700; letter-spacing: 1px;}
+        .nav-links { display: flex; gap: 10px; list-style: none; }
+        .nav-links li a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.95rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
         .nav-links li a:hover, .nav-links li a.active { color: var(--primary); background: var(--primary-light); }
-        .menu-toggle { display: none; font-size: 1.5rem; color: var(--text-heading); cursor: pointer; padding: 10px; }
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
 
-        .page-section { display: none; padding: 100px 0 80px; min-height: 100vh; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
-        .page-section.active { display: block; opacity: 1; transform: translateY(0); }
+        /* Profile Section */
+        .profile-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; align-items: center; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-md); margin: 40px 0;}
+        .profile-photo { width: 100%; max-width: 300px; border-radius: 15px; border: 5px solid var(--primary-light); margin: 0 auto; display: block;}
+        .profile-details h1 { font-size: 2.2rem; color: var(--primary); font-weight: 800; }
+        .profile-details h3 { font-size: 1.1rem; color: var(--accent); margin-bottom: 15px; font-weight: 700;}
+        .profile-details p { font-size: 1rem; margin-bottom: 10px; color: var(--text-heading); font-weight: 500;}
+        .achievements-box { background: var(--bg-body); padding: 15px; border-radius: 10px; border-left: 4px solid var(--accent); margin-top: 15px; }
+        .achievements-box ul { list-style: none; padding-left: 5px;}
+        .achievements-box ul li { margin-bottom: 5px; font-weight: 600; color: var(--primary-dark); font-size: 0.95rem;}
 
-        /* Profile & About */
-        .profile-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; align-items: center; background: white; padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); margin-bottom: 40px;}
-        .profile-photo { width: 100%; max-width: 350px; border-radius: 20px; border: 8px solid var(--primary-light); margin: 0 auto; display: block; box-shadow: var(--shadow-sm);}
-        .profile-details h1 { font-size: 2.5rem; color: var(--primary); font-weight: 800; margin-bottom: 5px; }
-        .profile-details h3 { font-size: 1.2rem; color: var(--accent); margin-bottom: 20px; font-weight: 700;}
-        .profile-details p { font-size: 1.05rem; margin-bottom: 15px; color: var(--text-heading); font-weight: 500;}
-        .profile-details p i { color: var(--primary); width: 25px; }
-        
-        .achievements-box { background: var(--bg-body); padding: 20px; border-radius: 12px; border-left: 5px solid var(--accent); margin-top: 20px; }
-        .achievements-box h4 { color: var(--text-heading); margin-bottom: 10px; font-size: 1.1rem; }
-        .achievements-box ul { list-style: none; padding-left: 10px;}
-        .achievements-box ul li { margin-bottom: 8px; font-weight: 600; color: var(--primary-dark); display: flex; align-items: flex-start; gap: 10px;}
-        .achievements-box ul li i { color: #eab308; margin-top: 4px; }
+        /* Folders & Grid */
+        .section-header { text-align: center; margin-bottom: 2rem; margin-top: 40px;}
+        .section-header h2 { font-size: 2rem; color: var(--text-heading); font-weight: 800; }
+        .folders-scroll { width: 100%; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; }
+        .folders-bar { display: flex; gap: 10px; width: max-content; padding: 0 5px;}
+        .folder-tab { background: white; border: 2px solid var(--border); padding: 10px 20px; border-radius: 30px; font-weight: 700; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; }
+        .folder-tab.active { background: var(--primary); border-color: var(--primary); color: white; }
 
-        /* Dynamic Folders */
-        .folders-scroll-wrapper { width: 100%; overflow-x: auto; padding-bottom: 15px; margin-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-        .folders-scroll-wrapper::-webkit-scrollbar { display: none; }
-        .folders-bar { display: flex; gap: 12px; width: max-content; margin: 0 auto; padding: 0 10px;}
-        .folder-tab { background: white; border: 2px solid var(--border); padding: 12px 24px; border-radius: 30px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-size: 0.95rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
-        .folder-tab:hover, .folder-tab.active { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 4px 10px rgba(15, 118, 110, 0.3);}
-
-        /* Dynamic Grid & Cards */
-        .grid { display: grid; gap: 25px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
-        
-        .content-card { background: var(--bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: var(--transition); display: flex; flex-direction: column; cursor: pointer; position: relative;}
-        .content-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--primary-light);}
-        .content-media { height: 180px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .content-media i { font-size: 4rem; opacity: 0.9; }
-        .badge { position: absolute; top: 12px; right: 12px; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);}
-        .class-badge { position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.9); color: var(--text-heading); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
-        
-        .content-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .content-info h4 { color: var(--text-heading); font-size: 1.15rem; margin-bottom: 8px; font-weight: 700; line-height: 1.3;}
-        .content-info p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
-        .card-btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; color: white; display: flex; align-items: center; justify-content: center; gap: 8px;}
-        .card-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        footer { background: #0f172a; color: white; padding: 60px 0 20px; margin-top: 60px; text-align: center; }
+        .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); margin-bottom: 50px;}
+        .content-card { background: white; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border); transition: 0.2s; cursor: pointer;}
+        .content-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary);}
+        .content-media { height: 160px; display: flex; align-items: center; justify-content: center; position: relative;}
+        .content-media i { font-size: 3.5rem; opacity: 0.9; }
+        .badge { position: absolute; top: 10px; right: 10px; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+        .content-info { padding: 15px; }
+        .content-info h4 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 700;}
+        .content-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;}
+        .card-btn { width: 100%; padding: 10px; border: none; border-radius: 8px; font-weight: 700; color: white; display: flex; justify-content: center; align-items: center; gap: 8px;}
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
-            .nav-links { position: absolute; top: 70px; left: 0; width: 100%; background: var(--bg-card); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; box-shadow: var(--shadow-md); }
-            .nav-links.active { max-height: 400px; padding: 10px 0; border-top: 1px solid var(--border);}
-            .nav-links li a { padding: 16px 24px; border-bottom: 1px solid var(--border); display: block; font-size: 1.1rem;}
-            .profile-container { grid-template-columns: 1fr; text-align: center; padding: 20px;}
-            .achievements-box ul li { justify-content: center; text-align: left;}
-            .folders-scroll-wrapper { margin-left: -24px; width: calc(100% + 48px); padding-left: 24px; padding-right: 24px;}
+            .nav-links { display: none; position: absolute; top: 70px; left: 0; width: 100%; background: white; flex-direction: column; padding: 10px 0; box-shadow: var(--shadow-md);}
+            .nav-links.active { display: flex; }
+            .profile-container { grid-template-columns: 1fr; text-align: center;}
+            .achievements-box ul li { text-align: left; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Master Site-Wide Lock Screen -->
+    <!-- SECURE LOCK SCREEN -->
     <div id="site-lock-overlay">
         <div class="site-lock-card">
-            <h3><i class="fas fa-shield-alt" style="color: var(--primary); font-size: 2rem; margin-bottom: 15px;"></i></h3>
+            <h3><i class="fas fa-shield-alt" style="color: var(--primary); font-size: 2.5rem; margin-bottom: 15px;"></i></h3>
             <h2>Restricted Access</h2>
-            <p>Enter Master Password to Access Hub</p>
-            <input type="password" id="site-pass-input" class="site-lock-input" placeholder="••••••" maxlength="6">
-            <button class="btn btn-primary" style="width: 100%; font-size: 1.1rem;" onclick="unlockSite()">Unlock & Enter</button>
-            <p style="margin-top: 15px; font-size: 0.8rem; color: #94a3b8;"><i class="fas fa-lock"></i> Protected by A. Rambabu</p>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Enter Master Password</p>
+            <input type="password" id="sitePassInput" class="site-lock-input" placeholder="••••••" maxlength="6">
+            <button id="unlockBtn" class="unlock-btn">Unlock & Enter</button>
         </div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar glass-panel">
-        <div class="container nav-container">
-            <div class="logo">
-                <h1>DIGITAL BIOLOGY <span>HUB</span></h1>
-                <p>By A. Rambabu</p>
+    <!-- MAIN CONTENT (Hidden until unlocked) -->
+    <div id="mainContent" class="hidden-content">
+        <nav class="navbar">
+            <div class="container nav-container">
+                <div class="logo">
+                    <h1>DIGITAL BIOLOGY <span>HUB</span></h1>
+                    <p>By A. Rambabu</p>
+                </div>
+                <div class="menu-toggle" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a class="nav-link active" data-target="home">Teacher Profile</a></li>
+                    <li><a class="nav-link" data-target="library">Resource Library</a></li>
+                </ul>
             </div>
-            <div class="menu-toggle" id="mobile-menu-btn"><i class="fas fa-bars"></i></div>
-            <ul class="nav-links" id="nav-links">
-                <li><a class="nav-link active" data-target="home">Teacher Profile</a></li>
-                <li><a class="nav-link" data-target="library">Resource Library</a></li>
-            </ul>
-        </div>
-    </nav>
+        </nav>
 
-    <main>
-        <!-- Home / Profile Section -->
-        <section id="home" class="page-section active">
+        <section id="home" class="page-section" style="display: block;">
             <div class="container">
                 <div class="profile-container">
-                    <div>
-                        <!-- Loads profile.png directly -->
-                        <img src="profile.png" alt="A. Rambabu" class="profile-photo" onerror="this.src='https://placehold.co/400x500/0f766e/ffffff?text=A.+Rambabu';">
-                    </div>
+                    <img src="profile.png" alt="A. Rambabu" class="profile-photo" onerror="this.src='https://placehold.co/400x500/0f766e/ffffff?text=A.+Rambabu';">
                     <div class="profile-details">
                         <h1>A. RAMBABU</h1>
                         <h3>M.Sc. ZOOLOGY, B.Ed. | SA BIOLOGY</h3>
-                        
-                        <p><i class="fas fa-award"></i> <strong>DSC Rank:</strong> 4th Ranker</p>
-                        <p><i class="fas fa-school"></i> <strong>Working At:</strong> ZPHS Vemsoor</p>
-                        <p><i class="fas fa-chalkboard-teacher"></i> <strong>Experience:</strong> 15 Years Teaching</p>
+                        <p><i class="fas fa-award" style="color:var(--primary);"></i> <strong>DSC Rank:</strong> 4th Ranker</p>
+                        <p><i class="fas fa-school" style="color:var(--primary);"></i> <strong>Working At:</strong> ZPHS Vemsoor</p>
+                        <p><i class="fas fa-chalkboard-teacher" style="color:var(--primary);"></i> <strong>Experience:</strong> 15 Years</p>
                         
                         <div class="achievements-box">
-                            <h4><i class="fas fa-trophy" style="color: var(--accent);"></i> Major Achievements</h4>
+                            <h4 style="margin-bottom:10px;"><i class="fas fa-trophy" style="color:var(--accent);"></i> Achievements</h4>
                             <ul>
-                                <li><i class="fas fa-star"></i> STATE GREEN CHAMPION AWARDEE</li>
-                                <li><i class="fas fa-star"></i> MANDAL LEVEL BEST TEACHER AWARDEE</li>
-                                <li><i class="fas fa-star"></i> DISTRICT LEVEL BEST TEACHER AWARDEE</li>
-                                <li><i class="fas fa-star"></i> SUCCESS JOURNEY TV CREATOR</li>
+                                <li><i class="fas fa-star" style="color:#eab308;"></i> STATE GREEN CHAMPION AWARDEE</li>
+                                <li><i class="fas fa-star" style="color:#eab308;"></i> MANDAL LEVEL BEST TEACHER AWARDEE</li>
+                                <li><i class="fas fa-star" style="color:#eab308;"></i> DISTRICT LEVEL BEST TEACHER AWARDEE</li>
+                                <li><i class="fas fa-star" style="color:#eab308;"></i> SUCCESS JOURNEY TV CREATOR</li>
                             </ul>
-                        </div>
-
-                        <div style="margin-top: 25px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                            <button class="btn btn-primary nav-trigger" data-target="library"><i class="fas fa-rocket"></i> Enter Digital Hub</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dynamic Resource Library Section -->
-        <section id="library" class="page-section">
+        <section id="library" class="page-section" style="display: none;">
             <div class="container">
                 <div class="section-header">
                     <h2>Digital Resource Library</h2>
-                    <div class="divider"></div>
                 </div>
 
-                <!-- ALL Requested Folders -->
-                <div class="folders-scroll-wrapper">
+                <div class="folders-scroll">
                     <div class="folders-bar" id="folders-bar">
                         <button class="folder-tab active" data-filter="all"><i class="fas fa-globe"></i> All</button>
                         <button class="folder-tab" data-filter="teacher"><i class="fas fa-chalkboard-teacher"></i> Teacher Portal</button>
@@ -214,89 +182,91 @@
                     </div>
                 </div>
 
-                <!-- Container where JS will inject cards -->
                 <div class="grid" id="dynamic-grid">
-                    <!-- Loading state, will be replaced by data.js -->
-                    <p style="text-align: center; grid-column: 1/-1; color: var(--text-muted);">Loading Database...</p>
-                </div>
-                
-                <div id="no-results" style="display: none; text-align: center; padding: 50px; color: var(--text-muted); grid-column: 1/-1;">
-                    <i class="fas fa-folder-open" style="font-size: 4rem; margin-bottom: 20px; opacity: 0.3;"></i>
-                    <h3>Folder is Empty</h3>
-                    <p>New materials will be added here soon.</p>
+                    <p style="text-align: center; grid-column: 1/-1;">Loading resources...</p>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
-    <footer>
-        <div class="container">
-            <h3 style="margin-bottom: 10px; font-weight: 800; letter-spacing: 1px;">A. RAMBABU DIGITAL BIOLOGY HUB</h3>
-            <p style="color: #64748b; font-size: 0.9rem;">&copy; 2026 | Built for National Best Teacher Award Nomination | ICT & AI Integration</p>
-        </div>
-    </footer>
-
-    <!-- Loads the external Database File -->
+    <!-- Load external database -->
     <script src="data.js"></script>
 
     <script>
-        // 1. MASTER PASSWORD LOGIC
-        function unlockSite() {
-            const pass = document.getElementById('site-pass-input').value;
-            if(pass === '052128') {
-                document.getElementById('site-lock-overlay').style.display = 'none';
-                // Use sessionStorage so it locks again if they close the browser tab
-                sessionStorage.setItem('hub_unlocked', 'true');
-            } else {
-                alert('Incorrect password! Please try again.');
-                document.getElementById('site-pass-input').value = '';
-            }
-        }
+        // --- 1. BULLETPROOF PASSWORD LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const unlockBtn = document.getElementById('unlockBtn');
+            const passInput = document.getElementById('sitePassInput');
+            const overlay = document.getElementById('site-lock-overlay');
+            const mainContent = document.getElementById('mainContent');
 
-        document.getElementById('site-pass-input').addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') unlockSite();
+            // Check if already unlocked in this session
+            if(sessionStorage.getItem('hub_unlocked') === 'true') {
+                overlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                initSiteLogic();
+            }
+
+            function processUnlock() {
+                // Get value and remove any accidental spaces added by mobile keyboards
+                const pass = passInput.value.trim(); 
+                
+                if(pass === '052128') {
+                    overlay.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    sessionStorage.setItem('hub_unlocked', 'true');
+                    initSiteLogic(); // Initialize the rest of the site ONLY after unlocking
+                } else {
+                    alert('Incorrect password! Please try again.');
+                    passInput.value = '';
+                }
+            }
+
+            // Bind to Button Click
+            unlockBtn.addEventListener('click', processUnlock);
+            
+            // Bind to Enter Key on keyboard
+            passInput.addEventListener('keypress', (e) => {
+                if(e.key === 'Enter') processUnlock();
+            });
         });
 
-        if(sessionStorage.getItem('hub_unlocked') === 'true') {
-            document.getElementById('site-lock-overlay').style.display = 'none';
-        }
+        // --- 2. SITE LOGIC (Runs only after unlock) ---
+        function initSiteLogic() {
+            // Navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = {
+                'home': document.getElementById('home'),
+                'library': document.getElementById('library')
+            };
 
-        // 2. NAVIGATION LOGIC
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelectorAll('.nav-link, .nav-trigger');
-            const sections = document.querySelectorAll('.page-section');
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const navLinksContainer = document.getElementById('nav-links');
+            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+                document.getElementById('navLinks').classList.toggle('active');
+            });
 
-            mobileMenuBtn.addEventListener('click', () => { navLinksContainer.classList.toggle('active'); });
-
-            function navigateTo(targetId) {
-                sections.forEach(sec => {
-                    sec.classList.remove('active');
-                    if(sec.id === targetId) { sec.classList.add('active'); }
-                });
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if(link.getAttribute('data-target') === targetId) { link.classList.add('active'); }
-                });
-                navLinksContainer.classList.remove('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-
-            navLinks.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const target = btn.getAttribute('data-target');
-                    if(target) { e.preventDefault(); navigateTo(target); }
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const target = link.getAttribute('data-target');
+                    // Update active tab
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    // Show correct section
+                    sections.home.style.display = (target === 'home') ? 'block' : 'none';
+                    sections.library.style.display = (target === 'library') ? 'block' : 'none';
+                    // Hide mobile menu
+                    document.getElementById('navLinks').classList.remove('active');
                 });
             });
 
-            // 3. DATABASE RENDER LOGIC
+            // Database Rendering
+            const grid = document.getElementById('dynamic-grid');
             if(typeof resourceData !== 'undefined') {
                 renderCards('all');
             } else {
-                document.getElementById('dynamic-grid').innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1;">Error: data.js file not found! Please create it.</p>';
+                grid.innerHTML = '<p style="color:red; text-align:center;">Error: data.js file not found!</p>';
             }
-            
+
+            // Folder Filtering
             const folderTabs = document.querySelectorAll('.folder-tab');
             folderTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
@@ -305,7 +275,38 @@
                     renderCards(tab.getAttribute('data-filter'));
                 });
             });
-        });
 
-        function renderCards(filter) {
-            c
+            function renderCards(filter) {
+                grid.innerHTML = '';
+                let count = 0;
+                resourceData.forEach(item => {
+                    if(filter === 'all' || item.folders.includes(filter)) {
+                        const card = document.createElement('div');
+                        card.className = 'content-card';
+                        card.addEventListener('click', () => {
+                            if(item.type === 'youtube_link') window.open(item.url, '_blank');
+                            else window.location.href = item.url;
+                        });
+                        card.innerHTML = `
+                            <div class="content-media" style="background: ${item.bgColor};">
+                                <i class="${item.icon}" style="color: ${item.color};"></i>
+                                <span class="badge" style="background:${item.color};">${item.badgeText}</span>
+                            </div>
+                            <div class="content-info">
+                                <h4>${item.title}</h4>
+                                <p>${item.description}</p>
+                                <div class="card-btn" style="background: ${item.color};">
+                                    <i class="${item.buttonIcon}"></i> ${item.buttonText}
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                        count++;
+                    }
+                });
+                if(count === 0) grid.innerHTML = '<p style="text-align:center; color:#64748b; padding:40px;">This folder is empty.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
