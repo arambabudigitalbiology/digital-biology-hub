@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Cell vs Animal Cell - Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f766e; 
+            --primary-light: #ccfbf1;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .lesson-container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        /* --- Header & Navigation --- */
+        .top-nav {
+            padding: 15px 20px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+        .btn-back {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--primary); }
+
+        /* --- Embedded YouTube Video --- */
+        .video-section {
+            width: 100%;
+            background-color: #000;
+            position: relative;
+            border-bottom: 4px solid var(--primary);
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-section iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- Header / Progress --- */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .q-tracker { font-weight: 700; color: var(--text-light); }
+        .score-badge { background-color: var(--primary-light); color: var(--primary); padding: 6px 16px; border-radius: 20px; font-weight: 700; }
+
+        /* Progress Bar */
+        .progress-bar-container { width: 100%; height: 6px; background-color: var(--border); }
+        .progress-bar { height: 100%; background-color: var(--primary); width: 0%; transition: width 0.4s ease; }
+
+        /* --- Quiz Content --- */
+        .quiz-content { padding: 30px; }
+
+        .question-box { margin-bottom: 25px; }
+        .question-telugu { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; display: block; line-height: 1.5; }
+        .question-english { font-size: 1rem; color: var(--text-light); font-weight: 400; display: block; }
+
+        .options-grid { display: grid; gap: 12px; }
+
+        .option-btn {
+            background-color: #f8fafc;
+            border: 2px solid var(--border);
+            padding: 16px 20px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option-btn:hover:not(:disabled) { border-color: var(--primary); background-color: var(--primary-light); }
+        
+        .option-btn.correct { background-color: #dcfce7; border-color: var(--success); color: #065f46; }
+        .option-btn.wrong { background-color: #fee2e2; border-color: var(--danger); color: #991b1b; }
+        .option-btn:disabled { cursor: not-allowed; }
+
+        /* --- Feedback Area --- */
+        .feedback-area {
+            margin-top: 20px; padding: 15px 20px; border-radius: 10px;
+            display: none; font-weight: 600; align-items: flex-start; gap: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .feedback-area.correct-fb { display: flex; background-color: #dcfce7; border: 1px solid #bbf7d0; color: #065f46; }
+        .feedback-area.wrong-fb { display: flex; background-color: #fee2e2; border: 1px solid #fecaca; color: #991b1b; }
+        .feedback-icon { font-size: 1.5rem; margin-top: 2px; }
+
+        /* --- Controls --- */
+        .controls { margin-top: 25px; display: flex; justify-content: flex-end; }
+        .btn-next {
+            background-color: var(--primary); color: white; border: none; padding: 14px 28px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            display: none; transition: background 0.3s;
+        }
+        .btn-next:hover { background-color: #115e59; }
+
+        /* --- Results Screen --- */
+        .results-screen { display: none; text-align: center; padding: 50px 30px; }
+        .results-screen h2 { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 10px; }
+        
+        .final-score-circle {
+            width: 160px; height: 160px; background: var(--primary); color: white;
+            border-radius: 50%; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; margin: 30px auto; box-shadow: 0 10px 20px rgba(15, 118, 110, 0.3);
+        }
+        .final-score-circle span.big { font-size: 3.5rem; font-weight: 800; line-height: 1; }
+        
+        .btn-restart {
+            background-color: var(--text-dark); color: white; border: none; padding: 15px 30px;
+            border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 20px; margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lesson-container">
+        
+        <div class="top-nav">
+            <a href="index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        </div>
+
+        <!-- YOUTUBE VIDEO PLAYER -->
+        <div class="video-section">
+            <!-- ఇక్కడ మీరు మీ యూట్యూబ్ వీడియో లింక్‌లోంచి వచ్చిన 'Embed Code' ని పెట్టాలి. 
+                 ఇప్పుడు ఉన్నది కేవలం ఒక ఉదాహరణ. 
+                 ఆ src లో ఉన్న లింక్‌ని మీ వీడియో లింక్‌తో మార్చుకోండి. -->
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- QUIZ WORKSPACE -->
+        <div id="quiz-workspace">
+            <div class="quiz-header">
+                <span class="q-tracker" id="q-tracker">Question 1 / 5</span>
+                <span class="score-badge">Score: <span id="current-score">0</span></span>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-box">
+                    <span class="question-telugu" id="q-telugu">ప్రశ్న లోడ్ అవుతోంది...</span>
+                    <span class="question-english" id="q-english">Loading question...</span>
+                </div>
+                
+                <div class="options-grid" id="options-grid">
+                    <!-- Options injected by JS -->
+                </div>
+
+                <div class="feedback-area" id="feedback-area">
+                    <i id="feedback-icon" class="feedback-icon fas"></i>
+                    <div>
+                        <div id="feedback-title" style="font-size: 1.1rem; font-weight: 800; margin-bottom: 5px;"></div>
+                        <div id="feedback-text" style="font-size: 0.95rem; font-weight: 500;"></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn-next" id="btn-next">Next Question <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL RESULTS SCREEN -->
+        <div class="results-screen" id="results-screen">
+            <h2><i class="fas fa-award" style="color: var(--primary);"></i> Quiz Completed!</h2>
+            <p style="color: var(--text-light); font-size: 1.1rem;">You have successfully finished the Plant Cell vs Animal Cell module.</p>
+            
+            <div class="final-score-circle">
+                <span class="big" id="final-score">0</span>
+                <span>out of 5</span>
+            </div>
+
+            <p id="performance-msg" style="font-size: 1.3rem; font-weight: 700; margin-bottom: 30px;"></p>
+
+            <button class="btn-restart" onclick="restartQuiz()"><i class="fas fa-redo"></i> Retake Quiz</button>
+            <button class="btn-restart" style="background: var(--primary);" onclick="window.location.href='index.html'"><i class="fas fa-home"></i> Home</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Quiz Database: 5 Questions for Plant Cell vs Animal Cell
+        const quizQuestions = [
+            {
+                qTelugu: "1. వృక్ష కణంలో మాత్రమే ఉండి, జంతు కణంలో లేని భాగం ఏది?",
+                qEnglish: "Which part is present only in a plant cell and not in an animal cell?",
+                options: ["A) కణత్వచం (Cell Membrane)", "B) కణకవచం (Cell Wall)", "C) కేంద్రకం (Nucleus)", "D) మైటోకాండ్రియా (Mitochondria)"],
+                correctIndex: 1,
+                feedback: "వృక్ష కణానికి దృఢత్వాన్ని ఇవ్వడానికి దాని చుట్టూ 'కణకవచం' ఉంటుంది. జంతు కణంలో ఇది ఉండదు."
+            },
+            {
+                qTelugu: "2. కిరణజన్యసంయోగక్రియ (Photosynthesis) జరగడానికి ఏ అవయవం (organelle) అవసరం?",
+                qEnglish: "Which organelle is essential for Photosynthesis to occur?",
+                options: ["A) హరితరేణువు (Chloroplast)", "B) లైసోజోమ్ (Lysosome)", "C) గాల్జీ సంక్లిష్టం (Golgi apparatus)", "D) రైబోజోమ్ (Ribosome)"],
+                correctIndex: 0,
+                feedback: "వృక్ష కణాలలో ఉండే హరితరేణువులలోనే క్లోరోఫిల్ ఉండి, కిరణజన్యసంయోగక్రియ జరుగుతుంది."
+            },
+            {
+                qTelugu: "3. జంతు కణాలలో రిక్తికలు (Vacuoles) ఎలా ఉంటాయి?",
+                qEnglish: "How are vacuoles in animal cells?",
+                options: ["A) చాలా పెద్దవిగా ఉంటాయి (Very large)", "B) అసలు ఉండవు (Absent)", "C) చిన్నవిగా మరియు తాత్కాలికంగా ఉంటాయి (Small and temporary)", "D) కణకవచం లోపల దాగి ఉంటాయి (Hidden inside cell wall)"],
+                correctIndex: 2,
+                feedback: "వృక్ష కణాలలో ఒక పెద్ద రిక్తిక ఉంటుంది, కానీ జంతు కణాలలో రిక్తికలు చిన్నవిగా మరియు తాత్కాలికంగా ఉంటాయి."
+            },
+            {
+                qTelugu: "4. వృక్ష కణాలు ఆహారాన్ని ప్రధానంగా ఏ రూపంలో నిల్వ చేస్తాయి?",
+                qEnglish: "In what form do plant cells mainly store food?",
+                options: ["A) గ్లైకోజెన్ (Glycogen)", "B) స్టార్చ్ / పిండిపదార్థం (Starch)", "C) ప్రోటీన్లు (Proteins)", "D) కొవ్వులు (Fats)"],
+                correctIndex: 1,
+                feedback: "వృక్ష కణాలు తమ ఆహారాన్ని స్టార్చ్ (పిండిపదార్థం) రూపంలో నిల్వ చేస్తే, జంతు కణాలు గ్లైకోజెన్ రూపంలో నిల్వ చేస్తాయి."
+            },
+            {
+                qTelugu: "5. వృక్ష మరియు జంతు కణాలు రెండింటిలోనూ ఉమ్మడిగా కనిపించే భాగం ఏది?",
+                qEnglish: "Which part is found commonly in both plant and animal cells?",
+                options: ["A) హరితరేణువులు (Chloroplasts)", "B) కణకవచం (Cell Wall)", "C) పెద్ద కేంద్రక రిక్తిక (Large Central Vacuole)", "D) కణత్వచం (Cell Membrane)"],
+                correctIndex: 3,
+                feedback: "కణత్వచం (Cell Membrane), కేంద్రకం, మరియు సైటోప్లాజమ్ అనేవి వృక్ష మరియు జంతు కణాలు రెండింటిలోనూ ఉంటాయి."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // DOM Elements
+        const qTracker = document.getElementById('q-tracker');
+        const progressBar = document.getElementById('progress-bar');
+        const currentScoreEl = document.getElementById('current-score');
+        
+        const qTeluguEl = document.getElementById('q-telugu');
+        const qEnglishEl = document.getElementById('q-english');
+        const optionsGrid = document.getElementById('options-grid');
+        
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        
+        const btnNext = document.getElementById('btn-next');
+        const quizWorkspace = document.getElementById('quiz-workspace');
+        const resultsScreen = document.getElementById('results-screen');
+
+        function loadQuestion() {
+            feedbackArea.style.display = 'none';
+            btnNext.style.display = 'none';
+            optionsGrid.innerHTML = '';
+            
+            const currentQ = quizQuestions[currentQuestionIndex];
+            
+            qTracker.innerText = `Question ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex) / quizQuestions.length) * 100}%`;
+            
+            qTeluguEl.innerText = currentQ.qTelugu;
+            qEnglishEl.innerText = currentQ.qEnglish;
+
+            currentQ.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${optText}</span> <i class="fas fa-circle" style="color:var(--border); font-size: 0.8rem;"></i>`;
+                btn.onclick = () => checkAnswer(index, btn, currentQ.correctIndex, currentQ.feedback);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, selectedBtn, correctIndex, feedbackMsg) {
+            const allBtns = optionsGrid.querySelectorAll('.option-btn');
+            
+            allBtns.forEach(btn => btn.disabled = true);
+            feedbackArea.style.display = 'flex';
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add('correct');
+                selectedBtn.querySelector('i').className = 'fas fa-check-circle';
+                score++;
+                currentScoreEl.innerText = score;
+                
+                feedbackArea.className = 'feedback-area correct-fb';
+                feedbackIcon.className = 'feedback-icon fas fa-check-circle';
+                feedbackTitle.innerText = "సరియైన సమాధానం! (Correct!)";
+                feedbackText.innerText = feedbackMsg;
+            } else {
+                selectedBtn.classList.add('wrong');
+                selectedBtn.querySelector('i').className = 'fas fa-times-circle';
+                
+                allBtns[correctIndex].classList.add('correct');
+                allBtns[correctIndex].querySelector('i').className = 'fas fa-check-circle';
+                
+                feedbackArea.className = 'feedback-area wrong-fb';
+                feedbackIcon.className = 'feedback-icon fas fa-times-circle';
+                feedbackTitle.innerText = "తప్పు సమాధానం (Incorrect)";
+                feedbackText.innerText = feedbackMsg;
+            }
+
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                btnNext.innerHTML = 'Next Question <i class="fas fa-arrow-right"></i>';
+            } else {
+                btnNext.innerHTML = 'View Results <i class="fas fa-flag-checkered"></i>';
+            }
+            btnNext.style.display = 'inline-block';
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            quizWorkspace.style.display = 'none';
+            resultsScreen.style.display = 'block';
+            progressBar.style.width = '100%';
+            
+            document.getElementById('final-score').innerText = score;
+
+            const perfMsg = document.getElementById('performance-msg');
+            if(score === 5) {
+                perfMsg.innerText = "Excellent! You mastered the differences between Plant & Animal Cells! 🌟";
+                perfMsg.style.color = "var(--success)";
+            } else if(score >= 3) {
+                perfMsg.innerText = "Good Job! You have a solid understanding. 👍";
+                perfMsg.style.color = "var(--primary)";
+            } else {
+                perfMsg.innerText = "Please review the differences carefully and try again. 📖";
+                perfMsg.style.color = "var(--danger)";
+            }
+        }
+
+        window.restartQuiz = function() {
+            score = 0;
+            currentQuestionIndex = 0;
+            currentScoreEl.innerText = score;
+            
+            resultsScreen.style.display = 'none';
+            quizWorkspace.style.display = 'block';
+            
+            loadQuestion();
+        }
+
+        loadQuestion();
+
+    </script>
+</body>
+  </html>
