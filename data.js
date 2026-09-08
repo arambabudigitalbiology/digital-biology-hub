@@ -87,8 +87,8 @@ const resourceData = [
     {
         title: "PLANT CELL ANIMAL CELL",
         description: "Plant cells and animal cells are both eukaryotic cells, but they have several differences. A plant cell has a rigid cell wall, while an animal cell does not have a cell wall. Plant cells contain chloroplasts for photosynthesis, whereas animal cells do not contain chloroplasts. Plant cells usually have one large central vacuole, while animal cells have small and temporary vacuoles. Plant cells generally have a fixed, rectangular shape because of the cell wall, whereas animal cells usually have a flexible and irregular shape. Plant cells store food mainly in the form of starch, while animal cells store food mainly as glycogen. Both plant and animal cells have a cell membrane, cytoplasm, nucleus, mitochondria, and other common cell organelles.",
-        type: "youtube_link",
-        url: "https://youtu.be/kmKob-1-sL8", 
+        type: "quiz",
+        url: "plant_animal_cell_quiz.html",
         folders: ["class10", "youtube", "student"], 
         classBadge: "10th Class",
         badgeText: "YouTube Video",
