@@ -36,21 +36,21 @@ const resourceData = [
         buttonIcon: "fas fa-play-circle"
     },
 
-    // --- 3. YOUTUBE CHANNEL LINK ---
+    /
     {
-        title: "Success Journey TV",
-        description: "Watch Motivation, Tips, and Biology Lessons directly on my YouTube channel.",
-        type: "youtube_link",
-        url: "https://www.youtube.com/@SuccessJourneyTV", // మీ యూట్యూబ్ లింక్ ఇక్కడ ఉంటుంది
-        folders: ["youtube", "student", "class10", "class9", "class8"],
-        classBadge: "All Classes",
-        badgeText: "YouTube",
-        icon: "fab fa-youtube",
-        color: "#ef4444",            
-        bgColor: "#fee2e2",
-        buttonText: "Watch on YouTube",
-        buttonIcon: "fab fa-youtube"
-    },
+    
+        
+        
+        
+        
+        
+        
+        
+                  
+        
+        
+        
+    
 
     // --- 4. TEACHER PORTAL - TLM EXAMPLE ---
     {
