@@ -277,32 +277,79 @@
             });
 
             function renderCards(filter) {
-                grid.innerHTML = '';
-                let count = 0;
-                resourceData.forEach(item => {
-                    if(filter === 'all' || item.folders.includes(filter)) {
-                        const card = document.createElement('div');
-                        card.className = 'content-card';
-                        card.addEventListener('click', () => {
-                            if(item.type === 'youtube_link') window.open(item.url, '_blank');
-                            else window.location.href = item.url;
-                        });
-                        card.innerHTML = `
-                            <div class="content-media" style="background: ${item.bgColor};">
-                                <i class="${item.icon}" style="color: ${item.color};"></i>
-                                <span class="badge" style="background:${item.color};">${item.badgeText}</span>
+    grid.innerHTML = '';
+    let count = 0;
+
+    const classes = ['class8', 'class9', 'class10'];
+    
+    classes.forEach(clsKey => {
+        const classData = resourceData[clsKey];
+        if (classData) {
+            classData.forEach(item => {
+                if (filter === 'all' || clsKey === filter) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = 'content-card';
+                    
+                    card.addEventListener('click', () => {
+                        if (item.playlistUrl) {
+                            window.open(item.playlistUrl, '_blank');
+                        } else if (item.modules && item.modules.length > 0) {
+                            window.open(item.modules[0], '_blank');
+                        }
+                    });
+
+                    card.innerHTML = `
+                        <div class="content-media" style="background: #eef2f3; display: flex; align-items: center; justify-content: center; height: 140px;">
+                            <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--primary);"></i>
+                            <span class="badge" style="background: var(--accent);">${clsKey.toUpperCase()}</span>
+                        </div>
+                        <div class="content-info" style="padding: 15px;">
+                            <h4 style="font-size: 1.1rem; margin-bottom: 5px; color: var(--text-heading);">${item.chapterName}</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">Click to open Playlist & Modules</p>
+                            <div class="card-btn" style="margin-top: 10px; color: var(--primary); font-weight: bold;">
+                                <i class="fas fa-play-circle"></i> Start Learning
                             </div>
-                            <div class="content-info">
-                                <h4>${item.title}</h4>
-                                <p>${item.description}</p>
-                                <div class="card-btn" style="background: ${item.color};">
-                                    <i class="${item.buttonIcon}"></i> ${item.buttonText}
-                                </div>
-                            </div>
-                        `;
-                        grid.appendChild(card);
-                        count++;
-                    }
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        }
+    });
+
+    if (count === 0) {
+        grid.innerHTML = `<p style="text-align: center; color: #64748b; padding: 40px; grid-column: 1/-1;">No resources found in this section.</p>`;
+    }
+            }
+            
+            
+                
+            
+                    
+                    
+                        
+                    
+                            
+                    
+                        
+                        
+                        
+                            
+                        
+                            
+                            
+                                
+                                
+                            
+                                
+                            
+                    
+                        
+                    
+
+            
+                    
                 });
                 if(count === 0) grid.innerHTML = '<p style="text-align:center; color:#64748b; padding:40px;">This folder is empty.</p>';
             }
