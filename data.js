@@ -1,98 +1,51 @@
-const resourceData = [
-    
-    // --- 1. LYSOSOMES QUIZ ---
-    {
-        title: "Lysosomes (లైసోజోములు)",
-        description: "Interactive Video Quiz covering suicidal bags of the cell and their functions.",
-        type: "quiz",
-        url: "lysosomes.html",       
-        folders: ["class10", "student", "videos"], 
-        classBadge: "10th Class",
-        badgeText: "Video Quiz",
-        icon: "fas fa-biohazard",
-        color: "#6366f1",            
-        bgColor: "#e0e7ff",          
-        buttonText: "Play Quiz",
-        buttonIcon: "fas fa-play-circle"
-    },
+const digitalBiologyHubData = {
+  // 8వ తరగతి బయాలజీ చాప్టర్లు
+  "class8": [
+    { chapterId: 1, chapterName: "What is Science?", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 2, chapterName: "Cell - The Basic Unit of Life", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 3, chapterName: "The World of Microorganisms Part I&II", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 4, chapterName: "Reproduction in Animals", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 5, chapterName: "The Age of Adolescence", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 6, chapterName: "Biodiversity and its Conservation", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 7, chapterName: "Different Ecosystems", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 8, chapterName: "Production of Food from Plants", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 9, chapterName: "Production of Food from Animals", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 10, chapterName: "Not for Breathing Not for Drinking", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 11, chapterName: "Why do we fall ill?", playlistUrl: "", modules: [], quizzes: [] }
+  ],
 
-    // --- 2. PHOTOSYNTHESIS QUIZ ---
-    {
-        title: "Photosynthesis Mechanism",
-        description: "Interactive Video Quiz covering light, stomata, xylem, and glucose formation.",
-        type: "quiz",
-        url: "photosynthesis.html",  
-        folders: ["class10", "student", "videos"],
-        classBadge: "10th Class",
-        badgeText: "Video Quiz",
-        icon: "fas fa-leaf",
-        color: "#059669",            
-        bgColor: "#d1fae5",
-        buttonText: "Play Quiz",
-        buttonIcon: "fas fa-play-circle"
+  // 9వ తరగతి బయాలజీ చాప్టర్లు
+  "class9": [
+    { 
+      chapterId: 1, 
+      chapterName: "Cell - Structure and Functions", 
+      playlistUrl: "", 
+      modules: ["https://view.genially.com/6aa55b8a1b44580d49b8c70d"], // ఇది మీరు ఇంతకుముందు చేసిన వృక్ష కణం లింక్
+      quizzes: [] // పాత క్విజ్ లింక్ ఇక్కడ పెట్టుకోవచ్చు
     },
+    { chapterId: 2, chapterName: "Plant Tissues", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 4, chapterName: "Transportation through Plasma Membrane", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 5, chapterName: "Diversity in Living Organisms", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 6, chapterName: "Sense Organs", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 7, chapterName: "Animal Behaviour", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 8, chapterName: "Challenges in Improving Agricultural Production", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 9, chapterName: "Adaptations in Different Ecosystems", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 10, chapterName: "Soil Pollution", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
+  ],
 
-    // --- 3. TEACHER PORTAL - TLM EXAMPLE ---
-    {
-        title: "Biology TLM Models Gallery",
-        description: "Innovative Teaching Learning Materials for effective classroom transaction.",
-        type: "tlm",
-        url: "#", 
-        folders: ["teacher", "tlm", "images"],
-        classBadge: "Teacher Portal",
-        badgeText: "TLM Ideas",
-        icon: "fas fa-tools",
-        color: "#d97706",            
-        bgColor: "#fef3c7",
-        buttonText: "View Gallery",
-        buttonIcon: "fas fa-images"
-    },
-
-    // --- 4. PDF NOTES EXAMPLE (9th Class) ---
-    {
-        title: "9th Class Cell Structure Notes",
-        description: "Complete chapter notes available for download in PDF format.",
-        type: "pdf",
-        url: "#", 
-        folders: ["class9", "student", "pdf", "notes"],
-        classBadge: "9th Class",
-        badgeText: "PDF Note",
-        icon: "fas fa-file-pdf",
-        color: "#dc2626",            
-        bgColor: "#fee2e2",
-        buttonText: "Download PDF",
-        buttonIcon: "fas fa-download"
-    },
-
-        // --- 5. PLANT CELL ANIMAL CELL QUIZ ---
-    {
-        title: "PLANT CELL ANIMAL CELL",
-        description: "Plant cells and animal cells are both eukaryotic cells, but they have several differences.",
-        type: "quiz",
-        url: "plant_animal_cell_quiz.html",
-        folders: ["class10", "youtube", "student"],
-        classBadge: "10th Class",
-        badgeText: "Video Quiz",
-        icon: "fas fa-microscope",
-        color: "#ef4444",            
-        bgColor: "#fee2e2",
-        buttonText: "Play Quiz",
-        buttonIcon: "fas fa-play"
-    },
-    
-    // --- 6. INTERACTIVE PLANT CELL MODULE ---
-    {
-        title: "Interactive Plant Cell (వృక్ష కణం)",
-        description: "Explore the internal structure and organelles of a plant cell interactively.",
-        type: "interactive",
-        url: "interactive-learning-module/plant-cell.html",
-        folders: ["class9", "student", "interactive"],
-        classBadge: "9th Class",
-        badgeText: "Interactive Module",
-        icon: "fas fa-leaf",
-        color: "#16a34a",            
-        bgColor: "#dcfce7",          
-        buttonText: "Explore Cell",
-        buttonIcon: "fas fa-hand-pointer"
-    }
-];
+  // 10వ తరగతి బయాలజీ చాప్టర్లు
+  "class10": [
+    { chapterId: 1, chapterName: "Nutrition", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 2, chapterName: "Respiration", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 3, chapterName: "Transportation", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 5, chapterName: "Coordination", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 6, chapterName: "Reproduction", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 7, chapterName: "Coordination in life processes", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 8, chapterName: "Heredity and Evolution", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 9, chapterName: "Our environment", playlistUrl: "", modules: [], quizzes: [] },
+    { chapterId: 10, chapterName: "Natural Resources", playlistUrl: "", modules: [], quizzes: [] }
+  ]
+};
