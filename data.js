@@ -1,4 +1,5 @@
-const digitalBiologyHubData = {
+const resourceData = {
+  
   "class8": [
     { chapterId: 1, chapterName: "What is Science?", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 2, chapterName: "Cell - The Basic Unit of Life", playlistUrl: "", modules: [], quizzes: [] },
