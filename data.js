@@ -78,6 +78,26 @@ const resourceData = [
         bgColor: "#fee2e2",
         buttonText: "Play Quiz",
         buttonIcon: "fas fa-play"
+    },        buttonText: "Play Quiz",
+        buttonIcon: "fas fa-play"
+    },  <--- ఇక్కడ కామా (,) తప్పనిసరిగా పెట్టాలి
+
+    // --- 6. INTERACTIVE PLANT CELL MODULE ---
+    {
+        title: "Interactive Plant Cell (వృక్ష కణం)",
+        description: "Explore the internal structure and organelles of a plant cell interactively.",
+        type: "interactive",
+        url: "interactive-learning-module/plant-cell.html",
+        folders: ["class9", "student", "interactive"],
+        classBadge: "9th Class",
+        badgeText: "Interactive Module",
+        icon: "fas fa-leaf",
+        color: "#16a34a",            
+        bgColor: "#dcfce7",          
+        buttonText: "Explore Cell",
+        buttonIcon: "fas fa-hand-pointer"
     }
+];      <--- ఇది మీరు చెప్పిన చివరి లైన్ (లైన్ నంబర్ 83)
+
 
 ];
