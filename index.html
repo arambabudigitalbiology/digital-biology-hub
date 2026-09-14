@@ -26,7 +26,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
         
-        /* Master Lock Screen */
         #site-lock-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px);
@@ -50,7 +49,6 @@
         .unlock-btn:active { transform: scale(0.98); background: var(--primary-dark); }
         .hidden-content { display: none; }
         
-        /* Navbar */
         .navbar { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
         .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .logo h1 { font-size: 1.2rem; color: var(--text-heading); font-weight: 800; line-height: 1.2; }
@@ -61,12 +59,19 @@
         .nav-links li a:hover, .nav-links li a.active { color: var(--primary); background: var(--primary-light); }
         .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
         
-        /* Main Layout */
         .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
         .section-header { text-align: center; margin-bottom: 3rem; margin-top: 2rem; }
         .section-header h2 { font-size: 2.2rem; color: var(--text-heading); font-weight: 800; }
         
-        /* Folders & Grid */
+        /* Profile Section Styles */
+        .profile-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; align-items: center; background: white; padding: 40px; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-bottom: 40px; }
+        .profile-photo { width: 100%; max-width: 300px; border-radius: 15px; border: 5px solid var(--primary-light); margin: 0 auto; display: block; }
+        .profile-details h3 { font-size: 2.2rem; color: var(--text-heading); margin-bottom: 15px; font-weight: 700; }
+        .profile-details p { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-main); font-weight: 500; }
+        .achievements-box { background: var(--bg-body); padding: 15px; border-radius: 10px; border-left: 4px solid var(--primary); margin-top: 20px; }
+        .achievements-box ul { list-style: none; padding-left: 5px; }
+        .achievements-box ul li { margin-bottom: 5px; font-weight: 600; color: var(--primary-dark); font-size: 0.95rem; }
+
         .folders-scroll { width: 100%; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; }
         .folders-bar { display: flex; gap: 10px; width: max-content; padding: 5px; }
         .folder-tab { background: white; border: 2px solid var(--border); border-radius: 30px; padding: 8px 20px; font-size: 0.95rem; font-weight: 600; color: var(--text-main); cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
@@ -75,17 +80,12 @@
         .grid { display: grid; gap: 25px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         .content-card { background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); cursor: pointer; display: flex; flex-direction: column; }
         .content-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
-        .content-media { height: 160px; display: flex; align-items: center; justify-content: center; position: relative; }
-        .badge { position: absolute; top: 10px; right: 10px; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-        .content-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .content-info h4 { font-size: 1.1rem; color: var(--text-heading); margin-bottom: 8px; }
-        .content-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; }
-        .card-btn { width: 100%; padding: 10px; border: none; border-radius: 6px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
         
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-links { display: none; position: absolute; top: 70px; left: 0; width: 100%; background: white; flex-direction: column; padding: 20px; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-md); }
             .nav-links.active { display: flex; }
+            .profile-container { grid-template-columns: 1fr; text-align: center; }
         }
     </style>
 </head>
@@ -109,23 +109,47 @@
                 </div>
                 <div class="menu-toggle" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#" class="nav-link active" data-target="library">Resource Library</a></li>
+                    <li><a href="#" class="nav-link active" data-target="home">Teacher Profile</a></li>
+                    <li><a href="#" class="nav-link" data-target="library">Resource Library</a></li>
                 </ul>
             </div>
         </nav>
 
-        <section id="library" class="page-section">
+        <!-- Teacher Profile Section -->
+        <section id="home" class="page-section" style="display: block;">
+            <div class="container">
+                <div class="profile-container">
+                    <img src="profile.png" alt="A. Rambabu" class="profile-photo" onerror="this.src='https://placeholder.com/300'">
+                    <div class="profile-details">
+                        <h3>A. RAMBABU</h3>
+                        <p><i class="fas fa-graduation-cap" style="color: var(--primary);"></i> M.Sc. ZOOLOGY, B.Ed.</p>
+                        <p><i class="fas fa-award" style="color: var(--primary);"></i> <strong>DSC Rank:</strong> 4th Ranker</p>
+                        <p><i class="fas fa-chalkboard-teacher" style="color: var(--primary);"></i> <strong>Working At:</strong> ZPHS Vemsoor</p>
+                        <div class="achievements-box">
+                            <h4 style="margin-bottom: 10px; color: var(--accent);"><i class="fas fa-trophy"></i> Key Highlights</h4>
+                            <ul>
+                                <li><i class="fas fa-fa-star" style="color: #eab308;"></i> STATE GREEN CHAMPION AWARDEE</li>
+                                <li><i class="fas fa-fa-star" style="color: #eab308;"></i> MANDAL LEVEL BEST TEACHER AWARDEE</li>
+                                <li><i class="fas fa-fa-star" style="color: #eab308;"></i> SUCCESS JOURNEY TV CREATOR</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resource Library Section -->
+        <section id="library" class="page-section" style="display: none;">
             <div class="container">
                 <div class="section-header">
                     <h2>Digital Resource Library</h2>
                 </div>
                 <div class="folders-scroll">
                     <div class="folders-bar">
-                        <button class="folder-tab active" data-filter="all"><i class="fas fa-globe"></i> All</button>
-                        <button class="folder-tab" data-filter="pdf"><i class="fas fa-file-pdf"></i> PDFs</button>
-                        <button class="folder-tab" data-filter="notes"><i class="fas fa-book-open"></i> Important Notes</button>
-                        <button class="folder-tab" data-filter="tlm"><i class="fas fa-tools"></i> TLM</button>
-                        <button class="folder-tab" data-filter="images"><i class="fas fa-images"></i> Images</button>
+                        <button class="folder-tab active" data-filter="all"><i class="fas fa-globe"></i> All Classes</button>
+                        <button class="folder-tab" data-filter="class10"><i class="fas fa-award"></i> 10th Class</button>
+                        <button class="folder-tab" data-filter="class9"><i class="fas fa-book"></i> 9th Class</button>
+                        <button class="folder-tab" data-filter="class8"><i class="fas fa-graduation-cap"></i> 8th Class</button>
                     </div>
                 </div>
                 <div class="grid" id="dynamic-grid">
@@ -169,6 +193,23 @@
                 document.getElementById('navLinks').classList.toggle('active');
             });
 
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = {
+                home: document.getElementById('home'),
+                library: document.getElementById('library')
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const target = link.getAttribute('data-target');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    sections.home.style.display = (target === 'home') ? 'block' : 'none';
+                    sections.library.style.display = (target === 'library') ? 'block' : 'none';
+                    document.getElementById('navLinks').classList.remove('active');
+                });
+            });
+
             const grid = document.getElementById('dynamic-grid');
             if(typeof resourceData !== 'undefined') {
                 renderCards('all');
@@ -187,34 +228,51 @@
         }
 
         function renderCards(filter) {
+            const grid = document.getElementById('dynamic-grid');
             grid.innerHTML = '';
             let count = 0;
-            resourceData.forEach(item => {
-                if(filter === 'all' || item.folders.includes(filter)) {
-                    const card = document.createElement('div');
-                    card.className = 'content-card';
-                    card.addEventListener('click', () => {
-                        if(item.type === 'youtube_link') window.open(item.url, '_blank');
-                        else window.location.href = item.url;
+
+            const classes = ['class8', 'class9', 'class10'];
+            
+            classes.forEach(clsKey => {
+                const classData = resourceData[clsKey];
+                if (classData) {
+                    classData.forEach(item => {
+                        if (filter === 'all' || clsKey === filter) {
+                            count++;
+                            const card = document.createElement('div');
+                            card.className = 'content-card';
+                            
+                            card.addEventListener('click', () => {
+                                if (item.playlistUrl) {
+                                    window.open(item.playlistUrl, '_blank');
+                                } else if (item.modules && item.modules.length > 0) {
+                                    window.open(item.modules[0], '_blank');
+                                }
+                            });
+
+                            card.innerHTML = `
+                                <div class="content-media" style="background: #eef2f3; display: flex; align-items: center; justify-content: center; height: 140px; position: relative;">
+                                    <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--primary);"></i>
+                                    <span class="badge" style="background: var(--accent); position: absolute; top: 10px; right: 10px; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">${clsKey.toUpperCase()}</span>
+                                </div>
+                                <div class="content-info" style="padding: 20px;">
+                                    <h4 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--text-heading);">${item.chapterName}</h4>
+                                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Click to open Playlist & Modules</p>
+                                    <div class="card-btn" style="background: var(--primary); color: white; width: 100%; padding: 10px; border: none; border-radius: 6px; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                        <i class="fas fa-play-circle"></i> Start Learning
+                                    </div>
+                                </div>
+                            `;
+                            grid.appendChild(card);
+                        }
                     });
-                    card.innerHTML = `
-                        <div class="content-media" style="background: ${item.bgColor}">
-                            <i class="${item.icon}" style="color: ${item.color}; font-size: 2.5rem;"></i>
-                            <span class="badge" style="background: ${item.color};">${item.badgeText}</span>
-                        </div>
-                        <div class="content-info">
-                            <h4>${item.title}</h4>
-                            <p>${item.description}</p>
-                            <div class="card-btn" style="background: ${item.color}; color: white;">
-                                <i class="${item.buttonIcon}"></i> ${item.buttonText}
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                    count++;
                 }
             });
-            if(count === 0) grid.innerHTML = `<p style="text-align: center; color: #64748b; padding: 40px; grid-column: 1/-1;">This Folder is Empty</p>`;
+
+            if (count === 0) {
+                grid.innerHTML = `<p style="text-align: center; color: #64748b; padding: 40px; grid-column: 1/-1;">No resources found in this section.</p>`;
+            }
         }
     </script>
 </body>
