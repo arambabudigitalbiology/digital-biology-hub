@@ -20,8 +20,8 @@ const digitalBiologyHubData = {
       chapterId: 1, 
       chapterName: "Cell - Structure and Functions", 
       playlistUrl: "", 
-      modules: ["https://view.genially.com/6aa55b8a1b44580d49b8c70d"], // ఇది మీరు ఇంతకుముందు చేసిన వృక్ష కణం లింక్
-      quizzes: [] // పాత క్విజ్ లింక్ ఇక్కడ పెట్టుకోవచ్చు
+      modules: ["https://view.genially.com/6aa55b8a1b44580d49b8c70d"], // వృక్ష కణం మాడ్యూల్ లింక్
+      quizzes: [] 
     },
     { chapterId: 2, chapterName: "Plant Tissues", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] },
@@ -37,7 +37,13 @@ const digitalBiologyHubData = {
 
   // 10వ తరగతి బయాలజీ చాప్టర్లు
   "class10": [
-    { chapterId: 1, chapterName: "Nutrition", playlistUrl: "", modules: [], quizzes: [] },
+    { 
+      chapterId: 1, 
+      chapterName: "Nutrition", 
+      playlistUrl: "https://www.youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h", // మీ 10వ తరగతి న్యూట్రిషన్ ప్లేలిస్ట్
+      modules: [], 
+      quizzes: [] 
+    },
     { chapterId: 2, chapterName: "Respiration", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 3, chapterName: "Transportation", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] },
@@ -49,3 +55,4 @@ const digitalBiologyHubData = {
     { chapterId: 10, chapterName: "Natural Resources", playlistUrl: "", modules: [], quizzes: [] }
   ]
 };
+
