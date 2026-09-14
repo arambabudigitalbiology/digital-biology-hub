@@ -64,7 +64,7 @@ const resourceData = [
         buttonIcon: "fas fa-download"
     },
 
-    // --- 5. PLANT CELL ANIMAL CELL QUIZ ---
+        // --- 5. PLANT CELL ANIMAL CELL QUIZ ---
     {
         title: "PLANT CELL ANIMAL CELL",
         description: "Plant cells and animal cells are both eukaryotic cells, but they have several differences.",
@@ -78,10 +78,8 @@ const resourceData = [
         bgColor: "#fee2e2",
         buttonText: "Play Quiz",
         buttonIcon: "fas fa-play"
-    },        buttonText: "Play Quiz",
-        buttonIcon: "fas fa-play"
-    },  <--- ఇక్కడ కామా (,) తప్పనిసరిగా పెట్టాలి
-
+    },
+    
     // --- 6. INTERACTIVE PLANT CELL MODULE ---
     {
         title: "Interactive Plant Cell (వృక్ష కణం)",
@@ -97,7 +95,4 @@ const resourceData = [
         buttonText: "Explore Cell",
         buttonIcon: "fas fa-hand-pointer"
     }
-];      <--- ఇది మీరు చెప్పిన చివరి లైన్ (లైన్ నంబర్ 83)
-
-
 ];
