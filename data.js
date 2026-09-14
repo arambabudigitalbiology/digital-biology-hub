@@ -1,5 +1,4 @@
 const digitalBiologyHubData = {
-  // 8వ తరగతి బయాలజీ చాప్టర్లు
   "class8": [
     { chapterId: 1, chapterName: "What is Science?", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 2, chapterName: "Cell - The Basic Unit of Life", playlistUrl: "", modules: [], quizzes: [] },
@@ -13,14 +12,12 @@ const digitalBiologyHubData = {
     { chapterId: 10, chapterName: "Not for Breathing Not for Drinking", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 11, chapterName: "Why do we fall ill?", playlistUrl: "", modules: [], quizzes: [] }
   ],
-
-  // 9వ తరగతి బయాలజీ చాప్టర్లు
   "class9": [
     { 
       chapterId: 1, 
       chapterName: "Cell - Structure and Functions", 
       playlistUrl: "", 
-      modules: ["https://view.genially.com/6aa55b8a1b44580d49b8c70d"], // వృక్ష కణం మాడ్యూల్ లింక్
+      modules: ["https://view.genially.com/6aa55b8a1b44580d49b8c70d"], 
       quizzes: [] 
     },
     { chapterId: 2, chapterName: "Plant Tissues", playlistUrl: "", modules: [], quizzes: [] },
@@ -34,13 +31,11 @@ const digitalBiologyHubData = {
     { chapterId: 10, chapterName: "Soil Pollution", playlistUrl: "", modules: [], quizzes: [] },
     { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
   ],
-
-  // 10వ తరగతి బయాలజీ చాప్టర్లు
   "class10": [
     { 
       chapterId: 1, 
       chapterName: "Nutrition", 
-      playlistUrl: "https://www.youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h", // మీ 10వ తరగతి న్యూట్రిషన్ ప్లేలిస్ట్
+      playlistUrl: "https://www.youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h", 
       modules: [], 
       quizzes: [] 
     },
@@ -55,4 +50,3 @@ const digitalBiologyHubData = {
     { chapterId: 10, chapterName: "Natural Resources", playlistUrl: "", modules: [], quizzes: [] }
   ]
 };
-
