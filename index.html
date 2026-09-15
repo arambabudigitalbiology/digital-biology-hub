@@ -318,7 +318,7 @@
             if (currentQuestion >= nutritionQuizData.length) {
                 document.getElementById('quizContent').innerHTML = `
                     <div style="text-align: center; padding: 30px;">
-                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;">}</i>
+                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;"></i>
                         <h3>Quiz Completed!</h3>
                         <p style="font-size: 1.2rem; margin: 15px 0;">Your Score: <strong>${score} / ${nutritionQuizData.length}</strong></p>
                         <button class="quiz-nav-btn" onclick="openQuizModal()">Restart Quiz</button>
@@ -337,4 +337,4 @@
                 <div id="optionsContainer">
             `;
 
-            for (let key in q.options
+            for (let key in q.options)
