@@ -466,7 +466,7 @@ const nutritionQuizData = [
             C: "Fats into fatty acids / కొవ్వులను ఫ్యాటీ ఆమ్లాలుగా",
             D: "Vitamins / విటమిన్స్
         },
-      answer: "a"
+      answer: "A"
     },
       {
         id: 37,
@@ -635,5 +635,6 @@ const nutritionQuizData = [
             D: "Vitamin B12 / విటమిన్ బి12"
         },
         answer: "C"
+        ]:
     }
 ];
