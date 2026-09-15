@@ -2,15 +2,7 @@ const resourceData = {
     "class8": [
         { chapterId: 1, chapterName: "Crop Production", playlistUrl: "", modules: [], quizzes: [] },
         { chapterId: 2, chapterName: "Microorganisms", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 4, chapterName: "Transportation through Plasma", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 5, chapterName: "Diversity in Living Organisms", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 6, chapterName: "Sense Organs", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 7, chapterName: "Animal Behaviour", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 8, chapterName: "Challenges in Improving Agriculture", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 9, chapterName: "Adaptations in Different Ecosystems", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 10, chapterName: "Soil Pollution", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
+        { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] }
     ],
     "class9": [
         { chapterId: 1, chapterName: "Cell Structure", playlistUrl: "", modules: [], quizzes: [] }
@@ -21,17 +13,11 @@ const resourceData = {
             chapterName: "Nutrition",
             playlistUrl: "https://www.youtube.com/playlist?list=PL3K...",
             modules: [],
-            quizzes: []
+            quizzes: [ { quizId: 1, title: "Bilingual Quiz (30 Q)" } ]
         },
         { chapterId: 2, chapterName: "Respiration", playlistUrl: "", modules: [], quizzes: [] },
         { chapterId: 3, chapterName: "Transportation", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 5, chapterName: "Coordination", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 6, chapterName: "Reproduction", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 7, chapterName: "Coordination in life processes", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 8, chapterName: "Heredity and Evolution", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 9, chapterName: "Our environment", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 10, chapterName: "Natural Resources", playlistUrl: "", modules: [], quizzes: [] }
+        { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] }
     ]
 };
 
@@ -397,4 +383,4 @@ const nutritionQuizData = [
         answer: "D"
     }
 ];
-            
+    
