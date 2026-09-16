@@ -25,7 +25,7 @@ const resourceData = {
         { chapterId: 10, chapterName: "Soil Pollution", playlistUrl: "", modules: [], quizzes: [] },
         { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
     ],
-    "    "class10": [
+            "class10": [
         {
             chapterId: 1,
             chapterName: "Nutrition",
@@ -107,41 +107,3 @@ const resourceData = {
         }
     ]
                 
-       
-        
-        
-            
-
-        
-            
-                    
-                    
-        
-        
-           
-        
-        
-
-        
-        
-            
-            
-            
-            
-            quizzes: [
-                { quizId: 1, title: "Quiz Part-1" },
-                { quizId: 2, title: "Quiz Part-2" }
-            ]
-        },
-        { chapterId: 2, chapterName: "Respiration", playlistUrl: "https://www.youtube.com/playlist?list=PL3K...", modules: [], quizzes: [] },
-        { chapterId: 3, chapterName: "Transportation", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 5, chapterName: "Coordination", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 6, chapterName: "Reproduction", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 7, chapterName: "Coordination in life processes", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 8, chapterName: "Heredity and Evolution", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 9, chapterName: "Our environment", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 10, chapterName: "Natural Resources", playlistUrl: "", modules: [], quizzes: [] }
-    ]
-};
-
