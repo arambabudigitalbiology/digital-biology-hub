@@ -26,17 +26,29 @@ const resourceData = {
         { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
     ],
     "class10": [
+       "class10": [
         {
-           {
-        chapterId: 1,
-        chapterName: "Nutrition",
-        playlistUrl: "https://youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h&si=VEhO8ixFhleg2-4U",
-        modules: [ { moduleId: 1, title: "Interactive Digestive System", url: "https://view.genially.com/6aaa30d1f914833e7541d6d2" } ],
-        quizzes: [
-            { quizId: 1, title: "Quiz Part-1" },
-            { quizId: 2, title: "Quiz Part-2" }
-        ]
-    },
+            chapterId: 1,
+            chapterName: "Nutrition",
+            playlistUrl: "https://youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h&si=VEhO8ixFhleg2-4U",
+            modules: [
+                { 
+                    moduleId: 1, 
+                    title: "Interactive Digestive System", 
+                    url: "https://view.genially.com/6aaa30d1f914833e7541d6d2" 
+                }
+            ],
+            quizzes: [
+                { quizId: 1, title: "Quiz Part-1" },
+                { quizId: 2, title: "Quiz Part-2" }
+            ]
+        },
+        
+           
+        
+        
+
+        
         
             
             
