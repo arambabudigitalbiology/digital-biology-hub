@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10biology-nutrition-quiz | Digital Biology Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #ccfbf1;
+            --accent: #d97706;
+            --bg-body: #f8fafc;
+            --border: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-muted: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-heading); padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .quiz-card { background: white; max-width: 700px; width: 100%; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(15, 118, 110, 0.1); border: 2px solid var(--primary); }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        .quiz-header h2 { color: var(--primary); font-size: 1.4rem; }
+        .home-link { text-decoration: none; background: var(--primary-light); color: var(--primary); padding: 8px 15px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .home-link:hover { background: var(--primary); color: white; }
+        .quiz-option { background: var(--bg-body); border: 2px solid var(--border); padding: 14px 18px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; font-weight: 500; transition: 0.2s; font-size: 1rem; }
+        .quiz-option:hover { background: var(--primary-light); border-color: var(--primary); }
+        .quiz-option.correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; font-weight: bold; }
+        .quiz-option.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+        .quiz-nav-btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px; font-size: 1rem; width: 100%; transition: 0.2s; }
+        .quiz-nav-btn:hover { background: var(--primary-dark); }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card">
+        <div class="quiz-header">
+            <h2><i class="fas fa-question-circle"></i> Nutrition - Bilingual Quiz</h2>
+            <a href="index.html" class="home-link"><i class="fas fa-home"></i> Home</a>
+        </div>
+        <div id="quizContent"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                questionEn: "What is the primary reason why living organisms need food?",
+                questionTe: "జీవులకు ఆహారం ప్రధానంగా ఏ కొరకు అవసరం?",
+                options: { A: "Only for sleeping / నిద్రపోవడానికి మాత్రమే", B: "For growth and repair / పెరుగుదల మరియు మరమ్మత్తు కొరకు", C: "Only for respiration / శ్వాసక్రియ కొరకు మాత్రమే", D: "For excretion / విసర్జన కొరకు" },
+                answer: "B"
+            },
+            {
+                id: 2,
+                questionEn: "Which process makes plants 'The universal food providers' for all living organisms?",
+                questionTe: "మొకలను అన్ని జీవులకు 'విశ్వ ఆహార ప్రదాతలు'గా మార్చే ప్రక్రియ ఏది?",
+                options: { A: "Transpiration / భాష్పోత్సేకం", B: "Respiration / శ్వాసక్రియ", C: "Digestion / జీర్ణక్రియ", D: "Photosynthesis / కిరణజన్య సంయోగక్రియ" },
+                answer: "D"
+            },
+            {
+                id: 3,
+                questionEn: "Which scientist established the role of water in plant growth through a 5-year experiment?",
+                questionTe: "5 సంవత్సరాల ప్రయోగం ద్వారా మొక్కల పెరుగుదలలో నీటి పాత్రను నిరూపించిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Van Helmont / వాన్ హెల్మాంట్", B: "Joseph Priestley / జోసెఫ్ ప్రిస్ట్లీ", C: "Jan Ingenhousz / జాన్ ఇంజెన్‌హౌజ్", D: "C.B. Van Niel / సి.బి. వాన్ నీల్" },
+                answer: "A"
+            },
+            {
+                id: 4,
+                questionEn: "C.B. Van Niel worked on which organisms to understand photosynthesis?",
+                questionTe: "కిరణజన్య సంయోగక్రియను అర్థం చేసుకోవడానికి సి.బి. వాన్ నీల్ ఏ జీవులపై ప్రయోగాలు చేశారు?",
+                options: { A: "Green algae / ఆకుపచ్చ శైవలములు", B: "Amoeba / అమీబా", C: "Purple sulphur bacteria / గులాబీ రంగు సల్ఫర్ బ్యాక్టీరియా", D: "Fungi / శిలీంధ్రాలు" },
+                answer: "C"
+            },
+            {
+                id: 5,
+                questionEn: "In Van Niel's experiment with purple sulphur bacteria, what was used instead of H2O?",
+                questionTe: "వాన్ నీల్ ప్రయోగంలో గులాబీ సల్ఫర్ బ్యాక్టీరియాతో H2O స్థానంలో దేనిని ఉపయోగించారు?",
+                options: { A: "HCl", B: "NH3", C: "CO2", D: "H2S (Hydrogen sulphide) / హైడ్రోజన్ సల్ఫైడ్" },
+                answer: "D"
+            },
+            {
+                id: 6,
+                questionEn: "What is liberated instead of oxygen when bacteria are used in Van Niel's alternate equation?",
+                questionTe: "వాన్ నీల్ ప్రత్యామ్నాయ సమీకరణంలో ఆక్సిజన్‌కు బదులుగా వెలువడే పదార్థం ఏది?",
+                options: { A: "Sulphur / సల్ఫర్", B: "Nitrogen / నైట్రోజన్", C: "Carbon dioxide / కార్బన్‌డైఆక్సైడ్", D: "Hydrogen / హైడ్రోజన్" },
+                answer: "A"
+            },
+            {
+                id: 7,
+                questionEn: "Who discovered Oxygen gas in the year 1774?",
+                questionTe: "1774 సంవత్సరంలో ఆక్సిజన్ వాయువును కనుగొన్న శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Robert Hill / రాబర్ట్ హిల్", B: "Joseph Priestley / జోసెఫ్ ప్రిస్ట్లీ", C: "Lavoisier / లవ్‌సాయర్", D: "Engelman / ఎంగెల్‌మన్" },
+                answer: "B"
+            },
+            {
+                id: 8,
+                questionEn: "Who coined the name 'Oxygen' in the year 1775?",
+                questionTe: "1775 సంవత్సరంలో 'ఆక్సిజన్' అనే పేరును ఖరారు చేసిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Julius Von Sachs / జూలియస్ వాన్ సాక్స్", B: "Joseph Priestley / జోసెఫ్ ప్రిస్ట్లీ", C: "C.B. Van Niel / సి.బి. వాన్ నీల్", D: "Lavoisier / లవ్‌సాయర్" },
+                answer: "D"
+            },
+            {
+                id: 9,
+                questionEn: "In Priestley's experiment, what was the role of the mint plant in the bell jar?",
+                questionTe: "ప్రిస్ట్లీ ప్రయోగంలో బెల్ జార్‌లో ఉంచిన పుదీనా మొక్క పాత్ర ఏమిటి?",
+                options: { A: "It restores the air that breathing animals and burning candles remove / జంతువులు మరియు మంటలు పాడుచేసిన గాలిని పునరుద్ధరిస్తుంది", B: "It consumes oxygen / ఇది ఆక్సిజన్‌ను పీల్చుకుంటుంది", C: "It produces carbon dioxide only / ఇది కార్బన్‌డైఆక్సైడ్‌ను మాత్రమే ఇస్తుంది", D: "It absorbs water / ఇది నీటిని పీల్చుకుంటుంది" },
+                answer: "A"
+            },
+            {
+                id: 10,
+                questionEn: "Massive amounts of gaseous exchange in plants occur through:",
+                questionTe: "మొక్కలలో భారీ మొత్తంలో వాయు మార్పిడి జరిగే భాగాలు:",
+                options: { A: "Roots / వేర్లు", B: "Stem bark / కాండపు బెరడు", C: "Stomata / పత్రరంధ్రాలు (స్టొమాట)", D: "Fruits / పండ్లు" },
+                answer: "C"
+            },
+            {
+                id: 11,
+                questionEn: "What is the indicator used in Activity-1 to test the presence of starch in leaves?",
+                questionTe: "యాక్టివిటీ-1 లో ఆకులలో స్టార్చ్ ఉనికిని పరీక్షించడానికి ఉపయోగించే సూచిక ఏది?",
+                options: { A: "Iodine / Betadine solution / అయోడిన్ / బెటాడిన్ ద్రావణం", B: "Phenolphthalein / ఫినాల్ఫ్తాలిన్", C: "Methyl orange / మెథిల్ ఆరెంజ్", D: "Litmus paper / లిట్మస్ పేపర్" },
+                answer: "A"
+            },
+            {
+                id: 12,
+                questionEn: "The presence of starch in a leaf is indicated by which colour change with iodine?",
+                questionTe: "ఆకులో స్టార్చ్ ఉన్నప్పుడు అయోడిన్ పరీక్షలో ఏ రంగు ఏర్పడుతుంది?",
+                options: { A: "Bright red / ముదురు ఎరుపు", B: "Milky white / పాల లాంటి తెలుపు", C: "Yellow / పసుపు", D: "Bluish black / నీలం-నలుపు రంగు (బ్లూయిష్ బ్లాక్)" },
+                answer: "D"
+            },
+            {
+                id: 13,
+                questionEn: "What is the purpose of boiling the leaf in methylated spirit during the starch test?",
+                questionTe: "స్టార్చ్ పరీక్ష సమయంలో ఆకును మెథిలేటెడ్ స్పిరిట్‌లో మరగబెట్టడం వెనుక ఉద్దేశ్యం ఏమిటి?",
+                options: { A: "To add starch / స్టార్చ్ కలపడానికి", B: "To dissolve chlorophyll and make the leaf pale / క్లోరోఫిల్‌ను కరిగించి ఆకును పాలిపోయినట్లు చేయడానికి", C: "To make the leaf hard / ఆకును గట్టిగా చేయడానికి", D: "To add oxygen / ఆక్సిజన్ చేర్చడానికి" },
+                answer: "B"
+            },
+            {
+                id: 14,
+                questionEn: "In Mohl’s half-leaf experiment (Activity-2), what substance is placed in the bottle to absorb carbon dioxide?",
+                questionTe: "మోహల్ హాఫ్-లీఫ్ ప్రయోగంలో కార్బన్‌డైఆక్సైడ్‌ను పీల్చుకోవడానికి బాటిల్‌లో ఉంచే పదార్థం ఏది?",
+                options: { A: "Potassium hydroxide (KOH) / పొటాషియం హైడ్రాక్సైడ్ (KOH)", B: "Sodium chloride / సోడియం క్లోరైడ్", C: "Copper sulphate / కాపర్ సల్ఫేట్", D: "Calcium carbonate / కాల్షియం కార్బోనేట్" },
+                answer: "A"
+            },
+            {
+                id: 15,
+                questionEn: "Which scientist observed that oxygen bubbles are formed around green parts of aquatic plants only in sunlight?",
+                questionTe: "నీటి మొక్కల ఆకుపచ్చ భాగాల చుట్టూ సూర్యరశ్మిలో మాత్రమే ఆక్సిజన్ బుడగలు ఏర్పడతాయని గమనించిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Robert Hill / రాబర్ట్ హిల్", B: "Jan Ingenhousz / జాన్ ఇంజెన్‌హౌజ్", C: "Julius Von Sachs / జూలియస్ వాన్ సాక్స్", D: "Engelman / ఎంగెల్‌మన్" },
+                answer: "B"
+            },
+            {
+                id: 16,
+                questionEn: "Who used oxygen-sensitive bacteria and a strand of algae to detect the maximum rate of photosynthesis under different colours of light?",
+                questionTe: "వివిధ రంగుల కాంతిలో కిరణజన్య సంయోగక్రియ రేటును కనుగొనడానికి ఆక్సిజన్-సెన్సిటివ్ బ్యాక్టీరియాను ఉపయోగించిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Van Helmont / వాన్ హెల్మాంట్", B: "Joseph Priestley / జోసెఫ్ ప్రిస్ట్లీ", C: "C.B. Van Niel / సి.బి. వాన్ నీల్", D: "Engelman / ఎంగెల్‌మన్" },
+                answer: "D"
+            },
+            {
+                id: 17,
+                questionEn: "In the Hydrilla lab activity, how is the evolved gas tested?",
+                questionTe: "హైడ్రిల్లా ప్రయోగంలో వెలువడిన వాయువును ఏ విధంగా పరీక్షించవచ్చు?",
+                options: { A: "Using lime water / సున్నపు నీటిని ఉపయోగించి", B: "By smelling it / వాసన చూసి", C: "By inserting a glowing incense stick or match stick / మండుతున్న అగర్బత్తి లేదా అగ్గిపుల్లని ఉంచి", D: "Using litmus paper / లిట్మస్ పేపర్ ద్వారా" },
+                answer: "C"
+            },
+            {
+                id: 18,
+                questionEn: "Why is a plant kept in a dark room for 3 days before conducting photosynthesis experiments?",
+                questionTe: "కిరణజన్య సంయోగక్రియ ప్రయోగాలు చేయడానికి ముందు మొక్కను 3 రోజులు చీకటిలో ఉంచడానికి కారణం ఏమిటి?",
+                options: { A: "To increase chlorophyll / క్లోరోఫిల్‌ను పెంచడానికి", B: "To destarch the leaves / ఆకులలోని స్టార్చ్‌ను తొలగించడానికి (డీస్టార్చ్ చేయడానికి)", C: "To kill the plant / మొక్కను చంపడానికి", D: "To remove water / నీటిని తొలగించడానికి" },
+                answer: "B"
+            },
+            {
+                id: 19,
+                questionEn: "Who obtained an extract of the green coloured substance and named it 'chlorophyll' in 1817?",
+                questionTe: "1817లో ఆకుపచ్చ పదార్థం యొక్క సారాన్ని వెలికితీసి దానికి 'క్లోరోఫిల్' అని పేరు పెట్టిన శాస్త్రవేత్తలు ఎవరు?",
+                options: { A: "Watson and Crick / వాట్సన్ మరియు క్రిక్", B: "Banting and Best / బాంటింగ్ మరియు బెస్ట్", C: "Pelletier and Caventou / పెల్లెటియర్ మరియు కేవెంబో", D: "Schleiden and Schwann / శ్లీడన్ మరియు శ్వాన్" },
+                answer: "C"
+            },
+            {
+                id: 20,
+                questionEn: "Who observed in 1883 that chlorophyll is found in cell organelles called 'chloroplasts'?",
+                questionTe: "1883లో క్లోరోఫిల్ అనేది 'హరితరేణువులు' అనే కణాంగాలలో ఉంటుందని గుర్తించిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Daniel I. Arnon / డేనియల్ ఐ. ఆర్నాన్", B: "Robert Hill / రాబర్ట్ హిల్", C: "Jan Ingenhousz / జాన్ ఇంజెన్‌హౌజ్", D: "Julius Von Sachs / జూలియస్ వాన్ సాక్స్" },
+                answer: "D"
+            },
+            {
+                id: 21,
+                questionEn: "Who successfully isolated whole chloroplasts for study in the lab in 1954?",
+                questionTe: "1954లో సంపూర్ణ హరితరేణువులను వేరుచేసి ప్రయోగశాలలో అధ్యయనం చేసిన శాస్త్రవేత్త ఎవరు?",
+                options: { A: "Robert Hooke / రాబర్ట్ హుక్", B: "Daniel I. Arnon / డేనియల్ ఐ. ఆర్నాన్", C: "C.B. Van Niel / సి.బి. వాన్ నీల్", D: "Paul Langerhans / పౌల్ లాంగర్‌హాన్స్" },
+                answer: "B"
+            },
+            {
+                id: 22,
+                questionEn: "The stacked sac-like inner membrane structures inside a chloroplast are called:",
+                questionTe: "హరితరేణువులో గొలుసుకట్టుగా లేదా పేర్చబడిన సంచుల వలె ఉండే అంతర్గత నిర్మాణాలను ఏమంటారు?",
+                options: { A: "Grana / గ్రానా", B: "Stroma / స్ట్రోమా", C: "Ribosomes / రైబోసోములు", D: "Cristae / క్రిస్టె" },
+                answer: "A"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion === quizData.length) {
+                document.getElementById('quizContent').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--text-heading); margin-bottom: 10px;">Quiz Completed Successfully!</h3>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">Your Score: <strong>${score}</strong> / ${quizData.length}</p>
+                        <button class="quiz-nav-btn" onclick="loadQuiz()">Restart Quiz</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = quizData[currentQuestion];
+            let html = `
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Question ${currentQuestion + 1} of ${quizData.length}</p>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 10px;">${q.questionEn}</div>
+                <div style="color: var(--primary); font-weight: 600; margin-bottom: 20px;">${q.questionTe}</div>
+                <div id="optionsContainer"></div>
+            `;
+
+            document.getElementById('quizContent').innerHTML = html;
+            const optContainer = document.getElementById('optionsContainer');
+
+            for (let key in q.options) {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerHTML = `<strong>${key}:</strong> ${q.options[key]}`;
+                div.addEventListener('click', () => checkAnswer(key, q.answer, div));
+                optContainer.appendChild(div);
+            }
+        }
+
+        function checkAnswer(selected, correct, element) {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (selected === correct) {
+                element.classList.add('correct');
+                score++;
+            } else {
+                element.classList.add('wrong');
+                options.forEach(opt => {
+                    if (opt.innerHTML.startsWith(`<strong>${correct}:</strong>`)) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1300);
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
