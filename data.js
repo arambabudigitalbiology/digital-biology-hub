@@ -29,7 +29,7 @@ const resourceData = {
         {
             chapterId: 1,
             chapterName: "Nutrition",
-            playlistUrl: "https://www.youtube.com/playlist?list=PL3K...",
+            playlistUrl: "https://youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h&si=VEhO8ixFhleg2-4U",
             modules: [],
             quizzes: [
                 { quizId: 1, title: "Quiz Part-1" },
