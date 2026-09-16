@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition - Bilingual Quiz Part 2 | Digital Biology Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --primary-light: #ccfbf1;
+            --accent: #d97706;
+            --bg-body: #f8fafc;
+            --border: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-muted: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-heading); padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .quiz-card { background: white; max-width: 700px; width: 100%; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(15, 118, 110, 0.1); border: 2px solid var(--primary); }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        .quiz-header h2 { color: var(--primary); font-size: 1.3rem; }
+        .home-link { text-decoration: none; background: var(--primary-light); color: var(--primary); padding: 8px 15px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .home-link:hover { background: var(--primary); color: white; }
+        .quiz-option { background: var(--bg-body); border: 2px solid var(--border); padding: 14px 18px; border-radius: 10px; margin-bottom: 12px; cursor: pointer; font-weight: 500; transition: 0.2s; font-size: 1rem; }
+        .quiz-option:hover { background: var(--primary-light); border-color: var(--primary); }
+        .quiz-option.correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #15803d !important; font-weight: bold; }
+        .quiz-option.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #b91c1c !important; }
+        .quiz-nav-btn { background: var(--primary); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 20px; font-size: 1rem; width: 100%; transition: 0.2s; }
+        .quiz-nav-btn:hover { background: var(--primary-dark); }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card">
+        <div class="quiz-header">
+            <h2><i class="fas fa-question-circle"></i> Nutrition Quiz - Part 2</h2>
+            <a href="index.html" class="home-link"><i class="fas fa-home"></i> Home</a>
+        </div>
+        <div id="quizContent"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                questionEn: "The fluid-filled intermediary portion of the chloroplast where dark reactions occur is called:",
+                questionTe: "హరితరేణువులో చీకటి చర్యలు జరిగే ద్రవంతో నిండిన భాగాన్ని ఏమంటారు?",
+                options: { A: "Grana / గ్రానా", B: "Cytoplasm / సైటోప్లాజమ్", C: "Stroma / స్ట్రోమా", D: "Matrix / మాట్రిక్స్" },
+                answer: "C"
+            },
+            {
+                id: 2,
+                questionEn: "Which metal atom is present in the chlorophyll molecule?",
+                questionTe: "క్లోరోఫిల్ అణువులో ఉండే లోహ పరమాణువు ఏది?",
+                options: { A: "Iron / ఇనుము (Fe)", B: "Calcium / కాల్షియం (Ca)", C: "Sodium / సోడియం (Na)", D: "Magnesium / మెగ్నీషియం (Mg)" },
+                answer: "D"
+            },
+            {
+                id: 3,
+                questionEn: "Chlorophyll 'a' is what colour?",
+                questionTe: "క్లోరోఫిల్ 'a' ఏ రంగులో ఉంటుంది?",
+                options: { A: "Bluish-green / నీలం-ఆకుపచ్చ రంగు", B: "Yellowish-green / పసుపుపచ్చని రంగు", C: "Red / ఎరుపు", D: "Orange / నారింజ" },
+                answer: "A"
+            },
+            {
+                id: 4,
+                questionEn: "Light-dependent reactions (photochemical phase) take place in which part of the chloroplast?",
+                questionTe: "కిరణజన్య సంయోగక్రియ కాంతి చర్యలు (ఫోటోకెమికల్ దశ) హరితరేణువులోని ఏ భాగంలో జరుగుతాయి?",
+                options: { A: "Stroma / స్ట్రోమా", B: "Outer membrane / వెలుపలి పొర", C: "Grana / గ్రానా", D: "Nucleus / కేంద్రకం" },
+                answer: "C"
+            },
+            {
+                id: 5,
+                questionEn: "Photolysis of water (splitting of water molecules) during light reaction was discovered by:",
+                questionTe: "కాంతి చర్యలో నీటి అణువు విచ్ఛిన్నం కావడాన్ని (ఫోటోలైసిస్) కనుగొన్న వారు:",
+                options: { A: "C.B. Van Niel / సి.బి. వాన్ నీల్", B: "Robert Hill / రాబర్ట్ హిల్", C: "Jan Ingenhousz / జాన్ ఇంజెన్‌హౌజ్", D: "Engelman / ఎంగెల్‌మన్" },
+                answer: "B"
+            },
+            {
+                id: 6,
+                questionEn: "What is the full form of NADP which picks up hydrogen during photolysis?",
+                questionTe: "ఫోటోలైసిస్ సమయంలో హైడ్రోజన్‌ను స్వీకరించే NADP పూర్తి రూపం ఏమిటి?",
+                options: { A: "Nitrogen Adenine Di-phosphate / నైట్రోజన్ అడెనిన్ డై-ఫాస్ఫేట్", B: "Nicotinamide Acid Di-phosphate / నికోటినమైడ్ యాసిడ్ డై-ఫాస్ఫేట్", C: "Nicotinamide Adenine Dinucleotide Phosphate / నికోటినమైడ్ అడెనిన్ డైన్యూక్లియోటైడ్ ఫాస్ఫేట్", D: "None of these / ఏదీ కాదు" },
+                answer: "C"
+            },
+            {
+                id: 7,
+                questionEn: "Organisms that cannot prepare their own food and depend on others are called:",
+                questionTe: "తమ ఆహారాన్ని తాము తయారు చేసుకోలేక ఇతరులపై ఆధారపడే జీవులను ఏమంటారు?",
+                options: { A: "Heterotrophs / పరపోషకాలు", B: "Autotrophs / స్వయంపోషకాలు", C: "Saprophytes only / పూతికకాహారులు మాత్రమే", D: "Producers / ఉత్పాదకులు" },
+                answer: "A"
+            },
+            {
+                id: 8,
+                questionEn: "Organisms like mold, yeast, and mushrooms that break down food material outside the body and absorb it are called:",
+                questionTe: "బ్రెడ్ మోల్డ్, ఈస్ట్, పుట్టగొడుగుల వలె శరీరం వెలుపల ఆహారాన్ని విచ్ఛిన్నం చేసి గ్రహించే జీవులను ఏమంటారు?",
+                options: { A: "Parasites / పరాన్నజీవులు", B: "Herbivores / శాఖాహారులు", C: "Carnivores / మాంసాహారులు", D: "Saprophytes / పూతికకాహారులు" },
+                answer: "D"
+            },
+            {
+                id: 9,
+                questionEn: "The wave-like muscular movements in the oesophagus that push food down are called:",
+                questionTe: "ఆహారాన్ని క్రిందికి నెట్టడానికి అన్నవాహికలో జరిగే తరంగ లాంటి కండరాల కదలికలను ఏమంటారు?",
+                options: { A: "Mastication / నమలడం", B: "Emulsification / ఎమల్సిఫికేషన్", C: "Defecation / విసర్జన", D: "Peristaltic movements / పెరిస్టాల్టిక్ కదలికలు" },
+                answer: "D"
+            },
+            {
+                id: 10,
+                questionEn: "Which acid is present in the gastric juice of the stomach?",
+                questionTe: "జఠర రసంలో ఉండే ఆమ్లం ఏది?",
+                options: { A: "Nitric acid / నైట్రిక్ ఆమ్లం", B: "Sulphuric acid / సల్ఫ్యూరిక్ ఆమ్లం", C: "Hydrochloric acid (HCl) / హైడ్రోక్లోరిక్ ఆమ్లం", D: "Acetic acid / ఎసిటిక్ ఆమ్లం" },
+                answer: "C"
+            },
+            {
+                id: 11,
+                questionEn: "Which enzyme in the stomach helps in the digestion of proteins?",
+                questionTe: "కడుపులో ప్రొటీన్ల జీర్ణక్రియకు తోడ్పడే ఎంజైమ్ ఏది?",
+                options: { A: "Pepsin / పెప్సిన్", B: "Ptyalin / టైలిన్", C: "Lipase / లైపేజ్", D: "Amylase / అమైలేజ్" },
+                answer: "A"
+            },
+            {
+                id: 12,
+                questionEn: "Which digestive juice secreted from the liver contains no enzymes but helps in emulsification of fats?",
+                questionTe: "కాలేయం నుండి స్రవించబడి, ఎలాంటి ఎంజైములు లేకుండా కొవ్వుల సపైసీకరణకు తోడ్పడే రసం ఏది?",
+                options: { A: "Pancreatic juice / క్లోమ రసం", B: "Saliva / లాలాజలం", C: "Intestinal juice / ప్రేగు రసం", D: "Bile juice / పైత్యరసం (బైల్ జ్యూస్)" },
+                answer: "D"
+            },
+            {
+                id: 13,
+                questionEn: "Which gland secretes trypsin for protein digestion and lipase for fats?",
+                questionTe: "ప్రొటీన్ల కోసం ట్రిప్సిన్ మరియు కొవ్వుల కోసం లైపేజ్‌ను స్రవించే గ్రంథి ఏది?",
+                options: { A: "Pancreas / క్లోమం (పాంక్రియాస్)", B: "Liver / కాలేయం", C: "Salivary gland / లాలాజల గ్రంథి", D: "Gastric gland / జఠర గ్రంథి" },
+                answer: "A"
+            },
+            {
+                id: 14,
+                questionEn: "Finger-like projections in the small intestine that increase surface area for absorption are called:",
+                questionTe: "చిన్న ప్రేగులో శోషణ కోసం ఉపరితల వైశాల్యాన్ని పెంచే వేళ్ల వంటి నిర్మాణాలు:",
+                options: { A: "Alveoli / వాయుగోళాలు", B: "Nephrons / నెఫ్రాన్లు", C: "Villi / విల్లీ", D: "Haustoria / హస్టోరియా" },
+                answer: "C"
+            },
+            {
+                id: 15,
+                questionEn: "Eating food that does not have one or more nutrients in required amounts is known as:",
+                questionTe: "కావలసిన మోతాదులో ఒకటి లేదా అంతకంటే ఎక్కువ పోషకాలు లేని ఆహారాన్ని తీసుకోవడాన్ని ఏమంటారు?",
+                options: { A: "Malnutrition / లోపభూయిష్ట ఆహారం (మాల్‌న్యూట్రిషన్)", B: "Balanced diet / సమతుల్య ఆహారం", C: "Obesity / స్థూలకాయం", D: "Digestion / జీర్ణక్రియ" },
+                answer: "A"
+            },
+            {
+                id: 16,
+                questionEn: "Kwashiorkor disease is caused due to the deficiency of:",
+                questionTe: "క్వాషియార్కర్ వ్యాధి దేని లోపం వల్ల వస్తుంది?",
+                options: { A: "Carbohydrates / కార్బోహైడ్రేట్ల లోపం", B: "Proteins / ప్రొటీన్ల లోపం", C: "Fats only / కొవ్వుల లోపం", D: "Vitamin C / విటమిన్ సి" },
+                answer: "B"
+            },
+            {
+                id: 17,
+                questionEn: "Marasmus disease occurs due to the deficiency of:",
+                questionTe: "మారాస్మస్ వ్యాధి దేని లోపం వల్ల కలుగుతుంది?",
+                options: { A: "Both proteins and calories / ప్రొటీన్లు మరియు కేలరీలు రెండూ", B: "Proteins only / కేవలం ప్రొటీన్లు", C: "Vitamins only / కేవలం విటమిన్లు", D: "Minerals only / కేవలం ఖనిజాలు" },
+                answer: "A"
+            },
+            {
+                id: 18,
+                questionEn: "Constant intake of high calorific food leads to a condition called:",
+                questionTe: "ఎక్కువ కేలరీల ఆహారాన్ని నిరంతరం తీసుకోవడం వల్ల ఏర్పడే పరిస్థితిని ఏమంటారు?",
+                options: { A: "Malnutrition / మాల్‌న్యూట్రిషన్", B: "Kwashiorkor / క్వాషియార్కర్", C: "Obesity / ఒబెసిటీ (స్థూలకాయం)", D: "Beri-beri / బెరి-బెరి" },
+                answer: "C"
+            },
+            {
+                id: 19,
+                questionEn: "Beri-beri is caused due to the deficiency of which vitamin:",
+                questionTe: "ఏ విటమిన్ లోపం వల్ల బెరి-బెరి వ్యాధి వస్తుంది?",
+                options: { A: "Vitamin A / విటమిన్ ఏ", B: "Vitamin C / విటమిన్ సి", C: "Vitamin D / విటమిన్ డి", D: "Vitamin B1 (Thiamin) / విటమిన్ బి1 (థయామిన్)" },
+                answer: "D"
+            },
+            {
+                id: 20,
+                questionEn: "Scurvy disease (delay in healing of wounds, fractures in bones) is caused by the deficiency of:",
+                questionTe: "స్కర్వీ వ్యాధి దేని లోపం వల్ల వస్తుంది?",
+                options: { A: "Ascorbic acid (Vitamin C) / ఆస్కార్బిక్ ఆమ్లం (విటమిన్ సి)", B: "Retinol (Vitamin A) / రెటినోల్", C: "Calciferol (Vitamin D) / కాల్సిఫెరాల్", D: "Folic acid / ఫోలిక్ ఆమ్లం" },
+                answer: "A"
+            },
+            {
+                id: 21,
+                questionEn: "Night blindness and xerophthalmia are caused due to the deficiency of:",
+                questionTe: "రాత్రి అంధత్వం మరియు జీరోప్తాల్మియా ఏ విటమిన్ లోపం వల్ల వస్తాయి?",
+                options: { A: "Vitamin B / విటమిన్ బి", B: "Vitamin A / విటమిన్ ఏ (రెటినోల్)", C: "Vitamin E / విటమిన్ ఇ", D: "Vitamin K / విటమిన్ కె" },
+                answer: "B"
+            },
+            {
+                id: 22,
+                questionEn: "Rickets (improper formation of bones, weak bones) in children is due to the deficiency of:",
+                questionTe: "పిల్లలలో రికెట్స్ (ఎముకల బలహీనత) దేని లోపం వల్ల సంభవిస్తుంది?",
+                options: { A: "Vitamin A / విటమిన్ ఎ", B: "Vitamin C / విటమిన్ సి", C: "Vitamin D (Calciferol) / విటమిన్ డి (కాల్సిఫెరాల్)", D: "Vitamin B12 / విటమిన్ బి12" },
+                answer: "C"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion === quizData.length) {
+                document.getElementById('quizContent').innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-trophy" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--text-heading); margin-bottom: 10px;">Quiz Part 2 Completed!</h3>
+                        <p style="font-size: 1.2rem; margin: 15px 0;">Your Score: <strong>${score}</strong> / ${quizData.length}</p>
+                        <button class="quiz-nav-btn" onclick="loadQuiz()">Restart Quiz</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = quizData[currentQuestion];
+            let html = `
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px;">Question ${currentQuestion + 1} of ${quizData.length}</p>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 10px;">${q.questionEn}</div>
+                <div style="color: var(--primary); font-weight: 600; margin-bottom: 20px;">${q.questionTe}</div>
+                <div id="optionsContainer"></div>
+            `;
+
+            document.getElementById('quizContent').innerHTML = html;
+            const optContainer = document.getElementById('optionsContainer');
+
+            for (let key in q.options) {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerHTML = `<strong>${key}:</strong> ${q.options[key]}`;
+                div.addEventListener('click', () => checkAnswer(key, q.answer, div));
+                optContainer.appendChild(div);
+            }
+        }
+
+        function checkAnswer(selected, correct, element) {
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (selected === correct) {
+                element.classList.add('correct');
+                score++;
+            } else {
+                element.classList.add('wrong');
+                options.forEach(opt => {
+                    if (opt.innerHTML.startsWith(`<strong>${correct}:</strong>`)) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 1300);
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
