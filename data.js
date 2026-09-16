@@ -26,7 +26,7 @@ const resourceData = {
         { chapterId: 11, chapterName: "Biogeochemical cycles", playlistUrl: "", modules: [], quizzes: [] }
     ],
     "class10": [
-       "class10": [
+       
         {
             chapterId: 1,
             chapterName: "Nutrition",
