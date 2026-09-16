@@ -5,13 +5,16 @@ const resourceData = {
         { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] }
     ],
     "class9": [
-        { chapterId: 1, chapterName: "Cell Structure", playlistUrl: "", modules: [], quizzes: [] }
+        { chapterId: 1, chapterName: "Cell Structure", playlistUrl: "", modules: [], quizzes: [] },
+        { chapterId: 2, chapterName: "Plant Tissues", playlistUrl: "", modules: [], quizzes: [] },
+        { chapterId: 3, chapterName: "Animal Tissues", playlistUrl: "", modules: [], quizzes: [] },
+        { chapterId: 4, chapterName: "Transportation through Plasma Membrane", playlistUrl: "", modules: [], quizzes: [] }
     ],
     "class10": [
         {
             chapterId: 1,
             chapterName: "Nutrition",
-            playlistUrl: "https://www.youtube.com/playlist?list=PL3K...",
+            playlistUrl: "https://youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h&si=VEhO8ixFhleg2-4U",
             modules: [
                 { 
                     moduleId: 1, 
@@ -21,9 +24,27 @@ const resourceData = {
             ],
             quizzes: [ { quizId: 1, title: "Bilingual Quiz (30 Q)" } ]
         },
-        { chapterId: 2, chapterName: "Respiration", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 3, chapterName: "Transportation", playlistUrl: "", modules: [], quizzes: [] },
-        { chapterId: 4, chapterName: "Excretion", playlistUrl: "", modules: [], quizzes: [] }
+        { 
+            chapterId: 2, 
+            chapterName: "Respiration", 
+            playlistUrl: "https://www.youtube.com/playlist?list=PL3K...", 
+            modules: [], 
+            quizzes: [] 
+        },
+        { 
+            chapterId: 3, 
+            chapterName: "Transportation", 
+            playlistUrl: "", 
+            modules: [], 
+            quizzes: [] 
+        },
+        { 
+            chapterId: 4, 
+            chapterName: "Excretion", 
+            playlistUrl: "", 
+            modules: [], 
+            quizzes: [] 
+        }
     ]
 };
 
@@ -389,4 +410,3 @@ const nutritionQuizData = [
         answer: "D"
     }
 ];
-                
