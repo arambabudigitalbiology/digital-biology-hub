@@ -89,12 +89,6 @@
         .content-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
         .content-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-heading); }
         .content-info p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
-        
-        .quiz-btn {
-            background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 8px;
-            font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; margin-top: auto;
-        }
-        .quiz-btn:hover { background: var(--primary-dark); }
 
         @media (max-width: 768px) {
             .profile-container { grid-template-columns: 1fr; text-align: center; }
@@ -196,6 +190,7 @@
                     navLinks.forEach(l => l.classList.remove('active'));
                     link.classList.add('active');
                     sections.home.style.display = (target === 'home') ? 'block' : 'none';
+                    sections.library.style.display = (target === 'library') ? 'library' : 'none'; // Fixed
                     sections.library.style.display = (target === 'library') ? 'block' : 'none';
                 });
             });
@@ -227,13 +222,20 @@
                             let extraHtml = '';
                             if (item.chapterName === "Nutrition") {
                                 extraHtml = `
-                                    <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
-                                        <a href="10biology-nutrition-quiz.html" target="_blank" style="background: #0f766e; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-1</a>
-                                        <a href="10biology-nutrition-quiz-part2.html" target="_blank" style="background: #d97706; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-2</a>
+                                    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                                        ${item.playlistUrl ? `<a href="${item.playlistUrl}" target="_blank" style="background: #ef4444; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-align: center;"><i class="fab fa-youtube"></i> Watch YouTube Playlist</a>` : ''}
+                                        <div style="display: flex; gap: 8px;">
+                                            <a href="10biology-nutrition-quiz.html" target="_blank" style="background: #0f766e; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-1</a>
+                                            <a href="10biology-nutrition-quiz-part2.html" target="_blank" style="background: #d97706; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-2</a>
+                                        </div>
                                     </div>
                                 `;
                             } else {
-                                extraHtml = `<button class="quiz-btn">Explore Chapter</button>`;
+                                extraHtml = item.playlistUrl ? `
+                                    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                                        <a href="${item.playlistUrl}" target="_blank" style="background: #ef4444; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-align: center;"><i class="fab fa-youtube"></i> Watch YouTube Playlist</a>
+                                    </div>
+                                ` : `<button style="background: #cbd5e1; color: #475569; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; width: 100%; cursor: default;">Chapter Ready</button>`;
                             }
 
                             card.innerHTML = `
