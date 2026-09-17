@@ -1,261 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A. RAMBABU - DIGITAL BIOLOGY HUB</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- పాత డేటా కాకుండా ఎప్పటికప్పుడు కొత్త డేటా లోడ్ అవ్వడానికి కోడ్ (No-Cache) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>Digital Biology Hub - Akuti Rambabu</title>
     <style>
-        :root {
-            --primary: #0f766e;
-            --primary-dark: #115e59;
-            --primary-light: #ccfbf1;
-            --accent: #d97706;
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #334155;
-            --text-heading: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --radius-md: 12px;
-            --shadow-sm: 0 2px 4px rgba(15, 118, 110, 0.05);
-            --shadow-md: 0 10px 25px rgba(15, 118, 110, 0.1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
-
-        #site-lock-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px);
-            z-index: 9999; display: flex; align-items: center; justify-content: center;
-        }
-        .site-lock-card {
-            background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 400px;
-            text-align: center; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            border: 2px solid var(--primary);
-        }
-        .site-lock-card h2 { color: var(--text-heading); margin-bottom: 15px; font-size: 1.5rem; }
-        .site-lock-input {
-            width: 100%; padding: 15px; border: 2px solid var(--border); border-radius: 10px;
-            font-size: 1.2rem; text-align: center; letter-spacing: 5px; margin-bottom: 20px; outline: none;
-            font-weight: bold; color: var(--text-heading);
-        }
-        .unlock-btn {
-            background: var(--primary); color: white; border: none; padding: 15px 30px; border-radius: 10px;
-            font-size: 1rem; font-weight: 700; width: 100%; cursor: pointer; transition: 0.2s;
-        }
-        .unlock-btn:hover { background: var(--primary-dark); }
-        .hidden-content { display: none; }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
-            display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 0 auto; padding: 15px 30px;
-            border-bottom: 1px solid var(--border);
-        }
-        .logo h1 { font-size: 1.2rem; color: var(--text-heading); font-weight: 800; }
-        .logo span { color: var(--accent); }
-        .logo p { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
-        .nav-links { display: flex; gap: 15px; list-style: none; }
-        .nav-links li a {
-            text-decoration: none; color: var(--text-muted); font-weight: 600; padding: 8px 15px; border-radius: 8px;
-            transition: 0.2s; font-size: 0.9rem;
-        }
-        .nav-links li a:hover, .nav-links li a.active { color: var(--primary); background: var(--primary-light); }
-
-        .container { max-width: 1300px; margin: 0 auto; padding: 30px 20px; }
-        .section-header { text-align: center; margin-bottom: 2rem; }
-        .section-header h2 { font-size: 2.2rem; color: var(--text-heading); font-weight: 800; }
-
-        .profile-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; align-items: center; background: white; padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); border: 1px solid var(--border); }
-        .profile-photo { width: 100%; max-width: 380px; border-radius: 15px; object-fit: cover; box-shadow: var(--shadow-md); }
-        .profile-details h3 { font-size: 2.2rem; color: var(--text-heading); margin-bottom: 10px; font-weight: 700; }
-        .profile-details p { font-size: 1.1rem; color: var(--text-main); margin-bottom: 10px; font-weight: 500; }
-
-        .folders-scroll { width: 100%; overflow-x: auto; padding-bottom: 10px; margin-bottom: 25px; display: flex; gap: 12px; }
-        .folder-tab {
-            background: white; border: 2px solid var(--border); color: var(--text-main); padding: 10px 25px; border-radius: 30px;
-            cursor: pointer; font-weight: 600; white-space: nowrap; transition: 0.2s; font-size: 0.95rem;
-        }
-        .folder-tab:hover, .folder-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; }
-        .content-card {
-            background: white; border-radius: var(--radius-md); border: 1px solid var(--border);
-            overflow: hidden; box-shadow: var(--shadow-sm); transition: 0.3s; display: flex; flex-direction: column;
-        }
-        .content-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-        .content-media { height: 120px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; }
-        .content-info { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .content-info h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-heading); }
-        .content-info p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
-
-        @media (max-width: 768px) {
-            .profile-container { grid-template-columns: 1fr; text-align: center; }
-            .profile-photo { margin: 0 auto; }
-            .navbar { padding: 15px 20px; }
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+        
+        /* ప్రొఫైల్ బ్యాక్‌గ్రౌండ్ మరియు అక్షరాల స్టైల్స్ */
+        .header { background-color: #2c3e50; color: white; padding: 30px 20px; text-align: center; }
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 15px; }
+        .header h1 { margin: 0; font-size: 30px; letter-spacing: 1px; }
+        .header p { margin: 8px 0 0 0; font-size: 16px; color: #ecf0f1; }
+        .highlight-text { color: #f1c40f; font-weight: bold; font-size: 17px; margin-top: 12px !important; }
+        
+        /* కంటెంట్ బాక్స్ స్టైల్స్ */
+        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        .content-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .content-box h2 { color: #2c3e50; margin-top: 0; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; font-size: 22px; text-align: center; }
+        
+        ul { list-style-type: none; padding: 0; margin: 0; }
+        /* ప్రతి లింక్ ఒక బాక్స్ లాగా కనిపిస్తుంది */
+        li { margin: 15px 0; padding: 15px; background: #f8f9fa; border-left: 5px solid #3498db; border-radius: 6px; border: 1px solid #e9ecef; transition: transform 0.2s; }
+        li:hover { transform: translateX(5px); background: #eef2f5; border-left: 5px solid #2ecc71; }
+        
+        a { text-decoration: none; color: #2c3e50; font-weight: bold; font-size: 18px; display: block; }
+        /* బ్రాకెట్లలో ఉండే టెక్స్ట్ రంగులు */
+        .tag-video { color: #e74c3c; font-size: 14px; margin-left: 10px; }
+        .tag-quiz { color: #2980b9; font-size: 14px; margin-left: 10px; }
+        .tag-module { color: #9b59b6; font-size: 14px; margin-left: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="site-lock-overlay">
-        <div class="site-lock-card">
-            <i class="fas fa-shield-alt" style="color: var(--primary); font-size: 2.5rem; margin-bottom: 15px;"></i>
-            <h2>Restricted Access</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Enter Master Password</p>
-            <input type="password" id="passInput" class="site-lock-input" placeholder="••••••" maxlength="6">
-            <button id="unlockBtn" class="unlock-btn">Unlock & Enter</button>
+    <!-- ప్రొఫైల్ సెక్షన్ (ఛానెల్స్ పేర్లు లేకుండా) -->
+    <div class="header">
+        <img src="my-photo.jpg" alt="Akuti Rambabu" class="profile-img">
+        <h1>Sri Akuti Rambabu</h1>
+        <p><strong>School Assistant (Biological Science)</strong></p>
+        <p>ZPHS Vemsoor, Khammam District, Telangana</p>
+        <p class="highlight-text">⭐ DSC 4th Ranker | 15 Years of Teaching Experience</p>
+        <p style="margin-top: 20px; font-weight: bold; font-size: 18px;">Welcome to Digital Biology Hub</p>
+    </div>
+
+    <!-- స్టడీ మెటీరియల్స్ ఒకే లిస్ట్ -->
+    <div class="container">
+        <div class="content-box">
+            <h2>📚 All Study Materials</h2>
+            <ul>
+                
+                <!-- YouTube Playlists -->
+                <li><a href="https://youtube.com/playlist?list=PL3KgjzKcjj-rst5p9TUcBJz5ihI2ToR0h&si=VEhO8ixFhleg2-4U" target="_blank">10th Class - Nutrition - YouTube Playlist <span class="tag-video">(Video Playlist)</span></a></li>
+                
+                <!-- Quizzes -->
+                <li><a href="10biology-nutrition-quiz.html" target="_blank">10th Class - Nutrition - Interactive Quiz <span class="tag-quiz">(HTML Quiz)</span></a></li>
+                <li><a href="10biology-nutrition-quiz-part2.html" target="_blank">10th Class - Nutrition - Interactive Quiz Part-2 <span class="tag-quiz">(HTML Quiz)</span></a></li>
+                
+                <!-- Modules -->
+                <li><a href="https://view.genially.com/6aaa30d1f914833e7541d6d2" target="_blank">10th Class - Nutrition - Digestive System <span class="tag-module">(Genially Module)</span></a></li>
+                <!-- ఉదయం మీరు చేసిన అమీబా మాడ్యూల్ లింక్ ఇక్కడ యాడ్ చేసుకోండి -->
+                <li><a href="ఇక్కడ_మీ_అమీబా_మాడ్యూల్_లింక్_పెట్టండి" target="_blank">9th Class - Amoeba Cell Structure <span class="tag-module">(Genially Module)</span></a></li>
+                
+            </ul>
         </div>
     </div>
 
-    <div id="mainContent" class="hidden-content">
-        <nav class="navbar">
-            <div class="logo">
-                <h1>DIGITAL BIOLOGY <span>HUB</span></h1>
-                <p>By A. Rambabu</p>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" data-target="home">Teacher Profile</a></li>
-                <li><a href="#" class="nav-link" data-target="library">Resource Library</a></li>
-            </ul>
-        </nav>
-
-        <section id="home" class="page-section" style="display: block;">
-            <div class="container">
-                <div class="profile-container">
-                    <img src="profile.png" alt="A. Rambabu" class="profile-photo" onerror="this.src='https://placehold.co/380x380?text=A.+Rambabu'">
-                    <div class="profile-details">
-                        <h3>A. RAMBABU</h3>
-                        <p><i class="fas fa-graduation-cap"></i> M.Sc. ZOOLOGY, B.Ed.</p>
-                        <p><i class="fas fa-award"></i> DSC 4th Ranker</p>
-                        <p><i class="fas fa-chalkboard-teacher"></i> School Assistant (Biological Science)</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="library" class="page-section" style="display: none;">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Digital Resource Library</h2>
-                </div>
-                
-                <div class="folders-scroll">
-                    <div class="folder-tab active" data-filter="all">All Classes</div>
-                    <div class="folder-tab" data-filter="class10">10th Class</div>
-                    <div class="folder-tab" data-filter="class9">9th Class</div>
-                    <div class="folder-tab" data-filter="class8">8th Class</div>
-                </div>
-
-                <div class="grid sd" id="dynamic-grid"></div>
-            </div>
-        </section>
-    </div>
-
-    <script src="data.js"></script>
-    <script>
-        function initSiteLock() {
-            const unlockBtn = document.getElementById('unlockBtn');
-            const passInput = document.getElementById('passInput');
-            const overlay = document.getElementById('site-lock-overlay');
-            const mainContent = document.getElementById('mainContent');
-
-            function processUnlock() {
-                if (passInput.value.trim() === '052128') {
-                    overlay.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    initNavLogic();
-                } else {
-                    alert('Incorrect Password! Please try again.');
-                    passInput.value = '';
-                }
-            }
-
-            unlockBtn.addEventListener('click', processUnlock);
-            passInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processUnlock(); });
-        }
-
-        function initNavLogic() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = {
-                home: document.getElementById('home'),
-                library: document.getElementById('library')
-            };
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const target = link.getAttribute('data-target');
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                    sections.home.style.display = (target === 'home') ? 'block' : 'none';
-                    sections.library.style.display = (target === 'library') ? 'library' : 'none'; // Fixed
-                    sections.library.style.display = (target === 'library') ? 'block' : 'none';
-                });
-            });
-
-            renderCards('all');
-
-            const folderTabs = document.querySelectorAll('.folder-tab');
-            folderTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    folderTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    renderCards(tab.getAttribute('data-filter'));
-                });
-            });
-        }
-
-        function renderCards(filter) {
-            const grid = document.getElementById('dynamic-grid');
-            grid.innerHTML = '';
-
-            const classes = ['class8', 'class9', 'class10'];
-            classes.forEach(clsKey => {
-                if (resourceData[clsKey]) {
-                    resourceData[clsKey].forEach(item => {
-                        if (filter === 'all' || clsKey === filter) {
-                            const card = document.createElement('div');
-                            card.className = 'content-card';
-                            
-                            let extraHtml = '';
-                            if (item.chapterName === "Nutrition") {
-                                extraHtml = `
-                                    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
-                                        ${item.playlistUrl ? `<a href="${item.playlistUrl}" target="_blank" style="background: #ef4444; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-align: center;"><i class="fab fa-youtube"></i> Watch YouTube Playlist</a>` : ''}
-                                        <div style="display: flex; gap: 8px;">
-                                            <a href="10biology-nutrition-quiz.html" target="_blank" style="background: #0f766e; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-1</a>
-                                            <a href="10biology-nutrition-quiz-part2.html" target="_blank" style="background: #d97706; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center;">Quiz Part-2</a>
-                                        </div>
-                                    </div>
-                                `;
-                            } else {
-                                extraHtml = item.playlistUrl ? `
-                                    <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
-                                        <a href="${item.playlistUrl}" target="_blank" style="background: #ef4444; color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-align: center;"><i class="fab fa-youtube"></i> Watch YouTube Playlist</a>
-                                    </div>
-                                ` : `<button style="background: #cbd5e1; color: #475569; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; width: 100%; cursor: default;">Chapter Ready</button>`;
-                            }
-
-                            card.innerHTML = `
-                                <div class="content-media">
-                                    <i class="fas fa-graduation-cap" style="font-size: 3rem; color: var(--primary);"></i>
-                                </div>
-                                <div class="content-info">
-                                    <h4>${item.chapterName}</h4>
-                                    <p>Class: ${clsKey.replace('class', 'Class ')}</p>
-                                    ${extraHtml}
-                                </div>
-                            `;
-                            grid.appendChild(card);
-                        }
-                    });
-                }
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', initSiteLock);
-    </script>
 </body>
 </html>
