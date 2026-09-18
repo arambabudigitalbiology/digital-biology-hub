@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitochondria Bilingual Quiz</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f8ff; color: #333; margin: 0; padding: 20px; }
+        .quiz-container { max-width: 650px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; font-size: 24px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .question-box { margin-bottom: 25px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fafafa; }
+        .question-eng { font-size: 18px; font-weight: bold; color: #2980b9; margin-bottom: 5px; }
+        .question-tel { font-size: 17px; font-weight: bold; color: #d35400; margin-bottom: 15px; }
+        
+        .option-btn { display: block; width: 100%; text-align: left; background: #fff; border: 2px solid #bdc3c7; padding: 12px; margin-bottom: 10px; border-radius: 6px; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .option-btn:hover { background: #ecf0f1; border-color: #95a5a6; }
+        
+        /* కరెక్ట్ మరియు రాంగ్ జవాబుల రంగులు */
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; text-decoration: line-through; }
+        
+        /* వివరణ (Explanation) బాక్స్ */
+        .explanation { display: none; margin-top: 10px; padding: 10px; background-color: #e8f4f8; border-left: 4px solid #3498db; font-size: 15px; color: #2c3e50; }
+        
+        .score-display { text-align: center; font-size: 22px; font-weight: bold; color: #27ae60; margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>10 BIOLOGY: Mitochondria Interactive Quiz</h1>
+
+    <!-- Question 1 -->
+    <div class="question-box" id="q1-box">
+        <div class="question-eng">1. Which cell organelle is known as the "Powerhouse of the cell"?</div>
+        <div class="question-tel">1. కణశక్తి భాండాగారాలు (Powerhouses of the cell) అని వేటిని అంటారు?</div>
+        
+        <button class="option-btn" onclick="checkAnswer('q1', this, false)">A. Ribosome / రైబోసోమ్</button>
+        <button class="option-btn" onclick="checkAnswer('q1', this, false)">B. Nucleus / కేంద్రకం</button>
+        <button class="option-btn" onclick="checkAnswer('q1', this, true)">C. Mitochondria / మైటోకాండ్రియా</button>
+        <button class="option-btn" onclick="checkAnswer('q1', this, false)">D. Golgi body / గాల్జీ సంక్లిష్టం</button>
+        
+        <div class="explanation" id="exp-q1"><strong>Correct!</strong> మైటోకాండ్రియాలో శ్వాసక్రియ జరిగి శక్తి ఉత్పత్తి అవుతుంది కాబట్టి వీటిని కణశక్తి భాండాగారాలు అంటారు.</div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-box" id="q2-box">
+        <div class="question-eng">2. In which form is energy stored in mitochondria?</div>
+        <div class="question-tel">2. మైటోకాండ్రియాలో శక్తి ఏ రూపంలో నిల్వ ఉంటుంది?</div>
+        
+        <button class="option-btn" onclick="checkAnswer('q2', this, false)">A. DNA / డి.ఎన్.ఏ</button>
+        <button class="option-btn" onclick="checkAnswer('q2', this, true)">B. ATP / ఏ.టి.పి</button>
+        <button class="option-btn" onclick="checkAnswer('q2', this, false)">C. Glucose / గ్లూకోజ్</button>
+        <button class="option-btn" onclick="checkAnswer('q2', this, false)">D. RNA / ఆర్.ఎన్.ఏ</button>
+        
+        <div class="explanation" id="exp-q2"><strong>Correct!</strong> శక్తి ATP (Adenosine Triphosphate) అణువుల రూపంలో నిల్వ చేయబడుతుంది.</div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-box" id="q3-box">
+        <div class="question-eng">3. The inner folds of mitochondria are called as:</div>
+        <div class="question-tel">3. మైటోకాండ్రియా లోపలి పొర ముడతలను ఏమంటారు?</div>
+        
+        <button class="option-btn" onclick="checkAnswer('q3', this, true)">A. Cristae / క్రిస్టే</button>
+        <button class="option-btn" onclick="checkAnswer('q3', this, false)">B. Matrix / మాత్రిక</button>
+        <button class="option-btn" onclick="checkAnswer('q3', this, false)">C. Grana / గ్రానా</button>
+        <button class="option-btn" onclick="checkAnswer('q3', this, false)">D. Stroma / స్ట్రోమా</button>
+        
+        <div class="explanation" id="exp-q3"><strong>Correct!</strong> లోపలి పొరలోని ముడతలను 'క్రిస్టే' అంటారు. ఇవి శ్వాసక్రియ జరిగే వైశాల్యాన్ని పెంచుతాయి.</div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-box" id="q4-box">
+        <div class="question-eng">4. The fluid filled portion inside the mitochondria is called:</div>
+        <div class="question-tel">4. మైటోకాండ్రియా లోపల ద్రవంతో నిండిన భాగాన్ని ఏమంటారు?</div>
+        
+        <button class="option-btn" onclick="checkAnswer('q4', this, false)">A. Cytoplasm / కణద్రవ్యం</button>
+        <button class="option-btn" onclick="checkAnswer('q4', this, false)">B. Nucleoplasm / కేంద్రక ద్రవ్యం</button>
+        <button class="option-btn" onclick="checkAnswer('q4', this, true)">C. Matrix / మాత్రిక</button>
+        <button class="option-btn" onclick="checkAnswer('q4', this, false)">D. Plasma / ప్లాస్మా</button>
+        
+        <div class="explanation" id="exp-q4"><strong>Correct!</strong> మైటోకాండ్రియా లోపలి ద్రవ భాగాన్ని 'మాత్రిక' (Matrix) అంటారు.</div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question-box" id="q5-box">
+        <div class="question-eng">5. Cellular respiration occurs in which organelle?</div>
+        <div class="question-tel">5. కణ శ్వాసక్రియ ఏ కణాంగంలో జరుగుతుంది?</div>
+        
+        <button class="option-btn" onclick="checkAnswer('q5', this, false)">A. Chloroplast / హరితరేణువు</button>
+        <button class="option-btn" onclick="checkAnswer('q5', this, true)">B. Mitochondria / మైటోకాండ్రియా</button>
+        <button class="option-btn" onclick="checkAnswer('q5', this, false)">C. Vacuole / రిక్తిక</button>
+        <button class="option-btn" onclick="checkAnswer('q5', this, false)">D. Lysosome / లైసోసోమ్</button>
+        
+        <div class="explanation" id="exp-q5"><strong>Correct!</strong> కణ శ్వాసక్రియ మైటోకాండ్రియాలో జరిగి, గ్లూకోజ్ విచ్ఛిన్నమై శక్తి విడుదలవుతుంది.</div>
+    </div>
+
+    <div class="score-display" id="final-score"></div>
+
+</div>
+
+<script>
+    let score = 0;
+    let answeredQuestions = 0;
+    const totalQuestions = 5;
+
+    function checkAnswer(questionId, buttonClicked, isCorrect) {
+        // ఆ ప్రశ్నకు సంబంధించిన అన్ని బటన్లను డిసేబుల్ చేయడం (మళ్ళీ నొక్కకుండా)
+        let container = document.getElementById(questionId + '-box');
+        let buttons = container.getElementsByClassName('option-btn');
+        
+        for (let btn of buttons) {
+            btn.disabled = true;
+            btn.style.cursor = "not-allowed";
+        }
+
+        // జవాబు కరెక్టా, కాదా అని రంగులు మార్చడం
+        if (isCorrect) {
+            buttonClicked.classList.add('correct');
+            score++;
+        } else {
+            buttonClicked.classList.add('wrong');
+            // తప్పు నొక్కితే కరెక్ట్ ఆన్సర్ ఏదో చూపించడం కోసం:
+            for (let btn of buttons) {
+                if (btn.getAttribute('onclick').includes('true')) {
+                    btn.classList.add('correct');
+                }
+            }
+        }
+
+        // వివరణ (Explanation) బాక్స్ ఓపెన్ చేయడం
+        document.getElementById('exp-' + questionId).style.display = "block";
+        
+        answeredQuestions++;
+
+        // అన్ని ప్రశ్నలు పూర్తయ్యాక స్కోర్ చూపించడం
+        if (answeredQuestions === totalQuestions) {
+            let scoreDiv = document.getElementById('final-score');
+            scoreDiv.style.display = "block";
+            scoreDiv.innerHTML = "🎉 Your Score: " + score + " / " + totalQuestions;
+        }
+    }
+</script>
+
+</body>
+          </html>
+
