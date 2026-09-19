@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology - Chloroplast Interactive Quiz</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .quiz-container { max-width: 650px; margin: auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; border-bottom: 2px solid #27ae60; padding-bottom: 10px; margin-bottom: 5px; }
+        .creator-info { text-align: center; font-size: 14px; color: #555; margin-bottom: 20px; font-weight: 600; }
+        .question { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #34495e; }
+        .options { list-style: none; padding: 0; }
+        .options li { background: #ecf0f1; margin: 10px 0; padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 16px; border: 1px solid #bdc3c7; }
+        .options li:hover { background: #dfe6e9; }
+        .options li.correct { background-color: #2ecc71 !important; color: white; font-weight: bold; border-color: #27ae60; }
+        .options li.wrong { background-color: #e74c3c !important; color: white; font-weight: bold; border-color: #c0392b; }
+        .feedback { margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; min-height: 24px; }
+        .btn-next { display: block; width: 100%; background: #2980b9; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-next:hover { background: #2471a3; }
+        .score-card { text-align: center; font-size: 22px; font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container" id="quizApp">
+    <h2>10th Biology: Chloroplast Quiz (హరితరేణువు క్విజ్)</h2>
+    <div class="creator-info">Prepared by A. Rambabu, S.A. Biology</div>
+    
+    <div id="questionBox">
+        <div class="question" id="questionText"></div>
+        <ul class="options" id="optionsList"></ul>
+        <div class="feedback" id="feedbackText"></div>
+        <button class="btn-next" id="nextBtn" onclick="nextQuestion()" style="display:none;">తదుపరి ప్రశ్న (Next Question)</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1. మొక్కలలో కిరణజన్య సంయోగక్రియ ఏ కణాంగంలో జరుగుతుంది? <br><small>Which cell organelle is responsible for photosynthesis in plants?</small>",
+            options: [
+                "A) మైటోకాండ్రియా (Mitochondria)",
+                "B) గాల్గీ సంక్లిష్టం (Golgi Apparatus)",
+                "C) క్లోరోప్లాస్ట్ / హరితరేణువు (Chloroplast)",
+                "D) రైబోజోమ్ (Ribosome)"
+            ],
+            answer: 2
+        },
+        {
+            question: "2. క్లోరోప్లాస్ట్‌లలో కాంతిని గ్రహించే ఆకుపచ్చని వర్ణద్రవ్యం (Pigment) ఏది? <br><small>Which green pigment in chloroplasts absorbs light?</small>",
+            options: [
+                "A) కెరోటిన్ (Carotene)",
+                "B) క్లోరోఫిల్ (Chlorophyll)",
+                "C) జాంతోఫిల్ (Xanthophyll)",
+                "D) ఆంథోసయనిన్ (Anthocyanin)"
+            ],
+            answer: 1
+        },
+        {
+            question: "3. కిరణజన్య సంయోగక్రియలో కాంతి చర్య (Light Reaction) క్లోరోప్లాస్ట్‌లో ఎక్కడ జరుగుతుంది? <br><small>Where does the light reaction take place in a chloroplast?</small>",
+            options: [
+                "A) స్ట్రోమా (Stroma)",
+                "B) గ్రానా / థైలకాయిడ్స్ (Grana / Thylakoids)",
+                "C) బాహ్య పొర (Outer membrane)",
+                "D) లోపలి పొర (Inner membrane)"
+            ],
+            answer: 1
+        },
+        {
+            question: "4. క్లోరోప్లాస్ట్‌లో గ్లూకోజ్ తయారయ్యే నిష్కాంతి చర్య (Dark Reaction / Stroma reaction) ఎక్కడ జరుగుతుంది? <br><small>Where does the dark reaction take place in a chloroplast?</small>",
+            options: [
+                "A) స్ట్రోమా (Stroma)",
+                "B) గ్రానా (Grana)",
+                "C) క్రిస్టే (Cristae)",
+                "D) మ్యాట్రిక్స్ (Matrix)"
+            ],
+            answer: 0
+        },
+        {
+            question: "5. మొక్కల కణాలలో హరితరేణువులను (Chloroplasts) సాధారణంగా ఏమని పిలుస్తారు? <br><small>What are chloroplasts commonly known as in plant cells?</small>",
+            options: [
+                "A) కణపు శక్తి కేంద్రాలు (Powerhouses of the cell)",
+                "B) కణపు వంటశాలలు (Kitchen of the cell)",
+                "C) ఆత్మహత్య సంచులు (Suicide bags)",
+                "D) ప్రొటీన్ కర్మాగారాలు (Protein factories)"
+            ],
+            answer: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function loadQuiz() {
+        answered = false;
+        let q = quizData[currentQuestion];
+        document.getElementById("questionText").innerHTML = q.question;
+        let optionsHtml = "";
+        q.options.forEach((opt, index) => {
+            optionsHtml += `<li onclick="checkAnswer(${index})">${opt}</li>`;
+        });
+        document.getElementById("optionsList").innerHTML = optionsHtml;
+        document.getElementById("feedbackText").innerHTML = "";
+        document.getElementById("nextBtn").style.display = "none";
+    }
+
+    function checkAnswer(selectedIndex) {
+        if (answered) return;
+        answered = true;
+        let q = quizData[currentQuestion];
+        let options = document.getElementById("optionsList").children;
+
+        if (selectedIndex === q.answer) {
+            options[selectedIndex].classList.add("correct");
+            document.getElementById("feedbackText").innerHTML = "సరైన సమాధానం! (Correct Answer!)";
+            document.getElementById("feedbackText").style.color = "#27ae60";
+            score++;
+        } else {
+            options[selectedIndex].classList.add("wrong");
+            options[q.answer].classList.add("correct");
+            document.getElementById("feedbackText").innerHTML = "తప్పు సమాధానం. ఆకుపచ్చ రంగులో ఉన్నది సరైనది.";
+            document.getElementById("feedbackText").style.color = "#e74c3c";
+        }
+        document.getElementById("nextBtn").style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuiz();
+        } else {
+            document.getElementById("quizApp").innerHTML = `
+                <h2>క్విజ్ పూర్తయింది (Quiz Completed)</h2>
+                <div class="creator-info" style="margin-bottom: 15px;">Prepared by A. Rambabu, S.A. Biology</div>
+                <p class="score-card">మీ స్కోర్ (Your Score): ${score} / ${quizData.length}</p>
+                <button class="btn-next" onclick="location.reload()">మళ్లీ ప్రయత్నించండి (Try Again)</button>
+            `;
+        }
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
+
