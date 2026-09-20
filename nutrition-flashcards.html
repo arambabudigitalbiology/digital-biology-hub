@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology - Nutrition Flashcards</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; color: #333; }
+        .container { max-width: 600px; margin: auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 10px; margin-bottom: 5px; }
+        .creator-info { font-size: 15px; color: #e74c3c; margin-bottom: 20px; font-weight: bold; background: #f9ebea; padding: 8px; border-radius: 6px; border: 1px solid #f1948a; }
+        
+        /* Flashcard Flip CSS */
+        .flashcard { perspective: 1000px; width: 100%; height: 260px; margin-bottom: 20px; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; box-shadow: 0 4px 8px rgba(0,0,0,0.15); border-radius: 10px; }
+        .flashcard.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; box-sizing: border-box; border-radius: 10px; font-size: 18px; font-weight: bold; }
+        .card-front { background-color: #2980b9; color: white; }
+        .card-back { background-color: #27ae60; color: white; transform: rotateY(180deg); }
+        
+        .card-img { width: 90px; height: 90px; object-fit: contain; margin-bottom: 12px; background: white; padding: 5px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .card-counter { font-size: 14px; color: #7f8c8d; margin-bottom: 10px; font-weight: bold; }
+        
+        .btn-control { background: #e67e22; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 6px; cursor: pointer; transition: 0.3s; margin: 5px; font-weight: bold; }
+        .btn-control:hover { background: #d35400; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>10th Biology: Nutrition Flashcards <br><small style="font-size: 15px; color: #16a085;">(పోషణ - త్వరిత పునశ్చరణ)</small></h2>
+    <div class="creator-info">Prepared by A. Rambabu, S.A. Biology</div>
+    
+    <div class="card-counter" id="cardCounter">కార్డ్ 1 / 10</div>
+
+    <div class="flashcard" onclick="flipCard()">
+        <div class="card-inner" id="cardInner">
+            <div class="card-front" id="cardFront"></div>
+            <div class="card-back" id="cardBack"></div>
+        </div>
+    </div>
+
+    <button class="btn-control" onclick="prevCard()">వెనుకకు (Prev)</button>
+    <button class="btn-control" onclick="nextCard()">తదుపరి (Next)</button>
+</div>
+
+<script>
+    const flashcardData = [
+        {
+            front_text: "1. కిరణజన్య సంయోగక్రియ జరిగే ప్రధాన మొక్కల భాగాలు / కణాంగం ఏది?<br><small>Primary site of photosynthesis in plants?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/628/628328.png",
+            back_text: "ఆకులు మరియు హరితరేణువులు (Chloroplasts / Leaves)<br><small>సూర్యరశ్మిని గ్రహించే పచ్చని భాగాలు</small>"
+        },
+        {
+            front_text: "2. కిరణజన్య సంయోగక్రియలో విడుదలయ్యే ఆక్సిజన్ దేని విచ్ఛిన్నం వల్ల వస్తుంది?<br><small>Source of oxygen released in photosynthesis?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png",
+            back_text: "నీటి అణువు (Water Molecule - H₂O)<భావన: కాంతి సమక్షంలో కాంతి జలవిశ్లేషణ>"
+        },
+        {
+            front_text: "3. ఆకులలో వాయువుల మార్పిడికి తోడ్పడే సూక్ష్మ రంధ్రాలు ఏవి?<br><small>Microscopic pores for gas exchange in leaves?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/3067/3067423.png",
+            back_text: "పత్రరంధ్రాలు (Stomata)<br><small>వీటిని రక్షక కణాలు (Guard cells) నియంత్రిస్తాయి</small>"
+        },
+        {
+            front_text: "4. వానపాములో జరిగే పోషణ విధానం ఏమిటి?<br><small>Mode of nutrition in Earthworm?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/2935/2935306.png",
+            back_text: "పూతికాహార పోషణ (Saprozoic / Detritivorous Nutrition)<br><small>कुళ్ళిన పదార్ధాలపై ఆధారపడటం</small>"
+        },
+        {
+            front_text: "5. మానవుని ఆహార నాళంలో ఆహారం కదలడానికి తోడ్పడే తరంగ వంటి చలనం?<br><small>Wave-like movement in alimentary canal?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/2756/2756788.png",
+            back_text: "పెరిస్టాలిసిస్ / క్రిమక్రమ సంకోచ సడలింపులు (Peristalsis)"
+        },
+        {
+            front_text: "6. మానవుని లాలాజలంలో ఉండే ఎంజైమ్ ఏది?<br><small>Enzyme present in human saliva?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/2490/2490419.png",
+            back_text: "సలైవరీ అమైలేజ్ లేదా టైలిన్ (Salivary Amylase / Ptyalin)<br><small>పిండి పదార్థాలను చక్కరలుగా మారుస్తుంది</small>"
+        },
+        {
+            front_text: "7. మానవుని కడుపులో (Stomach) ఉత్పత్తి అయ్యే ఆమ్లం ఏది?<br><small>Acid produced in human stomach?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/1149/1149168.png",
+            back_text: "హైడ్రోక్లోరిక్ ఆమ్లం (HCl)<br><small>ఇది ఆహారంలోని బ్యాక్టీరియాలను నశింపజేస్తుంది</small>"
+        },
+        {
+            front_text: "8. జీర్ణక్రియలో కొవ్వులను సూక్ష్మ గోళాలుగా మార్చే ప్రక్రియను ఏమంటారు?<br><small>Process of breaking down fats into smaller droplets?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/1046/1046857.png",
+            back_text: "ఎమల్సిఫికేషన్ (Emulsification)<br><small>పిత్త రసం (Bile juice) ద్వారా జరుగుతుంది</small>"
+        },
+        {
+            front_text: "9. చిన్నప్రేగు లోపలి గోడలపై వేళ్ళ వంటి నిర్మాణాలు పోషక పదార్థాల శోషణకు తోడ్పడేవి?<br><small>Finger-like projections in small intestine for absorption?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/3004/3004458.png",
+            back_text: "చూషకాలు / విల్లి (Villi)<br><small>ఇవి శోషణ ఉపరితల వైశాల్యాన్ని పెంచుతాయి</small>"
+        },
+        {
+            front_text: "10. క్వాషియార్కర్ (Kwashiorkor) వ్యాధి దేని లోపం వల్ల వస్తుంది?<br><small>Deficiency disease caused by lack of?</small>",
+            front_img: "https://cdn-icons-png.flaticon.com/512/822/822128.png",
+            back_text: "ప్రోటీన్ల లోపం (Protein Deficiency)<br><small>పిల్లలలో ఎదుగుదల లోపిస్తుంది</small>"
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function loadCard() {
+        let card = flashcardData[currentIndex];
+        document.getElementById("cardFront").innerHTML = `
+            <img src="${card.front_img}" class="card-img" alt="Icon">
+            <div>${card.front_text}</div>
+        `;
+        document.getElementById("cardBack").innerHTML = `
+            <div style="font-size: 20px; margin-bottom: 10px;">✨ సమాధానం (Answer) ✨</div>
+            <div>${card.back_text}</div>
+        `;
+        document.getElementById("cardCounter").innerText = `కార్డ్ ${currentIndex + 1} / ${flashcardData.length}`;
+        document.querySelector(".flashcard").classList.remove("flipped");
+    }
+
+    function flipCard() {
+        document.querySelector(".flashcard").classList.toggle("flipped");
+    }
+
+    function nextCard() {
+        currentIndex = (currentIndex + 1) % flashcardData.length;
+        loadCard();
+    }
+
+    function prevCard() {
+        currentIndex = (currentIndex - 1 + flashcardData.length) % flashcardData.length;
+        loadCard();
+    }
+
+    loadCard();
+</script>
+
+</body>
+</html>
