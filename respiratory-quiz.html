@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology - Evolution of Respiratory Organs Quiz</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+        .quiz-container { max-width: 650px; margin: auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; text-align: center; border-bottom: 2px solid #27ae60; padding-bottom: 10px; margin-bottom: 5px; }
+        .creator-info { text-align: center; font-size: 15px; color: #e74c3c; margin-bottom: 20px; font-weight: bold; background: #f9ebea; padding: 8px; border-radius: 6px; border: 1px solid #f1948a; }
+        .question { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #34495e; }
+        .options { list-style: none; padding: 0; }
+        .options li { background: #ecf0f1; margin: 10px 0; padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 16px; border: 1px solid #bdc3c7; }
+        .options li:hover { background: #dfe6e9; }
+        .options li.correct { background-color: #2ecc71 !important; color: white; font-weight: bold; border-color: #27ae60; }
+        .options li.wrong { background-color: #e74c3c !important; color: white; font-weight: bold; border-color: #c0392b; }
+        .feedback { margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; min-height: 24px; }
+        .btn-next { display: block; width: 100%; background: #2980b9; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-next:hover { background: #2471a3; }
+        .score-card { text-align: center; font-size: 22px; font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container" id="quizApp">
+    <h2>10th Biology: Evolution of Respiratory Organs <br><small style="font-size: 15px; color: #16a085;">(వాయువు మార్పిడి వ్యవస్థలో పరిణామం)</small></h2>
+    <div class="creator-info">Prepared by A. Rambabu, S.A. Biology</div>
+    
+    <div id="questionBox">
+        <div class="question" id="questionText"></div>
+        <ul class="options" id="optionsList"></ul>
+        <div class="feedback" id="feedbackText"></div>
+        <button class="btn-next" id="nextBtn" onclick="nextQuestion()" style="display:none;">తదుపరి ప్రశ్న (Next Question)</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1. అమీబా, హైడ్రా వంటి ఏకకణ లేదా సరళ జీవులలో వాయువు మార్పిడి ఏ పద్ధతి ద్వారా జరుగుతుంది? <br><small>How does gas exchange occur in unicellular organisms like Amoeba and Hydra?</small>",
+            options: [
+                "A) చర్మం ద్వారా (Through skin)",
+                "B) వ్యాపనం ద్వారా (Through diffusion)",
+                "C) మొప్పల ద్వారా (Through gills)",
+                "D) ఊపిరితిత్తుల ద్వారా (Through lungs)"
+            ],
+            answer: 1
+        },
+        {
+            question: "2. కప్ప చర్మం ద్వారా జరిపే శ్వాసక్రియను ఏమంటారు? <br><small>What is respiration through the skin called?</small>",
+            options: [
+                "A) పుపుస శ్వాసక్రియ (Pulmonary respiration)",
+                "B) మొప్పల శ్వాసక్రియ (Branchial respiration)",
+                "C) చర్మ శ్వాసక్రియ (Cutaneous respiration)",
+                "D) వాయుకోశ శ్వాసక్రియ (Tracheal respiration)"
+            ],
+            answer: 2
+        },
+        {
+            question: "3. బొద్దింక, మిడత వంటి కీటకాలలో వాయువు మార్పిడి ఏ వ్యవస్థ ద్వారా జరుగుతుంది? <br><small>Which system is responsible for gas exchange in insects like cockroaches?</small>",
+            options: [
+                "A) శ్వాసనాళ వ్యవస్థ (Tracheal system)",
+                "B) మొప్పల వ్యవస్థ (Gills)",
+                "C) ఊపిరితిత్తులు (Lungs)",
+                "D) చర్మం (Skin)"
+            ],
+            answer: 0
+        },
+        {
+            question: "4. చేపలలో శ్వాసక్రియ కోసం ప్రత్యేకంగా అభివృద్ధి చెందిರುವ అవయవాలు ఏవి? <br><small>Which organs are specially developed for respiration in fish?</small>",
+            options: [
+                "A) ఊపిరితిత్తులు (Lungs)",
+                "B) మొప్పలు / బ్రాంకియా (Gills / Branchia)",
+                "C) శ్వాసనాళాలు (Tracheae)",
+                "D) చర్మం (Skin)"
+            ],
+            answer: 1
+        },
+        {
+            question: "5. చేపలలో నీరు నోటి ద్వారా లోపలికి ప్రవేశించి ఏ రంధ్రం ద్వారా వెలుపలికి వస్తుంది? <br><small>Through which opening does water exit after entering through the mouth in fish?</small>",
+            options: [
+                "A) నాసికా రంధ్రం (Nasal aperture)",
+                "B) గిల్ చీలికల ద్వారా / గ్రసని రంధ్రం (Through gill slits / pharyngeal aperture)",
+                "C) వాయునాళం (Trachea)",
+                "D) గుదం (Anus)"
+            ],
+            answer: 1
+        },
+        {
+            question: "6. కప్ప ఏ పద్ధతుల ద్వారా శ్వాసక్రియ జరుపుకోగలదు? <br><small>Through which processes can a frog respire?</small>",
+            options: [
+                "A) చర్మ మరియు పుపుస శ్వాసక్రియ (Cutaneous and pulmonary respiration)",
+                "B) కేవలం మొప్పల ద్వారా మాత్రమే (Only through gills)",
+                "C) కేవలం శ్వాసనాళాల ద్వారా మాత్రమే (Only through tracheae)",
+                "D) పైవన్నీ (All of the above)"
+            ],
+            answer: 0
+        },
+        {
+            question: "7. నేలపై నివసించే సరీసృపాలు, పక్షులు మరియు క్షీరాలలో ఊపిరితిత్తుల ద్వారా జరిగే శ్వాసక్రియను ఏమంటారు? <br><small>Respiration through lungs in terrestrial reptiles, birds, and mammals is called:</small>",
+            options: [
+                "A) పుపుస శ్వాసక్రియ (Pulmonary respiration)",
+                "B) చర్మ శ్వాసక్రియ (Cutaneous respiration)",
+                "C) మొప్పల శ్వాసక్రియ (Branchial respiration)",
+                "D) నాళికా శ్వాసక్రియ (Tracheal respiration)"
+            ],
+            answer: 0
+        },
+        {
+            question: "8. కప్పలో నోరు మరియు తోలు ద్వారా జరిగే శ్వాసక్రియను ఏమంటారు? <br><small>Respiration through bucco-pharyngeal cavity in frogs is known as:</small>",
+            options: [
+                "A) ముఖ-గ్రసని కుహర శ్వాసక్రియ (Bucco-pharyngeal respiration)",
+                "B) కణ శ్వాసక్రియ (Cellular respiration)",
+                "C) వాయురహిత శ్వాసక్రియ (Anaerobic respiration)",
+                "D) పైవేవీ కావు (None of the above)"
+            ],
+            answer: 0
+        },
+        {
+            question: "9. సరీసృపాలు, పక్షులు మరియు క్షీరాలలో ప్రధాన శ్వాసనాంగాలు ఏవి? <br><small>What are the main respiratory organs in reptiles, birds, and mammals?</small>",
+            options: [
+                "A) ఊపిరితిత్తులు (Lungs)",
+                "B) మొప్పలు (Gills)",
+                "C) చర్మం (Skin)",
+                "D) శరీర ఉపపరితలం (Body surface)"
+            ],
+            answer: 0
+        },
+        {
+            question: "10. ఏకకణ జీవులలో ఆక్సిజన్ శరీర ఉపపరితలం ద్వారా దేని ద్వారా గ్రహించబడుతుంది? <br><small>How is oxygen absorbed through the body surface in unicellular organisms?</small>",
+            options: [
+                "A) ద్రవాభిసరణ (Osmosis)",
+                "B) వ్యాపనం (Diffusion)",
+                "C) ప్రసరణ (Circulation)",
+                "D) స్వేదనం (Distillation)"
+            ],
+            answer: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    function loadQuiz() {
+        answered = false;
+        let q = quizData[currentQuestion];
+        document.getElementById("questionText").innerHTML = q.question;
+        let optionsHtml = "";
+        q.options.forEach((opt, index) => {
+            optionsHtml += `<li onclick="checkAnswer(${index})">${opt}</li>`;
+        });
+        document.getElementById("optionsList").innerHTML = optionsHtml;
+        document.getElementById("feedbackText").innerHTML = "";
+        document.getElementById("nextBtn").style.display = "none";
+    }
+
+    function checkAnswer(selectedIndex) {
+        if (answered) return;
+        answered = true;
+        let q = quizData[currentQuestion];
+        let options = document.getElementById("optionsList").children;
+
+        if (selectedIndex === q.answer) {
+            options[selectedIndex].classList.add("correct");
+            document.getElementById("feedbackText").innerHTML = "సరైన సమాధానం! (Correct Answer!)";
+            document.getElementById("feedbackText").style.color = "#27ae60";
+            score++;
+        } else {
+            options[selectedIndex].classList.add("wrong");
+            options[q.answer].classList.add("correct");
+            document.getElementById("feedbackText").innerHTML = "తప్పు సమాధానం. ఆకుపచ్చ రంగులో ఉన్నది సరైనది.";
+            document.getElementById("feedbackText").style.color = "#e74c3c";
+        }
+        document.getElementById("nextBtn").style.display = "block";
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuiz();
+        } else {
+            document.getElementById("quizApp").innerHTML = `
+                <h2>క్విజ్ పూర్తయింది (Quiz Completed)</h2>
+                <div class="creator-info" style="margin-bottom: 15px;">Prepared by A. Rambabu, S.A. Biology</div>
+                <p class="score-card">మీ స్కోర్ (Your Score): ${score} / ${quizData.length}</p>
+                <button class="btn-next" onclick="location.reload()">మళ్లీ ప్రయత్నించండి (Try Again)</button>
+            `;
+        }
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
