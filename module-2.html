@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology: Module 2 - Circulation & Excretion</title>
+    <style>
+        body {
+            background-color: #111b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 15px;
+            margin: 0;
+        }
+        .quiz-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .creator-box {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #111827;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+        .creator-box h3 {
+            color: #38bdf8;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+        }
+        .creator-box p {
+            color: #4ade80;
+            font-size: 13px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #374151;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .opt-btn {
+            background-color: #374151;
+            color: white;
+            padding: 10px 14px;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .opt-btn:hover {
+            background-color: #4b5563;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            background-color: #064e3b;
+            border-left: 4px solid #10b981;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #d1fae5;
+        }
+        h2 {
+            text-align: center;
+            color: #facc15;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .tags {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .tag {
+            background-color: #1e4620;
+            color: #4ade80;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <!-- Creator Details Banner -->
+    <div class="creator-box">
+        <h3>Created by: A. Rambabu</h3>
+        <p>School Assistant (Biological Science)</p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">10TH BIOLOGY</span>
+        <span class="tag" style="background-color: #1e3a8a; color: #93c5fd;">MODULE 2: CIRCULATION & EXCRETION</span>
+    </div>
+    <h2>భాగం-1: రవాణా వ్యవస్థ - ప్రాక్టీస్ క్విజ్</h2>
+
+    <!-- Question 1 -->
+    <div class="question-box" id="q1">
+        <p><strong>Q1. Which blood vessels carry blood away from the heart to various parts of the body?</strong><br>
+        గుండె నుండి శరీరంలోని వివిధ భాగాలకు రక్తాన్ని తీసుకొని వెళ్లే రక్తనాళాలు ఏవి?</p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(1, this, false)">A. Veins / సిరలు</button>
+            <button class="opt-btn" onclick="answer(1, this, true)">B. Arteries / ధమనులు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">C. Capillaries / రక్తకేశనాళికలు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">D. Vena cava / మహాసిర</button>
+        </div>
+        <div class="explanation" id="exp1"><strong>Correct: B. Arteries / ధమనులు</strong><br>ధమనులు గుండె నుండి శుద్ధ రక్తాన్ని (అశుద్ధ రక్తం పుపుస ధమని ద్వారా కాక) శరీర భాగాలకు రవాణా చేస్తాయి.</div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-box" id="q2">
+        <p><strong>Q2. Which blood cells play a major role in blood clotting?</strong><br>
+        రక్తం గడ్డకట్టడంలో ప్రధాన పాత్ర వహించే రక్త కణాలు ఏవి?</p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(2, this, false)">A. Red Blood Cells (RBC) / ఎర్ర రక్త కణాలు</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">B. White Blood Cells (WBC) / తెల్ల రక్త కణాలు</button>
+            <button class="opt-btn" onclick="answer(2, this, true)">C. Blood Platelets / రక్త ఫలకికలు</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">D. Blood plasma / రక్త ప్లాస్మా</button>
+        </div>
+        <div class="explanation" id="exp2"><strong>Correct: C. Blood Platelets / రక్త ఫలకికలు</strong><br>గాయాలు అయినప్పుడు రక్తస్రావం కాకుండా రక్తం గడ్డకట్టడంలో రక్త ఫలకికలు సహాయపడతాయి.</div>
+    </div>
+
+</div>
+
+<script>
+function answer(qNum, button, isCorrect) {
+    const qBox = document.getElementById('q' + qNum);
+    const buttons = qBox.getElementsByClassName('opt-btn');
+    const exp = document.getElementById('exp' + qNum);
+
+    for(let btn of buttons) {
+        btn.disabled = true;
+        if(btn.getAttribute('onclick').includes('true')) {
+            btn.style.backgroundColor = '#065f46';
+            btn.style.borderColor = '#10b981';
+        }
+    }
+
+    if(!isCorrect) {
+        button.style.backgroundColor = '#7f1d1d';
+        button.style.borderColor = '#ef4444';
+    }
+
+    exp.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
