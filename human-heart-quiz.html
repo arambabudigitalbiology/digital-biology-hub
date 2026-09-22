@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology: Human Heart Quiz - మానవ హృదయ నిర్మాణం</title>
+    <style>
+        body {
+            background-color: #111b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 15px;
+            margin: 0;
+        }
+        .quiz-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .creator-box {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #111827;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+        .creator-box h3 {
+            color: #facc15;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+        }
+        .creator-box p {
+            color: #4ade80;
+            font-size: 13px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #374151;
+        }
+        .question-box p {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .telugu-text {
+            color: #facc15;
+            font-weight: bold;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .opt-btn {
+            background-color: #374151;
+            color: white;
+            padding: 10px 14px;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .opt-btn:hover {
+            background-color: #4b5563;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            background-color: #064e3b;
+            border-left: 4px solid #10b981;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #d1fae5;
+        }
+        h2 {
+            text-align: center;
+            color: #facc15;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .tags {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .tag {
+            background-color: #1e3a8a;
+            color: #93c5fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .score-card {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #111827;
+            border-radius: 8px;
+            border: 2px solid #10b981;
+            margin-top: 20px;
+        }
+        .score-card h3 {
+            color: #4ade80;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .retry-btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .retry-btn:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <!-- Creator Details Banner -->
+    <div class="creator-box">
+        <h3>Created by: A. Rambabu</h3>
+        <p>S.A. Biology</p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">10TH BIOLOGY</span>
+        <span class="tag" style="background-color: #1e4620; color: #4ade80;">MODULE 2: HUMAN HEART</span>
+    </div>
+    <h2>మానవ హృదయ నిర్మాణం - ముఖ్యమైన బిట్లు (Quiz)</h2>
+
+    <!-- Q1 -->
+    <div class="question-box" id="q1">
+        <p><strong>Q1. How many chambers are present in the human heart?</strong><br>
+        <span class="telugu-text">మానవ హృదయంలో మొత్తం ఎన్ని గదులు ఉంటాయి?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(1, this, false)">A. 2 / రెండు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">B. 3 / మూడు</button>
+            <button class="opt-btn" onclick="answer(1, this, true)">C. 4 / నాలుగు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">D. 5 / ఐదు</button>
+        </div>
+        <div class="explanation" id="exp1"><strong>Correct: C. 4 / నాలుగు</strong><br>మానవ హృదయంలో రెండు కర్ణికలు (Atria), రెండు జఠరికలు (Ventricles) కలిసి మొత్తం 4 గదులు ఉంటాయి.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-box" id="q2">
+        <p><strong>Q2. Which chambers of the heart receive blood from various parts of the body?</strong><br>
+        <span class="telugu-text">శరీర భాగాల నుండి రక్తాన్ని స్వీకరించే గుండె గదులు ఏవి?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(2, this, true)">A. Atria / కర్ణికలు</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">B. Ventricles / జఠరికలు</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">C. Valves / కవాటాలు</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">D. Arteries / ధమనులు</button>
+        </div>
+        <div class="explanation" id="exp2"><strong>Correct: A. Atria / కర్ణికలు</strong><br>కుడి మరియు ఎడమ కర్ణికలు శరీరం మరియు ఊపిరితిత్తుల నుండి రక్తాన్ని స్వీకరిస్తాయి.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-box" id="q3">
+        <p><strong>Q3. Which chambers pump blood out of the heart to various body parts and lungs?</strong><br>
+        <span class="telugu-text">గుండె నుండి శరీర భాగాలకు మరియు ఊపిరితిత్తులకు రక్తాన్ని పంప్ చేసే గదులు ఏవి?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(3, this, false)">A. Atria / కర్ణికలు</button>
+            <button class="opt-btn" onclick="answer(3, this, true)">B. Ventricles / జఠరికలు</button>
+            <button class="opt-btn" onclick="answer(3, this, false)">C. Veins / సిరలు</button>
+            <button class="opt-btn" onclick="answer(3, this, false)">D. Capillaries / రక్తకేశనాళికలు</button>
+        </div>
+        <div class="explanation" id="exp3"><strong>Correct: B. Ventricles / జఠరికలు</strong><br>జఠరికలు దళసరి గోడలను కలిగి ఉండి రక్తాన్ని వేగంగా పంప్ చేస్తాయి.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-box" id="q4">
+        <p><strong>Q4. Which valve is present between the right atrium and right ventricle?</strong><br>
+        <span class="telugu-text">కుడి కర్ణిక మరియు కుడి జఠరికల మధ్య ఉండే కవాటం ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(4, this, false)">A. Bicuspid valve / ద్విపత్ర కవాటం</button>
+            <button class="opt-btn" onclick="answer(4, this, true)">B. Tricuspid valve / త్రిపత్ర కవాటం</button>
+            <button class="opt-btn" onclick="answer(4, this, false)">C. Semilunar valve / అర్ధచంద్రాకార కవాటం</button>
+            <button class="opt-btn" onclick="answer(4, this, false)">D. Aortic valve / మహాధమని కవాటం</button>
+        </div>
+        <div class="explanation" id="exp4"><strong>Correct: B. Tricuspid valve / త్రిపత్ర కవాటం</strong><br>కుడి కర్ణిక-జఠరిక రంధ్రం వద్ద మూడు తపత్రాలతో కూడిన త్రిపత్ర కవాటం ఉంటుంది.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-box" id="q5">
+        <p><strong>Q5. Which valve is also known as the Mitral valve?</strong><br>
+        <span class="telugu-text">ఏ కవాటాన్ని 'మిట్రల్ కవాటం' (Mitral valve) అని కూడా పిలుస్తారు?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(5, this, true)">A. Bicuspid valve / ద్విపత్ర కవాటం</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">B. Tricuspid valve / త్రిపత్ర కవాటం</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">C. Pulmonary valve / పుపుస కవాటం</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">D. Eustachian valve / యుస్టాచియన్ కవాటం</button>
+        </div>
+        <div class="explanation" id="exp5"><strong>Correct: A. Bicuspid valve / ద్విపత్ర కవాటం</strong><br>ఎడమ కర్ణిక మరియు ఎడమ జఠరికల మధ్య ఉండే ద్విపత్ర కవాటాన్ని మిట్రల్ కవాటం అంటారు.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-box" id="q6">
+        <p><strong>Q6. Which blood vessel carries oxygenated blood from the lungs to the heart?</strong><br>
+        <span class="telugu-text">ఊపిరితిత్తుల నుండి గుండెకు శుద్ధ రక్తాన్ని తీసుకొచ్చే రక్తనాళం ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(6, this, false)">A. Pulmonary artery / పుపుస ధమని</button>
+            <button class="opt-btn" onclick="answer(6, this, true)">B. Pulmonary vein / పుపుస సిర</button>
+            <button class="opt-btn" onclick="answer(6, this, false)">C. Vena cava / మహాసిర</button>
+            <button class="opt-btn" onclick="answer(6, this, false)">D. Coronary artery / కరొనరీ ధమని</button>
+        </div>
+        <div class="explanation" id="exp6"><strong>Correct: B. Pulmonary vein / పుపుస సిర</strong><br>అపవాదకంగా పుపుస సిరలు ఆక్సిజన్ ఉన్న శుద్ధ రక్తాన్ని ఊపిరితిత్తుల నుండి ఎడమ కర్ణికకు చేర్చుతాయి.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-box" id="q7">
+        <p><strong>Q7. Which blood vessel carries deoxygenated blood from the heart to the lungs?</strong><br>
+        <span class="telugu-text">గుండె నుండి అశుద్ధ రక్తాన్ని ఊపిరితిత్తులకు చేరవేసే రక్తనాళం ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(7, this, true)">A. Pulmonary artery / పుపుస ధమని</button>
+            <button class="opt-btn" onclick="answer(7, this, false)">B. Pulmonary vein / పుపుస సిర</button>
+            <button class="opt-btn" onclick="answer(7, this, false)">C. Aorta / మహాధమని</button>
+            <button class="opt-btn" onclick="answer(7, this, false)">D. Renal artery / మూత్రపిండ ధమని</button>
+        </div>
+        <div class="explanation" id="exp7"><strong>Correct: A. Pulmonary artery / పుపుస ధమని</strong><br>పుపుస ధమని కుడి జఠరిక నుండి అశుద్ధ రక్తాన్ని ఊపిరితిత్తులకు పంపుతుంది.</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-box" id="q8">
+        <p><strong>Q8. What is known as the natural pacemaker of the heart?</strong><br>
+        <span class="telugu-text">గుండె యొక్క సహజ పేస్‌మేకర్ (Pacemaker) అని దేనిని పిలుస్తారు?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(8, this, false)">A. AV Node / ఎ.వి. నోడ్</button>
+            <button class="opt-btn" onclick="answer(8, this, true)">B. SA Node (Sinoatrial node) / ఎస్.ఎ. నోడ్</button>
+            <button class="opt-btn" onclick="answer(8, this, false)">C. Purkinje fibers / పుర్కింజే తంతువులు</button>
+            <button class="opt-btn" onclick="answer(8, this, false)">D. Bundle of His / హిస్ కట్ల</button>
+        </div>
+        <div class="explanation" id="exp8"><strong>Correct: B. SA Node / ఎస్.ఎ. నోడ్</strong><br>కుడి కర్ణిక గోడపై ఉండే సైనో ఆరిక్యులర్ నోడ్ (SA Node) గుండె స్పందనకు విద్యుత్ ప్రేరణలను ఉత్పత్తి చేస్తుంది.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-box" id="q9">
+        <p><strong>Q9. What is the double-layered protective membrane covering the heart?</strong><br>
+        <span class="telugu-text">గుండెను కప్పి ఉండే ద్విఫలక రక్షక పొరను ఏమంటారు?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(9, this, false)">A. Pleura / ప్ల్యూరా</button>
+            <button class="opt-btn" onclick="answer(9, this, true)">B. Pericardium / పెరికార్డియం (పరిహృత్త్వచం)</button>
+            <button class="opt-btn" onclick="answer(9, this, false)">C. Meninges / మెనింజెస్</button>
+            <button class="opt-btn" onclick="answer(9, this, false)">D. Peritoneum / పెరిటోనియం</button>
+        </div>
+        <div class="explanation" id="exp9"><strong>Correct: B. Pericardium / పెరికార్డియం</strong><br>పెరికార్డియం పొర మరియు దాని మధ్య ఉండే ద్రవం గుండెకు బాహ్యఘాతాల నుండి రక్షణ కల్పిస్తుంది.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-box" id="q10">
+        <p><strong>Q10. Which is the largest artery in the human body?</strong><br>
+        <span class="telugu-text">మానవ శరీరంలో అతిపెద్ద ధమని ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(10, this, false)">A. Pulmonary artery / పుపుస ధమని</button>
+            <button class="opt-btn" onclick="answer(10, this, true)">B. Aorta / మహాధమని</button>
+            <button class="opt-btn" onclick="answer(10, this, false)">C. Carotid artery / కెరాటిడ్ ధమని</button>
+            <button class="opt-btn" onclick="answer(10, this, false)">D. Coronary artery / కరొనరీ ధమని</button>
+        </div>
+        <div class="explanation" id="exp10"><strong>Correct: B. Aorta / మహాధమని</strong><br>ఎడమ జఠరిక నుండి బయలుదేరి శరీర భాగాలన్నింటికి శుద్ధ రక్తాన్ని అందించే ప్రధాన మరియు అతిపెద్ద ధమని మహాధమని.</div>
+    </div>
+
+    <!-- Score Card Section -->
+    <div class="score-card" id="scoreCard">
+        <h3 id="scoreTitle">🎉 అద్భుతం / Excellent!</h3>
+        <p id="scoreText" style="font-size: 16px; margin: 10px 0;"></p>
+        <button class="retry-btn" onclick="location.reload()">🔄 మళ్లీ ప్రయత్నించండి (Retry)</button>
+    </div>
+
+</div>
+
+<script>
+let score = 0;
+let answeredCount = 0;
+const totalQuestions = 10;
+
+function answer(qNum, button, isCorrect) {
+    const qBox = document.getElementById('q' + qNum);
+    const buttons = qBox.getElementsByClassName('opt-btn');
+    const exp = document.getElementById('exp' + qNum);
+
+    // Prevent multiple clicks on the same question
+    if (qBox.getAttribute('data-answered') === 'true') return;
+    qBox.setAttribute('data-answered', 'true');
+
+    answeredCount++;
+
+    for(let btn of buttons) {
+        btn.disabled = true;
+        if(btn.getAttribute('onclick').includes('true')) {
+            btn.style.backgroundColor = '#065f46';
+            btn.style.borderColor = '#10b981';
+        }
+    }
+
+    if(isCorrect) {
+        score++;
+    } else {
+        button.style.backgroundColor = '#7f1d1d';
+        button.style.borderColor = '#ef4444';
+    }
+
+    exp.style.display = 'block';
+
+    // Check if all questions are answered
+    if (answeredCount === totalQuestions) {
+        showScoreCard();
+    }
+}
+
+function showScoreCard() {
+    const scoreCard = document.getElementById('scoreCard');
+    const scoreTitle = document.getElementById('scoreTitle');
+    const scoreText = document.getElementById('scoreText');
+
+    scoreText.innerHTML = `మీరు <strong>${totalQuestions}</strong> ప్రశ్నలకు గాను <strong>${score}</strong> మార్కులు సాధించారు!`;
+
+    if (score === 10) {
+        scoreTitle.innerHTML = "🏆 అత్యుత్తమం / Excellent!";
+    } else if (score >= 7) {
+        scoreTitle.innerHTML = "🌟 చాలా బాగుంది / Very Good!";
+    } else {
+        scoreTitle.innerHTML = "👍 బాగా ప్రయత్నించారు / Good Effort!";
+    }
+
+    scoreCard.style.display = 'block';
+    
+    // Scroll smoothly to the score card
+    scoreCard.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
