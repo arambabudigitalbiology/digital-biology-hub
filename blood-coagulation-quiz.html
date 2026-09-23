@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Biology: Blood Coagulation Quiz - రక్తం గడ్డకట్టడం</title>
+    <style>
+        body {
+            background-color: #111b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 15px;
+            margin: 0;
+        }
+        .quiz-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .creator-box {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #111827;
+            border-radius: 8px;
+            border: 1px solid #374151;
+        }
+        .creator-box h3 {
+            color: #facc15;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+        }
+        .creator-box p {
+            color: #4ade80;
+            font-size: 13px;
+            margin: 0;
+            font-weight: bold;
+        }
+        .question-box {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #374151;
+        }
+        .question-box p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+        .telugu-text {
+            color: #facc15;
+            font-weight: bold;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .opt-btn {
+            background-color: #374151;
+            color: white;
+            padding: 10px 14px;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .opt-btn:hover {
+            background-color: #4b5563;
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            background-color: #064e3b;
+            border-left: 4px solid #10b981;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #d1fae5;
+        }
+        h2 {
+            text-align: center;
+            color: #facc15;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .tags {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .tag {
+            background-color: #1e3a8a;
+            color: #93c5fd;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .score-card {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #111827;
+            border-radius: 8px;
+            border: 2px solid #10b981;
+            margin-top: 20px;
+        }
+        .score-card h3 {
+            color: #4ade80;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .retry-btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .retry-btn:hover {
+            background-color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <!-- Creator Details Banner -->
+    <div class="creator-box">
+        <h3>Created by: A. Rambabu</h3>
+        <p>S.A. Biology</p>
+    </div>
+
+    <div class="tags">
+        <span class="tag">10TH BIOLOGY</span>
+        <span class="tag" style="background-color: #1e4620; color: #4ade80;">MODULE 2: BLOOD COAGULATION</span>
+    </div>
+    <h2>రక్తం గడ్డకట్టడం (Blood Coagulation) - క్విజ్</h2>
+
+    <!-- Q1 -->
+    <div class="question-box" id="q1">
+        <p><strong>Q1. Which blood cells play a major role in blood clotting?</strong><br>
+        <span class="telugu-text">రక్తం గడ్డకట్టడంలో ప్రధాన పాత్ర వహించే రక్త కణాలు ఏవి?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(1, this, false)">A. Red Blood Cells (RBC) / ఎర్ర రక్త కణాలు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">B. White Blood Cells (WBC) / తెల్ల రక్త కణాలు</button>
+            <button class="opt-btn" onclick="answer(1, this, true)">C. Blood Platelets / రక్త ఫలకికలు</button>
+            <button class="opt-btn" onclick="answer(1, this, false)">D. Blood plasma / రక్త ప్లాస్మా</button>
+        </div>
+        <div class="explanation" id="exp1"><strong>Correct: C. Blood Platelets / రక్త ఫలకికలు</strong><br>రక్త ఫలకికలు (Platelets) గాయాలైనప్పుడు రక్తం గడ్డకట్టడానికి (Blood clotting) సహాయపడతాయి.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-box" id="q2">
+        <p><strong>Q2. Which protein present in the blood helps in blood coagulation?</strong><br>
+        <span class="telugu-text">రక్తం గడ్డకట్టడంలో సహాయపడే ప్లాస్మా ప్రొటీన్ ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(2, this, false)">A. Hemoglobin / హీమోగ్లోబిన్</button>
+            <button class="opt-btn" onclick="answer(2, this, true)">B. Fibrinogen / ఫైబ్రినోజెన్</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">C. Albumin / అల్బుమిన్</button>
+            <button class="opt-btn" onclick="answer(2, this, false)">D. Globulin / గ్లోబ్యುలిన్</button>
+        </div>
+        <div class="explanation" id="exp2"><strong>Correct: B. Fibrinogen / ఫైబ్రినోజెన్</strong><br>ప్లాస్మాలో ఉండే ఫైబ్రినోజెన్ ప్రొటీన్ తంతువులుగా మారి రక్తం గడ్డకట్టేలా చేస్తుంది.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-box" id="q3">
+        <p><strong>Q3. Which vitamin is essential for the coagulation of blood?</strong><br>
+        <span class="telugu-text">రక్తం గడ్డకట్టడానికి ఏ విటమిన్ అత్యంత అవసరం?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(3, this, false)">A. Vitamin A / విటమిన్ ఎ</button>
+            <button class="opt-btn" onclick="answer(3, this, false)">B. Vitamin B / విటమిన్ బి</button>
+            <button class="opt-btn" onclick="answer(3, this, false)">C. Vitamin C / విటమిన్ సి</button>
+            <button class="opt-btn" onclick="answer(3, this, true)">D. Vitamin K / విటమిన్ కె</button>
+        </div>
+        <div class="explanation" id="exp3"><strong>Correct: D. Vitamin K / విటమిన్ కె</strong><br>విటమిన్ కె ప్రొత్రాంబిన్ ఉత్పత్తికి తోడ్పడి రక్తం గడ్డకట్టడంలో ముఖ్యపాత్ర పోషిస్తుంది.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-box" id="q4">
+        <p><strong>Q4. Which mineral or metal ion is necessary for blood clotting?</strong><br>
+        <span class="telugu-text">రక్తం గడ్డకట్టడానికి కావలసిన ఖనిజ లవణం / అయాన్ ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(4, this, true)">A. Calcium (Ca²⁺) / కాల్షియం</button>
+            <button class="opt-btn" onclick="answer(4, this, false)">B. Iron (Fe) / ఇనుము</button>
+            <button class="opt-btn" onclick="answer(4, this, false)">C. Sodium (Na) / సోడియం</button>
+            <button class="opt-btn" onclick="answer(4, this, false)">D. Potassium (K) / పొటాషియం</button>
+        </div>
+        <div class="explanation" id="exp4"><strong>Correct: A. Calcium (Ca²⁺) / కాల్షియం</strong><br>ప్రొత్రాంబిన్ నుండి త్రాంబిన్ ఏర్పడటానికి కాల్షియం అయాన్లు అవసరం.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-box" id="q5">
+        <p><strong>Q5. Name the natural anticoagulant present in the blood vessels that prevents clotting inside the body.</strong><br>
+        <span class="telugu-text">రక్తనాళాల内 రక్తం గడ్డకట్టకుండా నిరోధించే సహజ సిద్ధమైన ప్రతిస్కందకం (Anticoagulant) ఏది?</span></p>
+        <div class="options">
+            <button class="opt-btn" onclick="answer(5, this, true)">A. Heparin / హెపారిన్</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">B. Thrombin / త్రాంబిన్</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">C. Fibrin / ఫైబ్రిన్</button>
+            <button class="opt-btn" onclick="answer(5, this, false)">D. Histamine / హిస్టమైన్</button>
+        </div>
+        <div class="explanation" id="exp5"><strong>Correct: A. Heparin / హెపారిన్</strong><br>కాలేయం ఉత్పత్తి చేసే హెపారిన్ రక్తం గడ్డకట్టకుండా నిరోధిస్తుంది.</div>
+    </div>
+
+    <!-- Score Card Section -->
+    <div class="score-card" id="scoreCard">
+        <h3 id="scoreTitle">🎉 అత్యుత్తమం / Excellent!</h3>
+        <p id="scoreText" style="font-size: 16px; margin: 10px 0;"></p>
+        <button class="retry-btn" onclick="location.reload()">🔄 మళ్లీ ప్రయత్నించండి (Retry)</button>
+    </div>
+
+</div>
+
+<script>
+let score = 0;
+let answeredCount = 0;
+const totalQuestions = 5;
+
+function answer(qNum, button, isCorrect) {
+    const qBox = document.getElementById('q' + qNum);
+    const buttons = qBox.getElementsByClassName('opt-btn');
+    const exp = document.getElementById('exp' + qNum);
+
+    if (qBox.getAttribute('data-answered') === 'true') return;
+    qBox.setAttribute('data-answered', 'true');
+
+    answeredCount++;
+
+    for(let btn of buttons) {
+        btn.disabled = true;
+        if(btn.getAttribute('onclick').includes('true')) {
+            btn.style.backgroundColor = '#065f46';
+            btn.style.borderColor = '#10b981';
+        }
+    }
+
+    if(isCorrect) {
+        score++;
+    } else {
+        button.style.backgroundColor = '#7f1d1d';
+        button.style.borderColor = '#ef4444';
+    }
+
+    exp.style.display = 'block';
+
+    if (answeredCount === totalQuestions) {
+        showScoreCard();
+    }
+}
+
+function showScoreCard() {
+    const scoreCard = document.getElementById('scoreCard');
+    const scoreTitle = document.getElementById('scoreTitle');
+    const scoreText = document.getElementById('scoreText');
+
+    scoreText.innerHTML = `మీరు <strong>${totalQuestions}</strong> ప్రశ్నలకు గాను <strong>${score}</strong> మార్కులు సాధించారు!`;
+
+    if (score === 5) {
+        scoreTitle.innerHTML = "🏆 అత్యుత్తమం / Excellent!";
+    } else if (score >= 3) {
+        scoreTitle.innerHTML = "🌟 చాలా బాగుంది / Very Good!";
+    } else {
+        scoreTitle.innerHTML = "👍 బాగా ప్రయత్నించారు / Good Effort!";
+    }
+
+    scoreCard.style.display = 'block';
+    scoreCard.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
