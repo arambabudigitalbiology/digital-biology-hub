@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Transport Flashcards</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 22px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .flashcard-container {
+            perspective: 1000px;
+            max-width: 500px;
+            height: 250px;
+            margin: 20px auto;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 2px solid #ffff00;
+        }
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .front {
+            background-color: #111111;
+            color: #ffff00;
+        }
+        .back {
+            background-color: #222222;
+            color: #00ff00;
+            transform: rotateY(180deg);
+        }
+        .nav-buttons {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #cccc00;
+        }
+        .counter {
+            margin-top: 15px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Plant Transport - Interactive Flashcards<br>మొక్కల్లో పదార్థాల రవాణా - ఫ్లాష్ కార్డ్స్</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="flashcard-container">
+        <div class="flashcard" id="card" onclick="flipCard()">
+            <div class="front" id="card-front">Loading...</div>
+            <div class="back" id="card-back">Loading...</div>
+        </div>
+    </div>
+
+    <div class="counter" id="counter-text">Card 1 of 10</div>
+
+    <div class="nav-buttons">
+        <button onclick="prevCard()">Previous / వెనుకకు</button>
+        <button onclick="nextCard()">Next / తదుపరి</button>
+    </div>
+
+    <script>
+        const flashcardsData = [
+            { front: "Xylem / దారువు", back: "Transports water and minerals from roots to other parts. / వేర్ల నుండి నీరు మరియు ఖనిజ లవణాలను రవాణా చేస్తుంది." },
+            { front: "Phloem / పోషక కణజాలం", back: "Transports food materials from leaves to other parts. / ఆకులలో తయారైన ఆహారాన్ని మొక్కల వివిధ భాగాలకు రవాణా చేస్తుంది." },
+            { front: "Root Hairs / మూలకేశాలు", back: "Hair-like structures that absorb water and minerals from soil. / నేల నుండి నీటిని, లవణాలను శోషించే సన్నని దారాలు." },
+            { front: "Osmosis / ద్రాభిసరణ", back: "Process by which water enters root hairs from soil. / వేర్లలోకి నీరు ప్రవేశించడానికి తోడ్పడే ప్రక్రియ." },
+            { front: "Root Pressure / వేరు పీడనం", back: "Pressure developed in roots that pushes water upwards. / వేర్లలో ఏర్పడి నీటిని పైకి నెట్టే పీడనం." },
+            { front: "Transpiration / భాస్పోత్సేకం", back: "Loss of water in the form of water vapor from aerial parts. / మొక్కల ఆకుపచ్చని భాగాల నుండి నీరు ఆవిరి రూపంలో పోవడం." },
+            { front: "Stomata / పత్రరంధ్రాలు", back: "Pores on leaves through which transpiration takes place. / భాస్పోత్సేకం జరిగే ఆకులపై ఉండే సూక్ష్మ రంధ్రాలు." },
+            { front: "Guard Cells / రక్షక కణాలు", back: "Cells that control the opening and closing of stomata. / పత్రరంధ్రాల తెరుచుకోవడం, మూసుకోవడాన్ని నియంత్రించే కణాలు." },
+            { front: "Aphids / ఎఫిడ్స్ (పచ్చపురుగులు)", back: "Insects used by scientists to study food transport in phloem. / పోషక కణజాలం ద్వారా ఆహార రవాణాను అధ్యయనం చేయడానికి ఉపయోగపడే కీటకాలు." },
+            { front: "Honey-dew / తేనె (Honey-dew)", back: "Sweet sugary fluid excreted by aphids from plant sap. / ఎఫిడ్స్ విసర్జించే తీపి ద్రావం." }
+        ];
+
+        let currentIndex = 0;
+        const card = document.getElementById("card");
+        const cardFront = document.getElementById("card-front");
+        const cardBack = document.getElementById("card-back");
+        const counterText = document.getElementById("counter-text");
+
+        function updateCard() {
+            card.classList.remove("flipped");
+            setTimeout(() => {
+                cardFront.innerText = flashcardsData[currentIndex].front;
+                cardBack.innerText = flashcardsData[currentIndex].back;
+                counterText.innerText = `Card ${currentIndex + 1} of ${flashcardsData.length}`;
+            }, 200);
+        }
+
+        function flipCard() {
+            card.classList.toggle("flipped");
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % flashcardsData.length;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + flashcardsData.length) % flashcardsData.length;
+            updateCard();
+        }
+
+        updateCard();
+    </script>
+</body>
+</html>
