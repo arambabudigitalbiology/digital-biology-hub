@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation in Plants - Quiz</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 22px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .quiz-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .question {
+            font-size: 17px;
+            color: #ffff00;
+            margin-bottom: 15px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            background-color: #222222;
+            color: #ffffff;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #444;
+            font-size: 15px;
+            text-align: left;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #333333;
+        }
+        .options button.correct {
+            background-color: #008000 !important;
+            color: #ffffff !important;
+            border-color: #00ff00 !important;
+        }
+        .options button.wrong {
+            background-color: #800000 !important;
+            color: #ffffff !important;
+            border-color: #ff0000 !important;
+        }
+        #next-btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Transportation in Plants - Interactive Quiz<br>మొక్కల్లో పదార్థాల రవాణా - ఇంటరాక్టివ్ క్విజ్</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="quiz-container" id="quiz-box">
+        <div id="question-text" class="question"></div>
+        <div class="options" id="options-list"></div>
+        <button onclick="nextQuestion()" id="next-btn">Next / తదుపరి ప్రశ్న</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const quizData = [
+            {
+                q: "1. Which tissue is responsible for the transport of water and minerals in plants? / మొక్కలలో నీరు మరియు ఖనిజ లవణాలను రవాణా చేసే కణజాలం ఏది?",
+                options: ["Phloem / పోషక కణజాలం", "Xylem / దారువు", "Parenchyma / పేరెంచైమా", "Collenchyma"],
+                answer: 1
+            },
+            {
+                q: "2. Which tissue is responsible for the transport of food materials in plants? / మొక్కలలో ఆహార పదార్థాలను రవాణా చేసే కణజాలం ఏది?",
+                options: ["Xylem / దారువు", "Phloem / పోషక కణజాలం", "Cortex / వల్కలం", "Cambium / క్యాంబియం"],
+                answer: 1
+            },
+            {
+                q: "3. Hair-like structures that absorb water from the soil are called? / నేల నుండి నీటిని పీల్చుకునే వేరు వెండ్రుకలను ఏమంటారు?",
+                options: ["Root hairs / మూలకేశాలు", "Stomata / పత్రరంధ్రాలు", "Lenticels / వాయురంధ్రాలు", "Vessels / నాళాలు"],
+                answer: 0
+            },
+            {
+                q: "4. The process of entry of water into root hairs from soil is based on? / మూలకేశాలలోకి నీరు ప్రవేశించడానికి ప్రధాన కారణం ఏ ప్రక్రియ?",
+                options: ["Diffusion / వ్యాపనం", "Osmosis / ద్రాభిసరణ", "Transpiration / భాస్పోత్సేకం", "Photosynthesis / కిరణజన్య సంయోగక్రియ"],
+                answer: 1
+            },
+            {
+                q: "5. The pressure developed in the roots that pushes water upwards is called? / వేర్లలో ఏర్పడి నీటిని పైకి నెట్టే పీడనాన్ని ఏమంటారు?",
+                options: ["Root pressure / వేరు పీడనం", "Osmotic pressure / ద్రాభిసరణ పీడనం", "Turgor pressure / టర్గర్ పీడనం", "Blood pressure / రక్త పీడనం"],
+                answer: 0
+            },
+            {
+                q: "6. Loss of water in the form of water vapor from aerial parts of plants is called? / మొక్కల భాగాల నుండి నీరు ఆవిరి రూపంలో బయటకు పోవడాన్ని ఏమంటారు?",
+                options: ["Respiration / శ్వాసక్రియ", "Transpiration / భాస్పోత్సేకం", "Evaporation / ఆవిరిభవనం", "Condensation / సంగమనం"],
+                answer: 1
+            },
+            {
+                q: "7. Pores present on leaves through which transpiration takes place are? / భాస్పోత్సేకం జరిగే ఆకుల మీద ఉండే రంధ్రాలు ఏవి?",
+                options: ["Lenticels / వాయురంధ్రాలు", "Stomata / పత్రరంధ్రాలు", "Hydathodes / హైడాతోడ్స్", "Root hairs / మూలకేశాలు"],
+                answer: 1
+            },
+            {
+                q: "8. The tensile strength of water columns in xylem is due to? / దారు నాళాలలో నీటి అణువుల మధ్య ఉండే బలమైన ఆకర్షణను ఏమంటారు?",
+                options: ["Cohesion / సంశ్లేషణ (Cohesion)", "Adhesion", "Surface tension / తలతన్యత", "Viscosity / స్నిగ్ధత"],
+                answer: 0
+            },
+            {
+                q: "9. Insects that help scientists study food transport in plants through phloem are? / మొక్కలలో పోషక కణజాలం ద్వారా ఆహార రవాణాను అధ్యయనం చేయడానికి ఉపయోగపడే కీటకాలు?",
+                options: ["Houseflies / ఈగలు", "Aphids / ఎఫిడ్స్ (పచ్చపురుగులు)", "Mosquitoes / దోమలు", "Butterflies / సీతాకోకచిలుకలు"],
+                answer: 1
+            },
+            {
+                q: "10. The sugary fluid excreted by aphids is commonly known as? / ఎఫిడ్స్ విసర్జించే తీపి ద్రావాన్ని ఏమంటారు?",
+                options: ["Honey-dew / తేనె (honey-dew)", "Nectar / మకరందం", "Sap / రసం", "Serum / సీరం"],
+                answer: 0
+            },
+            {
+                q: "11. Mineral ions are absorbed by roots mainly in the form of? / వేర్లు ఖనిజ లవణాలను ఏ రూపంలో గ్రహిస్తాయి?",
+                options: ["Solid crystals / ఘన రూపం", "Charged ions / విద్యుదావేశ అయిన్లు", "Neutral molecules / తటస్థ అణువులు", "Gas / వాయువు"],
+                answer: 1
+            },
+            {
+                q: "12. In roots, the xylem tissue is arranged towards the? / వేర్లలో దారు కణజాలం ఏ విధంగా అమరి ఉంటుంది?",
+                options: ["Center / కేంద్రం వైపు", "Periphery / పరిధి వైపు", "Bark / బెరడు వైపు", "Cuticle / ఉపచర్మం వైపు"],
+                answer: 0
+            },
+            {
+                q: "13. Opening and closing of stomata are controlled by? / పత్రరంధ్రాల తెరుచుకోవడం మరియు మూసుకోవడం ఎవరి ద్వారా నియంత్రించబడుతుంది?",
+                options: ["Guard cells / రక్షక కణాలు", "Epidermal cells / బాహ్యచర్మ కణాలు", "Xylem cells / దారు కణాలు", "Phloem cells / పోషక కణాలు"],
+                answer: 0
+            },
+            {
+                q: "14. Removal of ring of bark around the stem destroys which tissue? / కాండం చుట్టూ ఉన్న బెరడును తొలగిస్తే ఏ కణజాలం తొలగిపోతుంది?",
+                options: ["Xylem / దారువు", "Phloem / పోషక కణజాలం", "Pith / మజ్జ", "Vascular bundle / నాళికా పుంజం"],
+                answer: 1
+            },
+            {
+                q: "15. The force that pulls water upwards through xylem due to transpiration is? / భాస్పోత్సేకం ద్వారా దారు నాళాలలో నీరు పైకి లాగబడటానికి కారణమైన బలం?",
+                options: ["Pulling force / ఆకర్షణ బలం (Transpiration pull)", "Pushing force / నెట్టివేసే బలం", "Magnetic pull / అయస్కాంత బలం", "Gravitational pull / గురుత్వాకర్షణ బలం"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionText = document.getElementById("question-text");
+        const optionsList = document.getElementById("options-list");
+        const nextBtn = document.getElementById("next-btn");
+        const resultDiv = document.getElementById("result");
+        const quizBox = document.getElementById("quiz-box");
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.style.display = "none";
+            let q = quizData[currentQuestion];
+            questionText.innerText = q.q;
+            optionsList.innerHTML = "";
+            
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(index, btn);
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex, selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            let correctIndex = quizData[currentQuestion].answer;
+            const buttons = optionsList.getElementsByTagName("button");
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add("correct");
+                score++;
+            } else {
+                selectedBtn.classList.add("wrong");
+                buttons[correctIndex].classList.add("correct");
+            }
+
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+
+            nextBtn.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                quizBox.style.display = "none";
+                nextBtn.style.display = "none";
+                if (score >= 12) {
+                    resultDiv.innerHTML = `Excellent! / అద్భుతం!<br>Your Score: ${score} / 15<br><span style="color: #ffff00;">Great Job! మీరు చాలా బాగా చేశారు!</span>`;
+                } else if (score >= 8) {
+                    resultDiv.innerHTML = `Great! / చాలా బాగుంది!<br>Your Score: ${score} / 15<br><span style="color: #ffff00;">Good Effort! మంచి ప్రయత్నం!</span>`;
+                } else {
+                    resultDiv.innerHTML = `Retry! / మళ్లీ ప్రయత్నించండి!<br>Your Score: ${score} / 15<br><button onclick="location.reload()" style="background-color:#ffff00; color:#000; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; margin-top:15px; cursor:pointer;">Try Again / మళ్లీ చేయి</button>`;
+                }
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
