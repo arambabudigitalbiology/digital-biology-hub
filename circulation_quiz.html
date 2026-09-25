@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circulation Quiz - 10th Biology</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 24px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .quiz-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .question {
+            font-size: 18px;
+            color: #ffff00;
+            margin-bottom: 15px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            background-color: #222222;
+            color: #ffffff;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #444;
+            font-size: 16px;
+            text-align: left;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #333333;
+        }
+        .options button.correct {
+            background-color: #008000 !important;
+            color: #ffffff !important;
+            border-color: #00ff00 !important;
+        }
+        .options button.wrong {
+            background-color: #800000 !important;
+            color: #ffffff !important;
+            border-color: #ff0000 !important;
+        }
+        #next-btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Circulation System - Interactive Quiz<br>రక్తప్రసరణ వ్యవస్థ - ఇంటరాక్టివ్ క్విజ్</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="quiz-container" id="quiz-box">
+        <div id="question-text" class="question"></div>
+        <div class="options" id="options-list"></div>
+        <button onclick="nextQuestion()" id="next-btn">Next / తదుపరి ప్రశ్న</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const quizData = [
+            {
+                q: "1. Which blood vessels carry blood from the heart to body parts? / గుండె నుండి శరీర భాగాలకు రక్తాన్ని సరఫరా చేసే రక్తనాళాలు ఏవి?",
+                options: ["Arteries / ధమనులు", "Veins / సిరలు", "Capillaries / రక్తకేశనాళికలు", "Lymph vessels / శోసరస నాళాలు"],
+                answer: 0
+            },
+            {
+                q: "2. Which blood vessels have valves to prevent backward flow of blood? / రక్తము వెనకకు రాకుండా నిరోధించే కవాటాలు ఏ రక్తనాళాలలో ఉంటాయి?",
+                options: ["Arteries / ధమనులు", "Veins / సిరలు", "Aorta / బృహద్ధమని", "Coronary vessels / కరోనరి నాళాలు"],
+                answer: 1
+            },
+            {
+                q: "3. Who discovered 'Capillaries' (microscopic blood vessels)? / సూక్ష్మ రక్తకేశనాళికలను (Capillaries) కనుగొన్న శాస్త్రవేత్త ఎవరు?",
+                options: ["William Harvey / విలియం హార్వే", "Marcello Malpighi / మార్సెల్లో మాల్పిజి", "Darwin / డార్విన్", "Robert Hooke / రాబర్ట్ హుక్"],
+                answer: 1
+            },
+            {
+                q: "4. Normal blood pressure in a healthy young person (Systolic / Diastolic) is? / ఆరోగ్యవంతుడైన యువకుడిలో సాధారణ రక్తపీడనం ఎంత?",
+                options: ["80/120 మి.మీ.", "120/80 మి.మీ. పాదరస పీడనం", "100/60 మి.మీ.", "140/90 మి.మీ."],
+                answer: 1
+            },
+            {
+                q: "5. An instrument used to measure Blood Pressure is? / రక్తపీడనాన్ని కొలవడానికి ఉపయోగించే పరికరం ఏది?",
+                options: ["Stethoscope / స్టెతస్కోప్", "Sphygmomanometer / స్విగ్మోమానోమీటర్", "Microscope / సూక్ష్మదర్శిని", "Thermometer / థర్మామీటర్"],
+                answer: 1
+            },
+            {
+                q: "6. Single circulation is found in which of the following? / ఏ జీవులలో ఏకవలయ రక్తప్రసరణ జరుగుతుంది?",
+                options: ["Man / మానవుడు", "Fish / చేపలు", "Frog / కప్ప", "Bird / పక్షులు"],
+                answer: 1
+            },
+            {
+                q: "7. Double circulation is characteristic of? / ద్వివలయ రక్తప్రసరణ ఏ జీవులలో కనిపిస్తుంది?",
+                options: ["Fishes / చేపలు", "Arthropods / ఆర్ద్రోపాడ్స్", "Mammals & Birds / క్షీరదాలు మరియు పక్షులు", "Insects / కీటకాలు"],
+                answer: 2
+            },
+            {
+                q: "8. The accumulation of tissue fluid causing leg swelling after long travel is called? / కాళ్లలో ద్రవం చేరి వాపు రావడాన్ని ఏమంటారు?",
+                options: ["Anemia / ఎనీమియా", "Edema / ఎడిమా", "Leukemia / లుకేమియా", "Blood pressure / రక్తపీడనం"],
+                answer: 1
+            },
+            {
+                q: "9. Upper chambers of the heart are called? / గుండె పై భాగంలో ఉండే గదులను ఏమంటారు?",
+                options: ["Ventricles / జఠరికలు", "Auricles (Atria) / కర్నికలు", "Septum / విభాజకం", "Aorta / బృహద్ధమని"],
+                answer: 1
+            },
+            {
+                q: "10. Lower chambers of the heart are called? / గుండె క్రింది భాగంలో ఉండే గదులను ఏమంటారు?",
+                options: ["Auricles / కర్నికలు", "Ventricles / జఠరికలు", "Valves / కవాటాలు", "Pulmonary vessels / పుపుస నాళాలు"],
+                answer: 1
+            },
+            {
+                q: "11. The largest artery in the human body is? / మానవ శరీరంలో అతి పెద్ద ధమని ఏది?",
+                options: ["Pulmonary artery / పుపుస ధమని", "Aorta / బృహద్ధమని", "Coronary artery / కరోనరి ధమని", "Carotid artery"],
+                answer: 1
+            },
+            {
+                q: "12. The blood vessel that carries deoxygenated blood from heart to lungs is? / గుండె నుండి ఊపిరితిత్తులకు రక్తాన్ని తీసుకుపోయే ధమని?",
+                options: ["Pulmonary artery / పుపుస ధమని", "Pulmonary vein / పుపుస సిర", "Superior vena cava / ఊర్థ్వమహాసిర", "Aorta / బృహద్ధమని"],
+                answer: 0
+            },
+            {
+                q: "13. The blood vessel that brings oxygenated blood from lungs to heart is? / ఊపిరితిత్తుల నుండి గుండెకు ఆక్సిజన్ సహిత రక్తాన్ని తెచ్చేది?",
+                options: ["Pulmonary artery / పుపుస ధమని", "Pulmonary vein / పుపుస సిర", "Inferior vena cava / అధోమహాసిర", "Hepatic portal vein"],
+                answer: 1
+            },
+            {
+                q: "14. Open circulatory system is seen in? / వివృత రక్తప్రసరణ వ్యవస్థ ఏ జీవులలో ఉంటుంది?",
+                options: ["Annelids / అనేలిడా", "Arthropods / ఆర్ద్రోపాడ్స్ (సందోపాద జంతువులు)", "Mammals / క్షీరదాలు", "Humans / మానవులు"],
+                answer: 1
+            },
+            {
+                q: "15. Closed circulatory system is seen in? / సంవృత రక్తప్రసరణ వ్యవస్థ గల జీవులు?",
+                options: ["Cockroach / బొద్దింక", "Arthropods / ఆర్ద్రోపాడ్స్", "Annelids & Cephalopods / అనేలిడా మరియు సెఫలోపోడా", "Insects / కీటకాలు"],
+                answer: 2
+            },
+            {
+                q: "16. The membrane that protects the heart is? / గుండెను ఆవరించి ఉండే పొరలను ఏమంటారు?",
+                options: ["Pleural membranes / ప్లూరల్ పొరలు", "Pericardial membranes / హృదయావరణ త్వచాలు", "Meninges / మెనింజెస్", "Cell membrane / కణ త్వచం"],
+                answer: 1
+            },
+            {
+                q: "17. Who proved that blood circulates from heart to body and back to heart through experiments? / గుండె నుండి శరీరానికి, తిరిగి గుండెకు రక్తం ప్రసరిస్తుందని నిరూపించిన శాస్త్రవేత్త?",
+                options: ["William Harvey / విలియం హార్వే", "Malpighi / మాల్పిజి", "Aristotle / అరిస్టాటిల్", "Darwin / డార్విನ್"],
+                answer: 0
+            },
+            {
+                q: "18. The fluid present in the tissue spaces is called? / కణజాలాలలోని ద్రవాన్ని ఏమంటారు?",
+                options: ["Blood / రక్తం", "Tissue fluid / కణజాల ద్రవం", "Lymph / శోసరసం", "Serum / సీరం"],
+                answer: 1
+            },
+            {
+                q: "19. The wall that separates left and right chambers of the heart is? / గుండె గదులను వేరుచేసే విభజకం పేరు?",
+                options: ["Septum / విభాజకం", "Valve / కవాటం", "Aorta / బృహద్ధమని", "Pericardium / హృదయావరణం"],
+                answer: 0
+            },
+            {
+                q: "20. Normal pulse rate of a healthy human is equal to? / ఆరోగ్యవంతమైన మనిషి నాడీ స్పందన రేటు దేనికి సమానంగా ఉంటుంది?",
+                options: ["Heart beat / హృదయ స్పందన", "Respiratory rate / శ్వాసక్రియ రేటు", "Digestion rate / జీర్ణ వేగం", "Blood pressure / రక్తపీడనం"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionText = document.getElementById("question-text");
+        const optionsList = document.getElementById("options-list");
+        const nextBtn = document.getElementById("next-btn");
+        const resultDiv = document.getElementById("result");
+        const quizBox = document.getElementById("quiz-box");
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.style.display = "none";
+            let q = quizData[currentQuestion];
+            questionText.innerText = q.q;
+            optionsList.innerHTML = "";
+            
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(index, btn);
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedIndex, selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            let correctIndex = quizData[currentQuestion].answer;
+            const buttons = optionsList.getElementsByTagName("button");
+
+            if (selectedIndex === correctIndex) {
+                selectedBtn.classList.add("correct");
+                score++;
+            } else {
+                selectedBtn.classList.add("wrong");
+                buttons[correctIndex].classList.add("correct");
+            }
+
+            // Disable all buttons after selection
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+
+            nextBtn.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                quizBox.style.display = "none";
+                nextBtn.style.display = "none";
+                if (score >= 15) {
+                    resultDiv.innerHTML = `Excellent! / అద్భుతం!<br>Your Score: ${score} / 20<br><span style="color: #ffff00;">Great Job!</span>`;
+                } else if (score >= 10) {
+                    resultDiv.innerHTML = `Great! / చాలా బాగుంది!<br>Your Score: ${score} / 20<br><span style="color: #ffff00;">Good Effort!</span>`;
+                } else {
+                    resultDiv.innerHTML = `Retry! / మళ్లీ ప్రయత్నించండి!<br>Your Score: ${score} / 20<br><button onclick="location.reload()" style="background-color:#ffff00; color:#000; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; margin-top:15px; cursor:pointer;">Try Again / మళ్లీ చేయి</button>`;
+                }
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
