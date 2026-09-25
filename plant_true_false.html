@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Transport - True or False Quiz</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 22px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .quiz-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .question {
+            font-size: 18px;
+            color: #ffff00;
+            margin-bottom: 20px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            background-color: #222222;
+            color: #ffffff;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #444;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .options button:hover:not(:disabled) {
+            background-color: #333333;
+        }
+        .options button.correct {
+            background-color: #008000 !important;
+            color: #ffffff !important;
+            border-color: #00ff00 !important;
+        }
+        .options button.wrong {
+            background-color: #800000 !important;
+            color: #ffffff !important;
+            border-color: #ff0000 !important;
+        }
+        #next-btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Plant Transport - True or False Quiz<br>మొక్కల్లో రవాణా - తప్పు / ఒప్పుల క్విజ్</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="quiz-container" id="quiz-box">
+        <div id="question-text" class="question"></div>
+        <div class="options" id="options-list">
+            <button onclick="selectAnswer(true)">True / ఒప్పు (సరైనది)</button>
+            <button onclick="selectAnswer(false)">False / తప్పు (సరికాదు)</button>
+        </div>
+        <button onclick="nextQuestion()" id="next-btn">Next / తదుపరి ప్రశ్న</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const tfData = [
+            {
+                q: "1. Xylem tissue is responsible for the transport of water and minerals in plants.\nమొక్కలలో నీరు మరియు ఖనిజ లవణాలను దారువు (Xylem) రవాణా చేస్తుంది.",
+                answer: true
+            },
+            {
+                q: "2. Phloem tissue transports water from roots to leaves.\nపోషక కణజాలం (Phloem) వేర్ల నుండి నీటిని ఆకులకు రవాణా చేస్తుంది.",
+                answer: false
+            },
+            {
+                q: "3. Root hairs absorb water and minerals from the soil based on osmosis.\nమూలకేశాలు నేల నుండి నీటిని ద్రాభిసరణ (Osmosis) ద్వారా శోషిస్తాయి.",
+                answer: true
+            },
+            {
+                q: "4. Transpiration is the loss of water in the form of water vapor from aerial parts of plants.\nమొక్కల ఆకుపచ్చని భాగాల నుండి నీరు ఆవిరి రూపంలో పోవడాన్ని భాస్పోత్సేకం అంటారు.",
+                answer: true
+            },
+            {
+                q: "5. Aphids are insects used to study food transport through xylem.\nదారువు ద్వారా ఆహార రవాణాను అధ్యయనం చేయడానికి ఎఫిడ్స్ (పచ్చపురుగులు) ఉపయోగపడతాయి.",
+                answer: false
+            },
+            {
+                q: "6. Root pressure is one of the factors that helps push water upwards in plants.\nవేరు పీడనం మొక్కలలో నీరు పైకి వెళ్లడానికి తోడ్పడే ఒక కారణం.",
+                answer: true
+            },
+            {
+                q: "7. Stomata control the opening and closing of pores on leaves for transpiration.\nపత్రరంధ్రాలు భాస్పోత్సేకానికి అవసరమైన రంధ్రాల తెరుచుకోవడాన్ని నియంత్రిస్తాయి.",
+                answer: true
+            },
+            {
+                q: "8. Removal of a ring of bark (phloem) stops the downward transport of food, causing the roots to starve.\nబెరడును (పోషక కణజాలం) తొలగిస్తే ఆహారం క్రిందికి వెళ్లకుండా ఆగిపోతుంది.",
+                answer: true
+            },
+            {
+                q: "9. Mineral ions are absorbed by roots mainly in the form of solid crystals.\nవేర్లు ఖనిజ లవణాలను ప్రధానంగా ఘన రూప స్పటికాలుగా గ్రహిస్తాయి.",
+                answer: false
+            },
+            {
+                q: "10. The largest artery in the human body is the Aorta.\nమానవ శరీరంలో అతి పెద్ద ధమని బృహద్ధమని (Aorta).",
+                answer: true
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionText = document.getElementById("question-text");
+        const nextBtn = document.getElementById("next-btn");
+        const resultDiv = document.getElementById("result");
+        const quizBox = document.getElementById("quiz-box");
+        const optionsList = document.getElementById("options-list");
+
+        function loadQuestion() {
+            answered = false;
+            nextBtn.style.display = "none";
+            
+            // Reset button styles
+            const buttons = optionsList.getElementsByTagName("button");
+            for (let btn of buttons) {
+                btn.disabled = false;
+                btn.classList.remove("correct", "wrong");
+            }
+
+            let q = tfData[currentQuestion];
+            questionText.innerText = q.q;
+        }
+
+        function selectAnswer(userAnswer) {
+            if (answered) return;
+            answered = true;
+
+            let correctAnswer = tfData[currentQuestion].answer;
+            const buttons = optionsList.getElementsByTagName("button");
+
+            // buttons[0] is True, buttons[1] is False
+            let trueBtn = buttons[0];
+            let falseBtn = buttons[1];
+
+            if (userAnswer === correctAnswer) {
+                if (userAnswer === true) {
+                    trueBtn.classList.add("correct");
+                } else {
+                    falseBtn.classList.add("correct");
+                }
+                score++;
+            } else {
+                if (userAnswer === true) {
+                    trueBtn.classList.add("wrong");
+                    falseBtn.classList.add("correct");
+                } else {
+                    falseBtn.classList.add("wrong");
+                    trueBtn.classList.add("correct");
+                }
+            }
+
+            for (let btn of buttons) {
+                btn.disabled = true;
+            }
+
+            nextBtn.style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < tfData.length) {
+                loadQuestion();
+            } else {
+                quizBox.style.display = "none";
+                nextBtn.style.display = "none";
+                if (score >= 8) {
+                    resultDiv.innerHTML = `Excellent! / అద్భుతం!<br>Your Score: ${score} / 10<br><span style="color: #ffff00;">Great Job! మీరు చాలా బాగా చేశారు!</span>`;
+                } else if (score >= 5) {
+                    resultDiv.innerHTML = `Great! / చాలా బాగుంది!<br>Your Score: ${score} / 10<br><span style="color: #ffff00;">Good Effort! మంచి ప్రయత్నం!</span>`;
+                } else {
+                    resultDiv.innerHTML = `Retry! / మళ్లీ ప్రయత్నించండి!<br>Your Score: ${score} / 10<br><button onclick="location.reload()" style="background-color:#ffff00; color:#000; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; margin-top:15px; cursor:pointer;">Try Again / మళ్లీ చేయి</button>`;
+                }
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
