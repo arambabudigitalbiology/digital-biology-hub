@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Transport - Matching Game</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 22px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .game-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .instruction {
+            color: #ffff00;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #222222;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+        .term {
+            color: #ffff00;
+            font-weight: bold;
+            width: 40%;
+            font-size: 15px;
+        }
+        select {
+            width: 55%;
+            padding: 8px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        select.correct {
+            background-color: #008000 !important;
+            color: #fff !important;
+            border-color: #00ff00 !important;
+        }
+        select.wrong {
+            background-color: #800000 !important;
+            color: #fff !important;
+            border-color: #ff0000 !important;
+        }
+        .check-btn {
+            display: block;
+            width: 100%;
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .check-btn:hover {
+            background-color: #cccc00;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Plant Transport - Matching Activity<br>మొక్కల్లో రవాణా - జతపరుచు ఆట</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="game-container">
+        <div class="instruction">మొక్కల భాగాలను / అంశాలను సరైన విధులతో జతపరచండి:<br>Match the plant parts with their correct functions:</div>
+        
+        <div id="match-list"></div>
+
+        <button class="check-btn" onclick="checkAnswers()">Check Answers / సమాధానాలను తనిఖీ చేయి</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const matchData = [
+            { id: 0, term: "Xylem / దారువు", correct: "Transports water & minerals / నీరు మరియు ఖనిజ లవణాల రవాణా" },
+            { id: 1, term: "Phloem / పోషక కణజాలం", correct: "Transports food materials / ఆహార పదార్థాల రవాణా" },
+            { id: 2, term: "Root Hairs / మూలకేశాలు", correct: "Absorb water from soil / నేల నుండి నీటిని శోషించడం" },
+            { id: 3, term: "Stomata / పత్రరంధ్రాలు", correct: "Helps in transpiration / భాస్పోత్సేకంలో తోడ్పడును" },
+            { id: 4, term: "Root Pressure / వేరు పీడనం", correct: "Pushes water upwards / నీటిని పైకి నెట్టుట" },
+            { id: 5, term: "Guard Cells / రక్షక కణాలు", correct: "Control stomatal pores / పత్రరంధ్రాల నియంత్రణ" },
+            { id: 6, term: "Aphids / ఎఫిడ్స్", correct: "Used to study food transport / ఆహార రవాణా అధ్యయన కీటకాలు" }
+        ];
+
+        // Shuffle options for dropdowns
+        const optionsList = [
+            "Transports water & minerals / నీరు మరియు ఖనిజ లవణాల రవాణా",
+            "Transports food materials / ఆహార పదార్థాల రవాణా",
+            "Absorb water from soil / నేల నుండి నీటిని శోషించడం",
+            "Helps in transpiration / భాస్పోత్సేకంలో తోడ్పడును",
+            "Pushes water upwards / నీటిని పైకి నెట్టుట",
+            "Control stomatal pores / పత్రరంధ్రాల నియంత్రణ",
+            "Used to study food transport / ఆహార రవాణా అధ్యయన కీటకాలు"
+        ];
+
+        // Shuffle function
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        const matchList = document.getElementById("match-list");
+
+        function loadGame() {
+            matchList.innerHTML = "";
+            let shuffledOptions = shuffle([...optionsList]);
+
+            matchData.forEach((item, index) => {
+                let optionsHTML = `<option value="">-- జతపరచండి / Select --</option>`;
+                shuffledOptions.forEach(opt => {
+                    optionsHTML += `<option value="${opt}">${opt}</option>`;
+                });
+
+                matchList.innerHTML += `
+                    <div class="match-row">
+                        <div class="term">${item.term}</div>
+                        <select id="select-${index}" data-correct="${item.correct}">
+                            ${optionsHTML}
+                        </select>
+                    </div>
+                `;
+            });
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let allAnswered = true;
+
+            matchData.forEach((item, index) => {
+                let selectBox = document.getElementById(`select-${index}`);
+                let selectedVal = selectBox.value;
+                
+                if (selectedVal === "") {
+                    allAnswered = false;
+                }
+
+                if (selectedVal === item.correct) {
+                    selectBox.classList.add("correct");
+                    selectBox.classList.remove("wrong");
+                    score++;
+                } else {
+                    selectBox.classList.add("wrong");
+                    selectBox.classList.remove("correct");
+                }
+            });
+
+            const resultDiv = document.getElementById("result");
+            if (!allAnswered) {
+                resultDiv.innerHTML = `<span style="color: #ff0000;">దయచేసి అన్నింటినీ జతపరచండి! / Please answer all items!</span>`;
+                return;
+            }
+
+            if (score === matchData.length) {
+                resultDiv.innerHTML = `Excellent! / అద్భుతం!<br>All matches are correct! (${score}/${matchData.length})<br><span style="color: #ffff00;">Great Job! మీరు అన్ని సరిగ్గా జతపరిచారు!</span>`;
+            } else {
+                resultDiv.innerHTML = `Great Effort! / మంచి ప్రయత్నం!<br>Your Score: ${score} / ${matchData.length}<br><span style="color: #ffff00;">కొన్ని తప్పుగా ఉన్నాయి, సరిచూసుకోండి!</span>`;
+            }
+        }
+
+        loadGame();
+    </script>
+</body>
+</html>
