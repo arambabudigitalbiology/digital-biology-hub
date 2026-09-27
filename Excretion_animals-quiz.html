@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Animals - Quiz</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #ffff00;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .creator {
+            color: #ffff00;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .question-box {
+            background-color: #111111;
+            border: 1px solid #ffff00;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .question-text {
+            color: #ffff00;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option-label {
+            color: #ffffff;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        input[type="radio"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        /* New classes for correct and wrong answers */
+        .correct-ans {
+            color: #00ff00 !important; /* Green */
+            font-weight: bold;
+        }
+        .wrong-ans {
+            color: #ff0000 !important; /* Red */
+            font-weight: bold;
+        }
+        
+        .btn-submit, .btn-retry {
+            width: 100%;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn-submit:hover, .btn-retry:hover {
+            background-color: #cccc00;
+        }
+        .btn-retry {
+            display: none;
+        }
+        .result-container {
+            text-align: center;
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            background-color: #111111;
+        }
+        .score-text {
+            font-size: 22px;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+        .excellent-text {
+            font-size: 28px;
+            color: #ffff00;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Excretion in Animals - Quiz<br>జంతువులలో విసర్జన - క్విజ్</h1>
+    <div class="creator">Created by A Rambabu SA BIOLOGY</div>
+
+    <div class="quiz-container" id="quiz-container">
+        <!-- Questions will be inserted here -->
+    </div>
+
+    <div class="quiz-container">
+        <button class="btn-submit" id="submit-btn" onclick="calculateScore()">Submit Quiz / సమాధానాలు సమర్పించు</button>
+        
+        <div class="result-container" id="result-container">
+            <div id="excellent-msg" class="excellent-text">Excellent! 🎉 అద్భుతం!</div>
+            <div class="score-text" id="score-text"></div>
+            <button class="btn-retry" id="retry-btn" onclick="retryQuiz()">Retry / మళ్లీ ప్రయత్నించు ↻</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                q: "1. What is the shape of the human kidney? / మానవ మూత్రపిండం ఆకారం ఏమిటి?",
+                options: ["Round / గుండ్రని", "Bean-shaped / చిక్కుడు గింజ", "Oval / అండాకారం", "Flat / బల్లపరుపుగా"],
+                ans: 1
+            },
+            {
+                q: "2. Why is the right kidney slightly lower than the left kidney? / కుడి మూత్రపిండం ఎడమ మూత్రపిండం కంటే కొంచెం ఎందుకు కిందకు ఉంటుంది?",
+                options: ["Due to heart / గుండె వల్ల", "Due to stomach / జీర్ణాశయం వల్ల", "Due to liver / కాలేయం వల్ల", "Due to lungs / ఊపిరితిత్తుల వల్ల"],
+                ans: 2
+            },
+            {
+                q: "3. Structural and functional unit of the kidney is? / మూత్రపిండం యొక్క నిర్మాణాత్మక, క్రియాత్మక ప్రమాణం?",
+                options: ["Neuron / న్యూరాన్", "Alveoli / వాయుగోణులు", "Villi / చూషకాలు", "Nephron / నెఫ్రాన్"],
+                ans: 3
+            },
+            {
+                q: "4. The bunch of capillaries in Bowman's capsule is called? / బౌమన్స్ గుళికలో ఉండే రక్తకేశనాళికల గుచ్ఛాన్ని ఏమంటారు?",
+                options: ["Glomerulus / గ్లోమరులస్", "Henle's loop / హెన్లే శిక్యం", "DCT / దూరస్థ సంవళిత నాళిక", "PCT / సమీపస్థ సంవళిత నాళిక"],
+                ans: 0
+            },
+            {
+                q: "5. The epithelial cells of Bowman's capsule are called? / బౌమన్స్ గుళికలోని ఉపకళా కణాలను ఏమంటారు?",
+                options: ["Flame cells / జ్వాలా కణాలు", "Podocytes / పోడోసైట్లు", "Renette cells / రెనెట్ కణాలు", "Guard cells / రక్షక కణాలు"],
+                ans: 1
+            },
+            {
+                q: "6. Primary urine is formed in? / ప్రాథమిక మూత్రం ఎక్కడ ఏర్పడుతుంది?",
+                options: ["Ureter / మూత్రనాళం", "Urethra / ప్రసేకం", "Bowman's capsule / బౌమన్స్ గుళిక", "Urinary bladder / మూత్రాశయం"],
+                ans: 2
+            },
+            {
+                q: "7. Deficiency of Vasopressin hormone causes? / వాసోప్రెస్సిన్ హార్మోన్ లోపం వల్ల కలిగే వ్యాధి?",
+                options: ["Diabetes mellitus / డయాబెటిస్ మెల్లిటస్", "Diabetes insipidus / డయాబెటిస్ ఇన్‌సిపిడస్", "Uremia / యురేమియా", "Goitre / గాయిటర్"],
+                ans: 1
+            },
+            {
+                q: "8. Maximum storage capacity of the urinary bladder is? / మూత్రాశయం యొక్క గరిష్ట నిల్వ సామర్థ్యం ఎంత?",
+                options: ["100-200 ml", "300-400 ml", "700-800 ml", "1-2 Litres"],
+                ans: 2
+            },
+            {
+                q: "9. The pH of normal urine in the beginning is? / ప్రారంభంలో సాధారణ మూత్రం యొక్క pH ఎంత?",
+                options: ["7.0", "6.0", "8.0", "4.5"],
+                ans: 1
+            },
+            {
+                q: "10. Complete and irreversible kidney failure is called? / మూత్రపిండాలు పూర్తిగా పనిచేయకపోవడాన్ని ఏమంటారు?",
+                options: ["ESRD", "Dialysis / డయాలసిస్", "Diuresis / డయూరిసిస్", "Micturition / మిక్చురిషన్"],
+                ans: 0
+            },
+            {
+                q: "11. Anti-coagulant used during dialysis is? / డయాలసిస్ సమయంలో ఉపయోగించే రక్తం గడ్డకట్టనిచ్చే పదార్థం?",
+                options: ["Haemoglobin / హిమోగ్లోబిన్", "Fibrinogen / ఫైబ్రినోజెన్", "Heparin / హెపారిన్", "Insulin / ఇన్సులిన్"],
+                ans: 2
+            },
+            {
+                q: "12. Sebaceous glands in the skin excrete? / చర్మంలోని సెబేషియస్ గ్రంథులు దేనిని విసర్జిస్తాయి?",
+                options: ["Sweat / చెమట", "Sebum / సీబం", "Tears / కన్నీరు", "Saliva / లాలాజలం"],
+                ans: 1
+            },
+            {
+                q: "13. Which organ produces bile pigments like bilirubin and biliverdin? / బిలిరుబిన్ మరియు బిలివెర్డిన్ వంటి పైత్యరస వర్ణకాలను ఉత్పత్తి చేసే అవయవం?",
+                options: ["Kidney / మూత్రపిండం", "Pancreas / క్లోమం", "Spleen / ప్లీహం", "Liver / కాలేయం"],
+                ans: 3
+            },
+            {
+                q: "14. Excretory organs in Platyhelminthes are? / ప్లాటీహెల్మింథిస్ వర్గపు జీవులలో విసర్జకావయవాలు ఏవి?",
+                options: ["Flame cells / జ్వాలా కణాలు", "Nephridia / నెఫ్రీడియా", "Malpighian tubules / మాల్ఫీజియన్ నాళికలు", "Green glands / హరిత గ్రంథులు"],
+                ans: 0
+            },
+            {
+                q: "15. Excretory organs in Arthropods are? / ఆర్థ్రోపోడా జీవులలోని విసర్జకావయవాలు?",
+                options: ["Flame cells / జ్వాలా కణాలు", "Nephridia / నెఫ్రీడియా", "Malpighian tubules / మాల్ఫీజియన్ నాళికలు", "Renette cells / రెనెట్ కణాలు"],
+                ans: 2
+            },
+            {
+                q: "16. Excretory organs in Annelids are? / అన్నెలిడా జీవులలో విసర్జకావయవాలు ఏవి?",
+                options: ["Green glands / హరిత గ్రంథులు", "Nephridia / నెఫ్రీడియా", "Kidneys / మూత్రపిండాలు", "Contractile vacuole / సంకోచ రిక్తిక"],
+                ans: 1
+            },
+            {
+                q: "17. Osmoregulatory organelle in Amoeba is? / అమీబాలో ద్రవాభిసరణ క్రమతకు తోడ్పడేది?",
+                options: ["Nucleus / కేంద్రకం", "Contractile vacuole / సంకోచ రిక్తిక", "Food vacuole / ఆహార రిక్తిక", "Pseudopodia / మిథ్యాపాదాలు"],
+                ans: 1
+            },
+            {
+                q: "18. Water vascular system is the excretory system in which phylum? / జల ప్రసరణ వ్యవస్థ ద్వారా విసర్జన జరుపుకునే వర్గం?",
+                options: ["Mollusca / మొలస్కా", "Echinodermata / ఇఖైనోడర్మేటా", "Nematoda / నిమటోడా", "Protozoa / ప్రోటోజోవా"],
+                ans: 1
+            },
+            {
+                q: "19. The process of removing metabolic wastes from the body is called? / దేహం నుండి జీవక్రియ వ్యర్థాలను బయటకు పంపే ప్రక్రియను ఏమంటారు?",
+                options: ["Digestion / జీర్ణక్రియ", "Respiration / శ్వాసక్రియ", "Excretion / విసర్జన", "Circulation / ప్రసరణ"],
+                ans: 2
+            },
+            {
+                q: "20. Which blood vessel brings oxygenated blood loaded with waste products to the kidney? / వ్యర్థాలతో కూడిన ఆక్సిజన్ రక్తాన్ని మూత్రపిండాలకు తీసుకువచ్చే రక్తనాళం ఏది?",
+                options: ["Renal vein / వృక్క సిర", "Renal artery / వృక్క ధమని", "Pulmonary artery / పుపుస ధమని", "Aorta / బృహద్ధమని"],
+                ans: 1
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function loadQuestions() {
+            quizContainer.innerHTML = '';
+            questions.forEach((item, index) => {
+                let optionsHTML = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <label class="option-label" id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}">
+                            ${opt}
+                        </label>
+                    `;
+                });
+
+                quizContainer.innerHTML += `
+                    <div class="question-box">
+                        <div class="question-text">${item.q}</div>
+                        <div class="options">
+                            ${optionsHTML}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function calculateScore() {
+            let score = 0;
+            let allAnswered = true;
+
+            questions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                
+                if (!selected) {
+                    allAnswered = false;
+                } else {
+                    // Disable radios
+                    document.querySelectorAll(`input[name="q${index}"]`).forEach(radio => radio.disabled = true);
+                    
+                    const selectedVal = parseInt(selected.value);
+                    const selectedLabel = document.getElementById(`label-${index}-${selectedVal}`);
+                    const correctLabel = document.getElementById(`label-${index}-${item.ans}`);
+                    
+                    if (selectedVal === item.ans) {
+                        score++;
+                        selectedLabel.classList.add('correct-ans');
+                    } else {
+                        selectedLabel.classList.add('wrong-ans');
+                        correctLabel.classList.add('correct-ans');
+                    }
+                }
+            });
+
+            if (!allAnswered) {
+                alert("Please answer all questions! / దయచేసి అన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి!");
+                // Re-enable if not submitted fully
+                questions.forEach((item, index) => {
+                    document.querySelectorAll(`input[name="q${index}"]`).forEach(radio => radio.disabled = false);
+                });
+                return;
+            }
+
+            document.getElementById('submit-btn').style.display = "none";
+            document.getElementById('result-container').style.display = "block";
+            document.getElementById('retry-btn').style.display = "block";
+
+            const scoreText = document.getElementById('score-text');
+            const excellentMsg = document.getElementById('excellent-msg');
+
+            scoreText.innerHTML = `Your Score: ${score} / ${questions.length}`;
+
+            if (score === questions.length) {
+                excellentMsg.style.display = "block";
+            } else {
+                excellentMsg.style.display = "none";
+            }
+        }
+
+        function retryQuiz() {
+            document.getElementById('result-container').style.display = "none";
+            document.getElementById('submit-btn').style.display = "block";
+            loadQuestions(); // Reload to reset radio buttons and hide answers
+            window.scrollTo(0, 0);
+        }
+
+        // Init
+        loadQuestions();
+    </script>
+</body>
+</html>
