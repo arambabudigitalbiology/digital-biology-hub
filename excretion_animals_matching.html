@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Animals - Matching Game</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 22px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .game-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 15px;
+            max-width: 750px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .instruction {
+            color: #ffff00;
+            font-size: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #222222;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+        }
+        .term {
+            color: #ffff00;
+            font-weight: bold;
+            width: 35%;
+            font-size: 14px;
+        }
+        select {
+            width: 63%;
+            padding: 6px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        select.correct {
+            background-color: #008000 !important;
+            color: #fff !important;
+            border-color: #00ff00 !important;
+        }
+        select.wrong {
+            background-color: #800000 !important;
+            color: #fff !important;
+            border-color: #ff0000 !important;
+        }
+        .check-btn {
+            display: block;
+            width: 100%;
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .check-btn:hover {
+            background-color: #cccc00;
+        }
+        .retry-btn {
+            display: none;
+            width: 100%;
+            background-color: #00ffcc;
+            color: #000000;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .retry-btn:hover {
+            background-color: #00ccaa;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Excretion in Animals - Matching Activity<br>జంతువులలో విసర్జన - జతపరుచు ఆట</h1>
+    <div class="creator">Created by A. Rambabu, SA Biology</div>
+
+    <div class="game-container">
+        <div class="instruction">అవయవాలను / భాగాలను వాటి సరైన విధులతో జతపరచండి:<br>Match the parts/organs with their correct functions:</div>
+        
+        <div id="match-list"></div>
+
+        <button class="check-btn" onclick="checkAnswers()">Check Answers / సమాధానాలను తనిఖీ చేయి</button>
+        <button class="retry-btn" id="retry-btn" onclick="retryGame()">Retry / మళ్లీ ప్రయత్నించు</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const matchData = [
+            { id: 0, term: "Kidneys / మూత్రపిండాలు", correct: "Bean shaped excretory organs / చిక్కుడు గింజ ఆకారపు విసర్జక అవయవాలు" },
+            { id: 1, term: "Nephron / నెఫ్రాన్", correct: "Structural & functional unit of kidney / మూత్రపిండం నిర్మాణాత్మక, క్రియాత్మక ప్రమాణం" },
+            { id: 2, term: "Glomerulus / గ్లోమరులస్", correct: "Filtration unit (Capillary network) / వడపోత యంత్రాంగం (రక్తకేశనాళికా గుచ్ఛం)" },
+            { id: 3, term: "Bowman's capsule / బౌమన్స్ గుళిక", correct: "Cup shaped end of nephron / కప్ ఆకారంలో ఉండే నెఫ్రాన్ భాగం" },
+            { id: 4, term: "Ureter / మూత్రనాళం", correct: "Carries urine to bladder / మూత్రాన్ని మూత్రాశయానికి చేరవేస్తుంది" },
+            { id: 5, term: "Urinary bladder / మూత్రాశయం", correct: "Stores urine temporarily / మూత్రాన్ని తాత్కాలికంగా నిల్వ చేస్తుంది" },
+            { id: 6, term: "Urethra / ప్రసేకం", correct: "Tube that excretes urine outside / మూత్రాన్ని బయటకు పంపే నాళం" },
+            { id: 7, term: "Dialysis / డయాలసిస్", correct: "Artificial kidney process / కృత్రిమ మూత్రపిండ ప్రక్రియ" },
+            { id: 8, term: "Lungs / ఊపిరితిత్తులు", correct: "Removes Carbon dioxide & water / కార్బన్ డై ఆక్సైడ్, నీటిని తొలగిస్తాయి" },
+            { id: 9, term: "Skin / చర్మం", correct: "Excretes sweat and sebum / చెమట మరియు సీబంను విసర్జిస్తుంది" },
+            { id: 10, term: "Liver / కాలేయం", correct: "Produces bile pigments & urea / బైల్ వర్ణకాలను, యూరియాను ఉత్పత్తి చేస్తుంది" },
+            { id: 11, term: "Flame cells / జ్వాలా కణాలు", correct: "Excretory organs in Platyhelminthes / ప్లాటీహెల్మింథిస్ లోని విసర్జకావయవాలు" },
+            { id: 12, term: "Nephridia / నెఫ్రీడియా", correct: "Excretory organs in Annelids / అన్నెలిడా జీవులలోని విసర్జకావయవాలు" },
+            { id: 13, term: "Malpighian tubules / మాల్ఫీజియన్ నాళికలు", correct: "Excretory organs in Arthropods / ఆర్థ్రోపోడా జీవులలోని విసర్జకావయవాలు" },
+            { id: 14, term: "Contractile vacuole / సంకోచ రిక్తిక", correct: "Excretion in Amoeba / అమీబా, పారామీషియంలో విసర్జన అవయవం" }
+        ];
+
+        const optionsList = matchData.map(item => item.correct);
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        const matchList = document.getElementById("match-list");
+
+        function loadGame() {
+            matchList.innerHTML = "";
+            let shuffledOptions = shuffle([...optionsList]);
+
+            matchData.forEach((item, index) => {
+                let optionsHTML = `<option value="">-- జతపరచండి / Select --</option>`;
+                shuffledOptions.forEach(opt => {
+                    optionsHTML += `<option value="${opt}">${opt}</option>`;
+                });
+
+                matchList.innerHTML += `
+                    <div class="match-row">
+                        <div class="term">${item.term}</div>
+                        <select id="select-${index}" data-correct="${item.correct}">
+                            ${optionsHTML}
+                        </select>
+                    </div>
+                `;
+            });
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("retry-btn").style.display = "none";
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let allAnswered = true;
+
+            matchData.forEach((item, index) => {
+                let selectBox = document.getElementById(`select-${index}`);
+                let selectedVal = selectBox.value;
+                
+                if (selectedVal === "") {
+                    allAnswered = false;
+                }
+
+                if (selectedVal === item.correct) {
+                    selectBox.classList.add("correct");
+                    selectBox.classList.remove("wrong");
+                    score++;
+                } else {
+                    selectBox.classList.add("wrong");
+                    selectBox.classList.remove("correct");
+                }
+            });
+
+            const resultDiv = document.getElementById("result");
+            if (!allAnswered) {
+                resultDiv.innerHTML = `<span style="color: #ff0000;">దయచేసి అన్నింటినీ జతపరచండి! / Please answer all 15 items!</span>`;
+                return;
+            }
+
+            document.getElementById("retry-btn").style.display = "block";
+
+            if (score === matchData.length) {
+                resultDiv.innerHTML = `Excellent! / అద్భుతం!<br>All matches are correct! (${score}/${matchData.length})<br><span style="color: #ffff00;">Great Job! మీరు అన్ని సరిగ్గా జతపరిచారు!</span>`;
+            } else {
+                resultDiv.innerHTML = `Great Effort! / మంచి ప్రయత్నం!<br>Your Score: ${score} / ${matchData.length}<br><span style="color: #ffff00;">కొన్ని తప్పుగా ఉన్నాయి, సరిచూసుకోండి!</span>`;
+            }
+        }
+
+        function retryGame() {
+            loadGame();
+        }
+
+        loadGame();
+    </script>
+</body>
+</html>
