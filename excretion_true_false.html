@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Animals - True or False</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+        .quiz-container {
+            background-color: #111111;
+            border: 2px solid #ffff00;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(255, 255, 0, 0.1);
+        }
+        .question-box {
+            background-color: #222222;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffff00;
+            margin-bottom: 10px;
+        }
+        .options-container {
+            display: flex;
+            gap: 20px;
+        }
+        .option-label {
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        input[type="radio"] {
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        .correct-text {
+            color: #00ff00;
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+        .wrong-text {
+            color: #ff0000;
+            font-weight: bold;
+            margin-left: 10px;
+            display: none;
+        }
+        .check-btn {
+            display: block;
+            width: 100%;
+            background-color: #ffff00;
+            color: #000000;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .check-btn:hover {
+            background-color: #cccc00;
+        }
+        .retry-btn {
+            display: none;
+            width: 100%;
+            background-color: #00ffcc;
+            color: #000000;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .retry-btn:hover {
+            background-color: #00ccaa;
+        }
+        #result-box {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Excretion in Animals - True or False<br>జంతువులలో విసర్జన - తప్పు లేదా ఒప్పు</h1>
+    <div class="creator">Created by A. RAMBABU SA BIOLOGY</div>
+
+    <div class="quiz-container" id="quiz-container">
+        <!-- Questions will be injected here by JavaScript -->
+    </div>
+    
+    <div style="max-width: 800px; margin: 0 auto;">
+        <button class="check-btn" id="check-btn" onclick="checkAnswers()">Check Answers / సమాధానాలను తనిఖీ చేయి</button>
+        <button class="retry-btn" id="retry-btn" onclick="retryQuiz()">Retry / మళ్లీ ప్రయత్నించు</button>
+        <div id="result-box"></div>
+    </div>
+
+    <script>
+        const questionsData = [
+            { id: 1, text: "మూత్రపిండాలు చిక్కుడు గింజ ఆకారంలో, ముదురు ఎరుపు రంగులో ఉంటాయి. (Kidneys are bean-shaped and reddish brown).", answer: "True" },
+            { id: 2, text: "కుడి మూత్రపిండం ఎడమ మూత్రపిండం కంటే కొంచెం ఎగువన ఉంటుంది. (The right kidney is placed higher than the left kidney).", answer: "False" },
+            { id: 3, text: "నెఫ్రాన్ అనేది మూత్రపిండం యొక్క నిర్మాణాత్మక మరియు క్రియాత్మక ప్రమాణం. (Nephron is the structural and functional unit of the kidney).", answer: "True" },
+            { id: 4, text: "బౌమన్స్ గుళిక మరియు గ్లోమరులస్ కలిసి మాల్ఫీజియన్ దేహాన్ని ఏర్పరుస్తాయి. (Bowman's capsule and glomerulus form Malpighian body).", answer: "True" },
+            { id: 5, text: "మూత్రంలో 50% మాత్రమే నీరు ఉంటుంది. (Urine contains only 50% water).", answer: "False" },
+            { id: 6, text: "ఊపిరితిత్తులు పాడైనప్పుడు డయాలసిస్ పద్ధతిని ఉపయోగిస్తారు. (Dialysis is used when lungs fail).", answer: "False" },
+            { id: 7, text: "ఊపిరితిత్తులు కార్బన్ డై ఆక్సైడ్ మరియు నీటిని విసర్జిస్తాయి. (Lungs remove carbon dioxide and water).", answer: "True" },
+            { id: 8, text: "చర్మంలోని సెబేషియస్ గ్రంథులు సీబంను విసర్జిస్తాయి. (Sebaceous glands in skin excrete sebum).", answer: "True" },
+            { id: 9, text: "యూరియా ఉత్పత్తిలో కాలేయం ప్రధాన పాత్ర పోషిస్తుంది. (Liver is involved in urea formation).", answer: "True" },
+            { id: 10, text: "జ్వాలా కణాలు (Flame cells) ఆర్థ్రోపోడా జీవులలోని విసర్జకావయవాలు. (Flame cells are excretory organs in Arthropods).", answer: "False" },
+            { id: 11, text: "వానపాము (Annelids) లో విసర్జన నెఫ్రీడియా ద్వారా జరుగుతుంది. (Annelids excrete through nephridia).", answer: "True" },
+            { id: 12, text: "అమీబాలో విసర్జన సంకోచ రిక్తిక ద్వారా జరుగుతుంది. (Amoeba uses contractile vacuole for excretion).", answer: "True" },
+            { id: 13, text: "మూత్రాశయం మూత్రాన్ని తాత్కాలికంగా నిల్వ చేస్తుంది. (Urinary bladder stores urine temporarily).", answer: "True" },
+            { id: 14, text: "గ్లోమరులార్ వడపోత చాలా తక్కువ పీడనం వద్ద జరుగుతుంది. (Glomerular filtration occurs under low pressure).", answer: "False" },
+            { id: 15, text: "వాసోప్రెస్సిన్ హార్మోన్ లోపం వల్ల డయాబెటిస్ ఇన్‌సిపిడస్ వస్తుంది. (Deficiency of vasopressin causes diabetes insipidus).", answer: "True" }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        function loadQuiz() {
+            quizContainer.innerHTML = "";
+            questionsData.forEach((q, index) => {
+                const qBox = document.createElement('div');
+                qBox.className = 'question-box';
+                qBox.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.text}</div>
+                    <div class="options-container">
+                        <label class="option-label">
+                            <input type="radio" name="q${q.id}" value="True"> True (ఒప్పు)
+                        </label>
+                        <label class="option-label">
+                            <input type="radio" name="q${q.id}" value="False"> False (తప్పు)
+                        </label>
+                        <span id="correct-msg-${q.id}" class="correct-text">✔ Correct</span>
+                        <span id="wrong-msg-${q.id}" class="wrong-text">✖ Wrong (Correct Answer: ${q.answer})</span>
+                    </div>
+                `;
+                quizContainer.appendChild(qBox);
+            });
+            document.getElementById('result-box').innerHTML = "";
+            document.getElementById('retry-btn').style.display = "none";
+            document.getElementById('check-btn').style.display = "block";
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            let allAnswered = true;
+
+            questionsData.forEach(q => {
+                const selectedOption = document.querySelector(`input[name="q${q.id}"]:checked`);
+                const correctMsg = document.getElementById(`correct-msg-${q.id}`);
+                const wrongMsg = document.getElementById(`wrong-msg-${q.id}`);
+                
+                correctMsg.style.display = "none";
+                wrongMsg.style.display = "none";
+
+                if (!selectedOption) {
+                    allAnswered = false;
+                } else {
+                    // Disable radios after checking
+                    document.querySelectorAll(`input[name="q${q.id}"]`).forEach(radio => radio.disabled = true);
+                    
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        correctMsg.style.display = "inline";
+                    } else {
+                        wrongMsg.style.display = "inline";
+                    }
+                }
+            });
+
+            const resultBox = document.getElementById('result-box');
+
+            if (!allAnswered) {
+                resultBox.innerHTML = `<span style="color: #ff0000;">దయచేసి అన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి! (Please answer all questions)</span>`;
+                // Re-enable radios if not all answered
+                questionsData.forEach(q => {
+                    document.querySelectorAll(`input[name="q${q.id}"]`).forEach(radio => radio.disabled = false);
+                });
+                return;
+            }
+
+            document.getElementById('check-btn').style.display = "none";
+            document.getElementById('retry-btn').style.display = "block";
+
+            if (score === questionsData.length) {
+                resultBox.innerHTML = `<span style="color: #00ff00;">Excellent! / అద్భుతం!<br>Score: ${score} / ${questionsData.length}</span>`;
+            } else {
+                resultBox.innerHTML = `<span style="color: #ffff00;">Great Effort! / మంచి ప్రయత్నం!<br>Score: ${score} / ${questionsData.length}</span>`;
+            }
+        }
+
+        function retryQuiz() {
+            loadQuiz();
+        }
+
+        // Initialize quiz on load
+        loadQuiz();
+    </script>
+</body>
+</html>
