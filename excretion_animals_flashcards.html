@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Animals - Flashcards</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #ffff00;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .creator {
+            color: #00ffcc;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+        .flashcard-container {
+            perspective: 1000px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+            height: 300px;
+        }
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            border: 3px solid #ffff00;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(255, 255, 0, 0.2);
+        }
+        .flashcard-front {
+            background-color: #111111;
+        }
+        .flashcard-back {
+            background-color: #222222;
+            transform: rotateY(180deg);
+            border-color: #00ffcc;
+        }
+        .term-en {
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffff00;
+            margin-bottom: 10px;
+        }
+        .term-te {
+            font-size: 22px;
+            color: #ffffff;
+        }
+        .def-en {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-bottom: 15px;
+        }
+        .def-te {
+            font-size: 18px;
+            color: #ffffff;
+        }
+        .instruction {
+            color: #888;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #cccc00;
+        }
+        .progress {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #00ffcc;
+            font-weight: bold;
+        }
+        #completion-screen {
+            display: none;
+            margin-top: 50px;
+        }
+        .excellent-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .retry-btn {
+            background-color: #00ffcc;
+            color: #000000;
+            font-size: 18px;
+            padding: 15px 30px;
+        }
+        .retry-btn:hover {
+            background-color: #00ccaa;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Excretion in Animals - Flashcards<br>జంతువులలో విసర్జన - ఫ్లాష్ కార్డ్స్</h1>
+    <div class="creator">Created by A. RAMBABU SA BIOLOGY</div>
+
+    <div id="flashcard-section">
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="flashcard">
+                <!-- Front Side -->
+                <div class="flashcard-front">
+                    <div class="term-en" id="front-en">Kidneys</div>
+                    <div class="term-te" id="front-te">మూత్రపిండాలు</div>
+                    <div class="instruction">(Tap to flip / తిప్పడానికి కార్డ్ పై నొక్కండి)</div>
+                </div>
+                <!-- Back Side -->
+                <div class="flashcard-back">
+                    <div class="def-en" id="back-en">Bean shaped excretory organs</div>
+                    <div class="def-te" id="back-te">చిక్కుడు గింజ ఆకారపు విసర్జక అవయవాలు</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress" id="progress-text">Card 1 of 15</div>
+
+        <div class="controls">
+            <button class="btn" onclick="prevCard()">&#8592; Previous (గత)</button>
+            <button class="btn" onclick="nextCard()">Next (తరువాతి) &#8594;</button>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="completion-screen">
+        <div class="excellent-text">Excellent! 🎉<br>అద్భుతం!</div>
+        <p style="color: #ffff00; font-size: 18px; margin-bottom: 30px;">మీరు 15 ఫ్లాష్ కార్డ్స్ పూర్తి చేశారు.</p>
+        <button class="btn retry-btn" onclick="retryCards()">Retry / మళ్లీ ప్రారంభించండి ↻</button>
+    </div>
+
+    <script>
+        const flashcardsData = [
+            { enTerm: "Kidneys", teTerm: "మూత్రపిండాలు", enDef: "Bean shaped excretory organs", teDef: "చిక్కుడు గింజ ఆకారపు విసర్జక అవయవాలు" },
+            { enTerm: "Nephron", teTerm: "నెఫ్రాన్", enDef: "Structural & functional unit of kidney", teDef: "మూత్రపిండం యొక్క నిర్మాణాత్మక, క్రియాత్మక ప్రమాణం" },
+            { enTerm: "Glomerulus", teTerm: "గ్లోమరులస్", enDef: "Filtration unit (Bunch of capillaries)", teDef: "రక్తకేశనాళికా గుచ్ఛం (వడపోత యంత్రాంగం)" },
+            { enTerm: "Bowman's capsule", teTerm: "బౌమన్స్ గుళిక", enDef: "Cup shaped broader end of nephron", teDef: "కప్ ఆకారంలో ఉండే నెఫ్రాన్ భాగం" },
+            { enTerm: "Ureter", teTerm: "మూత్రనాళం", enDef: "Carries urine from kidney to bladder", teDef: "మూత్రాన్ని కిడ్నీ నుండి మూత్రాశయానికి చేరవేస్తుంది" },
+            { enTerm: "Urinary bladder", teTerm: "మూత్రాశయం", enDef: "Stores urine temporarily", teDef: "మూత్రాన్ని తాత్కాలికంగా నిల్వ చేస్తుంది" },
+            { enTerm: "Urethra", teTerm: "ప్రసేకం", enDef: "Tube that excretes urine outside", teDef: "మూత్రాన్ని బయటకు పంపే నాళం" },
+            { enTerm: "Dialysis", teTerm: "డయాలసిస్", enDef: "Artificial kidney process to filter blood", teDef: "రక్తాన్ని శుద్ధి చేసే కృత్రిమ మూత్రపిండ ప్రక్రియ" },
+            { enTerm: "Lungs", teTerm: "ఊపిరితిత్తులు", enDef: "Removes Carbon dioxide & water", teDef: "కార్బన్ డై ఆక్సైడ్ మరియు నీటిని తొలగిస్తాయి" },
+            { enTerm: "Skin", teTerm: "చర్మం", enDef: "Excretes sweat and sebum", teDef: "చెమట మరియు సీబంను విసర్జిస్తుంది" },
+            { enTerm: "Liver", teTerm: "కాలేయం", enDef: "Produces bile pigments & urea", teDef: "బైల్ వర్ణకాలను మరియు యూరియాను ఉత్పత్తి చేస్తుంది" },
+            { enTerm: "Flame cells", teTerm: "జ్వాలా కణాలు", enDef: "Excretory organs in Platyhelminthes", teDef: "ప్లాటీహెల్మింథిస్ లోని విసర్జకావయవాలు" },
+            { enTerm: "Nephridia", teTerm: "నెఫ్రీడియా", enDef: "Excretory organs in Annelids", teDef: "అన్నెలిడా జీవులలోని విసర్జకావయవాలు" },
+            { enTerm: "Malpighian tubules", teTerm: "మాల్ఫీజియన్ నాళికలు", enDef: "Excretory organs in Arthropods", teDef: "ఆర్థ్రోపోడా జీవులలోని విసర్జకావయవాలు" },
+            { enTerm: "Contractile vacuole", teTerm: "సంకోచ రిక్తిక", enDef: "Excretion organelle in Amoeba", teDef: "అమీబా, పారామీషియంలలో విసర్జన అవయవం" }
+        ];
+
+        let currentIndex = 0;
+        const flashcardElement = document.getElementById("flashcard");
+        const frontEn = document.getElementById("front-en");
+        const frontTe = document.getElementById("front-te");
+        const backEn = document.getElementById("back-en");
+        const backTe = document.getElementById("back-te");
+        const progressText = document.getElementById("progress-text");
+        
+        const sectionFlashcard = document.getElementById("flashcard-section");
+        const sectionCompletion = document.getElementById("completion-screen");
+
+        function updateCard() {
+            // Remove flip class if present so new card shows front
+            flashcardElement.classList.remove("flipped");
+            
+            setTimeout(() => {
+                const card = flashcardsData[currentIndex];
+                frontEn.textContent = card.enTerm;
+                frontTe.textContent = card.teTerm;
+                backEn.textContent = card.enDef;
+                backTe.textContent = card.teDef;
+                progressText.textContent = `Card ${currentIndex + 1} of ${flashcardsData.length}`;
+            }, 150); // slight delay to allow flip back animation
+        }
+
+        function flipCard() {
+            flashcardElement.classList.toggle("flipped");
+        }
+
+        function nextCard() {
+            if (currentIndex < flashcardsData.length - 1) {
+                currentIndex++;
+                updateCard();
+            } else {
+                // Show completion screen
+                sectionFlashcard.style.display = "none";
+                sectionCompletion.style.display = "block";
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCard();
+            }
+        }
+
+        function retryCards() {
+            currentIndex = 0;
+            sectionCompletion.style.display = "none";
+            sectionFlashcard.style.display = "block";
+            updateCard();
+        }
+
+        // Initialize first card
+        updateCard();
+    </script>
+</body>
+</html>
