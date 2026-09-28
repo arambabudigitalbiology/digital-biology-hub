@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Plants - Flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #ff0; font-size: 24px; }
+        .creator { color: #0fc; font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+        .card-container { perspective: 1000px; margin: 20px auto; width: 90%; max-width: 600px; height: 300px; }
+        .card { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .card.flipped { transform: rotateY(180deg); }
+        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 15px; border: 3px solid #ff0; padding: 20px; box-sizing: border-box; }
+        .front { background-color: #111; }
+        .back { background-color: #222; transform: rotateY(180deg); border-color: #0fc; }
+        .t-en { font-size: 26px; font-weight: bold; color: #ff0; }
+        .t-te { font-size: 22px; color: #fff; }
+        .d-en { font-size: 20px; font-weight: bold; color: #0fc; }
+        .d-te { font-size: 18px; color: #fff; }
+        .btn { background-color: #ff0; color: #000; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Excretion in Plants - Flashcards<br>మొక్కలలో విసర్జన - ఫ్లాష్ కార్డ్స్</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div id="card-sec">
+        <div class="card-container" onclick="document.getElementById('card').classList.toggle('flipped')">
+            <div class="card" id="card">
+                <div class="front"><div class="t-en" id="f-en"></div><div class="t-te" id="f-te"></div><br><span style="color:#888">(Tap to flip)</span></div>
+                <div class="back"><div class="d-en" id="b-en"></div><div class="d-te" id="b-te"></div></div>
+            </div>
+        </div>
+        <div style="color:#0fc; font-weight:bold; margin:15px;" id="prog"></div>
+        <button class="btn" onclick="change(-1)">← Prev</button>
+        <button class="btn" onclick="change(1)">Next →</button>
+    </div>
+    <div id="end-sec" style="display:none; margin-top:50px;">
+        <h2 style="color:#0f0; font-size:32px;">Excellent! 🎉 అద్భుతం!</h2>
+        <button class="btn" onclick="location.reload()" style="background-color:#0fc;">Retry / మళ్లీ ప్రారంభించండి ↻</button>
+    </div>
+    <script>
+        const data = [
+            { en: "Quinine", te: "క్వినైన్", den: "Antimalarial drug", dte: "మలేరియా మందు (సించోనా)" },
+            { en: "Nicotine", te: "నికోటిన్", den: "Insecticide", dte: "కీటకనాశిని (పొగాకు)" },
+            { en: "Morphine", te: "మార్ఫిన్", den: "Painkiller", dte: "నొప్పి నివారిణి (పాపావర్)" },
+            { en: "Reserpine", te: "రిసెర్పిన్", den: "High BP Medicine", dte: "రక్తపోటు మందు (సర్పగంధి)" },
+            { en: "Caffeine", te: "కెఫిన్", den: "CNS Stimulant", dte: "నాడీవ్యవస్థ ఉద్దీపకం (కాఫీ)" },
+            { en: "Nimbin", te: "నింబిన్", den: "Antiseptic", dte: "యాంటీసెప్టిక్ (వేప)" },
+            { en: "Scopolamine", te: "స్కోపోలమైన్", den: "Sedative", dte: "మత్తుమందు (ఉమ్మెత్త)" },
+            { en: "Pyrethroids", te: "పైరిత్రాయిడ్స్", den: "Insecticides", dte: "కీటకనాశినులు (చామంతి)" },
+            { en: "Tannins", te: "టానిన్లు", den: "Tanning of leather", dte: "తోళ్లను పదునుచేయడం" },
+            { en: "Resins", te: "రెసిన్లు", den: "Varnishes", dte: "వార్నిష్ తయారీ (పైనస్)" },
+            { en: "Gums", te: "జిగుర్లు", den: "Adhesives", dte: "అతికే పదార్థాలు (వేప, తుమ్మ)" },
+            { en: "Rubber", te: "రబ్బరు", den: "From Latex of Hevea", dte: "హీవియా క్షీరం నుండి" },
+            { en: "Jatropha Latex", te: "జట్రోఫా లేటెక్స్", den: "Source of Bio-diesel", dte: "బయో-డీజిల్ మూలం" },
+            { en: "Raphides", te: "రాఫైడ్స్", den: "Solid waste in fruits", dte: "పండ్లలో ఉండే ఘన వ్యర్థాలు" },
+            { en: "Transpiration", te: "భాష్పోత్సేకం", den: "Removal of excess water", dte: "అదనపు నీటి తొలగింపు" }
+        ];
+        let i = 0;
+        function load() {
+            document.getElementById("card").classList.remove("flipped");
+            setTimeout(() => {
+                document.getElementById("f-en").innerText = data[i].en; document.getElementById("f-te").innerText = data[i].te;
+                document.getElementById("b-en").innerText = data[i].den; document.getElementById("b-te").innerText = data[i].dte;
+                document.getElementById("prog").innerText = `Card ${i+1} of 15`;
+            }, 150);
+        }
+        function change(d) {
+            if(i+d >= 0 && i+d < 15) { i += d; load(); }
+            else if(i+d === 15) { document.getElementById("card-sec").style.display="none"; document.getElementById("end-sec").style.display="block"; }
+        }
+        load();
+    </script>
+</body>
+</html>
