@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excretion in Plants - True or False</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #ff0; font-size: 24px; }
+        .creator { color: #0fc; font-size: 16px; font-weight: bold; margin-bottom: 25px; }
+        .quiz-container { background-color: #111; border: 2px solid #ff0; border-radius: 12px; padding: 20px; max-width: 800px; margin: 0 auto; text-align: left; }
+        .q-box { background-color: #222; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #444; }
+        .q-text { font-size: 16px; font-weight: bold; color: #ff0; margin-bottom: 10px; }
+        .opt-label { font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-right:20px; padding:5px; border-radius:5px;}
+        .opts { display: flex; }
+        input[type="radio"] { transform: scale(1.2); }
+        .correct-ans { color: #0f0 !important; font-weight: bold; }
+        .wrong-ans { color: #f00 !important; font-weight: bold; }
+        .btn { width: 100%; background-color: #ff0; color: #000; padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+        #res-box { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Excretion in Plants - True/False<br>మొక్కలలో విసర్జన - తప్పు/ఒప్పు</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div class="quiz-container">
+        <div id="q-list"></div>
+        <button class="btn" id="chk-btn" onclick="check()">Submit / సమర్పించు</button>
+        <button class="btn" id="rty-btn" style="display:none; background-color:#0fc;" onclick="location.reload()">Retry / మళ్లీ ప్రయత్నించు ↻</button>
+        <div id="res-box"></div>
+    </div>
+    <script>
+        const data = [
+            { q: "1. Quinine is an antimalarial drug obtained from Cinchona. / క్వినైన్ సించోనా నుండి లభించే మలేరియా మందు.", a: "T" },
+            { q: "2. Nicotine is extracted from plant roots. / నికోటిన్ మొక్క వేర్ల నుండి తీస్తారు.", a: "F" },
+            { q: "3. Morphine is used as a painkiller. / మార్ఫిన్ ను నొప్పి నివారిణిగా వాడతారు.", a: "T" },
+            { q: "4. Reserpine is used to treat low blood pressure. / రిసెర్పిన్ ను తక్కువ రక్తపోటు (Low BP) కి వాడతారు.", a: "F" },
+            { q: "5. Caffeine is a CNS stimulant. / కెఫిన్ నాడీవ్యవస్థ ఉద్దీపకంగా పనిచేస్తుంది.", a: "T" },
+            { q: "6. Nimbin acts as a sedative. / నింబిన్ మత్తుమందుగా పనిచేస్తుంది.", a: "F" },
+            { q: "7. Pyrethroids are used as insecticides. / పైరిత్రాయిడ్స్ కీటకనాశినులుగా ఉపయోగపడతాయి.", a: "T" },
+            { q: "8. Tannins are used in varnishes. / టానిన్లను వార్నిష్ తయారీలో వాడతారు.", a: "F" },
+            { q: "9. Resins are mostly found in Gymnosperms. / రెసిన్లు ఎక్కువగా వివృతబీజాలలో ఉంటాయి.", a: "T" },
+            { q: "10. Gums help in healing plant damages. / జిగుర్లు మొక్కల గాయాలను మాన్పడానికి తోడ్పడతాయి.", a: "T" },
+            { q: "11. Rubber is prepared from Jatropha latex. / రబ్బరును జట్రోఫా క్షీరం నుండి తయారుచేస్తారు.", a: "F" },
+            { q: "12. Jatropha latex is a bio-diesel source. / జట్రోఫా లేటెక్స్ బయో-డీజిల్ కు మూలం.", a: "T" },
+            { q: "13. Raphides are solid waste bodies in fruits. / రాఫైడ్స్ అనేవి పండ్లలో ఉండే ఘన వ్యర్థాలు.", a: "T" },
+            { q: "14. Plants have specific excretory organs. / మొక్కలలో ప్రత్యేకమైన విసర్జక అవయవాలు ఉంటాయి.", a: "F" },
+            { q: "15. Transpiration removes excess water. / భాష్పోత్సేకం ద్వారా మొక్కలు అదనపు నీటిని కోల్పోతాయి.", a: "T" }
+        ];
+        const list = document.getElementById('q-list');
+        data.forEach((d, i) => {
+            list.innerHTML += `<div class="q-box"><div class="q-text">${d.q}</div><div class="opts"><label class="opt-label" id="l-${i}-T"><input type="radio" name="q${i}" value="T"> True (ఒప్పు)</label><label class="opt-label" id="l-${i}-F"><input type="radio" name="q${i}" value="F"> False (తప్పు)</label></div></div>`;
+        });
+        function check() {
+            let score = 0, all = true;
+            data.forEach((d, i) => {
+                let sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!sel) all = false;
+                else {
+                    document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.disabled = true);
+                    if (sel.value === d.a) { score++; document.getElementById(`l-${i}-${sel.value}`).classList.add("correct-ans"); }
+                    else { document.getElementById(`l-${i}-${sel.value}`).classList.add("wrong-ans"); document.getElementById(`l-${i}-${d.a}`).classList.add("correct-ans"); }
+                }
+            });
+            if (!all) return alert("Answer all questions! / అన్నీ పూర్తి చేయండి!");
+            document.getElementById("chk-btn").style.display = "none"; document.getElementById("rty-btn").style.display = "block";
+            let res = document.getElementById("res-box");
+            if (score === 15) res.innerHTML = `<span style="color:#0f0">Excellent! 🎉 అద్భుతం!<br>Score: 15/15</span>`;
+            else res.innerHTML = `<span style="color:#ff0">Score: ${score}/15</span>`;
+        }
+    </script>
+</body>
+</html>
