@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination - Flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #ff0; font-size: 24px; }
+        .creator { color: #0fc; font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+        .card-container { perspective: 1000px; margin: 20px auto; width: 90%; max-width: 600px; height: 300px; }
+        .card { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+        .card.flipped { transform: rotateY(180deg); }
+        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 15px; border: 3px solid #ff0; padding: 20px; box-sizing: border-box; }
+        .front { background-color: #111; }
+        .back { background-color: #222; transform: rotateY(180deg); border-color: #0fc; }
+        .t-en { font-size: 26px; font-weight: bold; color: #ff0; }
+        .t-te { font-size: 22px; color: #fff; }
+        .d-en { font-size: 20px; font-weight: bold; color: #0fc; }
+        .d-te { font-size: 18px; color: #fff; }
+        .btn { background-color: #ff0; color: #000; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Coordination - Flashcards<br>సమన్వయం - ఫ్లాష్ కార్డ్స్</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div id="card-sec">
+        <div class="card-container" onclick="document.getElementById('card').classList.toggle('flipped')">
+            <div class="card" id="card">
+                <div class="front"><div class="t-en" id="f-en"></div><div class="t-te" id="f-te"></div><br><span style="color:#888">(Tap to flip)</span></div>
+                <div class="back"><div class="d-en" id="b-en"></div><div class="d-te" id="b-te"></div></div>
+            </div>
+        </div>
+        <div style="color:#0fc; font-weight:bold; margin:15px;" id="prog"></div>
+        <button class="btn" onclick="change(-1)">← Prev</button>
+        <button class="btn" onclick="change(1)">Next →</button>
+    </div>
+    <div id="end-sec" style="display:none; margin-top:50px;">
+        <h2 style="color:#0f0; font-size:32px;">Excellent! 🎉 అద్భుతం!</h2>
+        <button class="btn" onclick="location.reload()" style="background-color:#0fc;">Retry / మళ్లీ ప్రారంభించండి ↻</button>
+    </div>
+    <script>
+        const data = [
+            { en: "Neuron", te: "న్యూరాన్", den: "Structural & functional unit of nervous system", dte: "నాడీ వ్యవస్థ నిర్మాణాత్మక, క్రియాత్మక ప్రమాణం" },
+            { en: "Synapse", te: "సినాప్స్", den: "Junction between two neurons", dte: "రెండు న్యూరాన్ల మధ్య అనుసంధాన స్థలం" },
+            { en: "Cerebrum", te: "సెరెబ్రం", den: "Center of memory, reasoning & thinking", dte: "జ్ఞాపకశక్తి, ఆలోచనల కేంద్రం" },
+            { en: "Cerebellum", te: "సెరెబెల్లం", den: "Maintains posture and equilibrium", dte: "శరీర సమతుల్యతను కాపాడుతుంది" },
+            { en: "Medulla Oblongata", te: "మెడుల్లా అబ్లాంగేటా", den: "Controls heartbeat & respiration", dte: "గుండె స్పందన, శ్వాసక్రియ నియంత్రణ" },
+            { en: "Hypothalamus", te: "హైపోతలామస్", den: "Master control center of endocrine system", dte: "అంతఃస్రావి వ్యవస్థ ప్రధాన నియంత్రణ కేంద్రం" },
+            { en: "Insulin", te: "ఇన్సులిన్", den: "Decreases blood glucose level", dte: "రక్తంలో చక్కెర స్థాయిలను తగ్గిస్తుంది" },
+            { en: "Adrenalin", te: "అడ్రినలిన్", den: "Emergency/fight or flight hormone", dte: "అత్యవసర పరిస్థితుల హార్మోన్" },
+            { en: "Thyroxine", te: "థైరాక్సిన్", den: "Controls metabolic rate and growth", dte: "జీవక్రియ వేగం మరియు పెరుగుదలను నియంత్రిస్తుంది" },
+            { en: "Auxin", te: "ఆక్సిన్", den: "Plant hormone for cell elongation", dte: "కణాల పొడవును పెంచే మొక్కల హార్మోన్" },
+            { en: "Ethylene", te: "ఇథిలీన్", den: "Plant hormone for fruit ripening", dte: "పండ్లు పక్వానికి రావడానికి తోడ్పడే హార్మోன்" },
+            { en: "Gibberellin", te: "జిబ్బరెల్లిన్", den: "Promotes stem elongation & seed germination", dte: "కాండం పెరుగుదల, విత్తన మొలకెత్తడం" },
+            { en: "Abscisic Acid", te: "అబ్సిసిక్ ఆమ్లం", den: "Growth inhibitor and stomata closure", dte: "పెరుగుదలను నిరోధించే హార్మోన్" },
+            { en: "Phototropism", te: "కాంతివర్తనం", den: "Movement of plant parts in response to light", dte: "కాంతికి అనుగుణంగా మొక్క భాగాల చలనం" },
+            { en: "Thigmonasty", te: "థిగ్మోనాస్టి", den: "Response to touch (e.g., Mimosa pudica)", dte: "స్పర్శకు ప్రతిస్పందన (అత్తిపత్తి ఆకులు)" }
+        ];
+        let i = 0;
+        function load() {
+            document.getElementById("card").classList.remove("flipped");
+            setTimeout(() => {
+                document.getElementById("f-en").innerText = data[i].en; document.getElementById("f-te").innerText = data[i].te;
+                document.getElementById("b-en").innerText = data[i].den; document.getElementById("b-te").innerText = data[i].dte;
+                document.getElementById("prog").innerText = `Card ${i+1} of 15`;
+            }, 150);
+        }
+        function change(d) {
+            if(i+d >= 0 && i+d < 15) { i += d; load(); }
+            else if(i+d === 15) { document.getElementById("card-sec").style.display="none"; document.getElementById("end-sec").style.display="block"; }
+        }
+        load();
+    </script>
+</body>
+</html>
