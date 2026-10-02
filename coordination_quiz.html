@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination - Quiz</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+        h1 { color: #ff0; text-align: center; font-size: 22px; margin-bottom: 5px; }
+        .creator { color: #0fc; text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 25px; }
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .question-box { background-color: #111; border: 1px solid #ff0; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .question-text { color: #ff0; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option-label { color: #fff; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 5px; border-radius: 5px; }
+        input[type="radio"] { transform: scale(1.2); cursor: pointer; }
+        .correct-ans { color: #0f0 !important; font-weight: bold; }
+        .wrong-ans { color: #f00 !important; font-weight: bold; }
+        .btn { width: 100%; background-color: #ff0; color: #000; padding: 12px; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 15px; }
+        .btn:hover { background-color: #cc0; }
+        .result-container { text-align: center; display: none; margin-top: 20px; padding: 20px; border: 2px solid #ff0; border-radius: 10px; background-color: #111; }
+        .score-text { font-size: 22px; color: #fff; margin-bottom: 15px; }
+        .excellent-text { font-size: 28px; color: #ff0; font-weight: bold; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Coordination - Quiz<br>సమన్వయం - క్విజ్</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div class="quiz-container" id="quiz-container"></div>
+    <div class="quiz-container">
+        <button class="btn" id="submit-btn" onclick="calculateScore()">Submit / సమర్పించు</button>
+        <div class="result-container" id="result-container">
+            <div id="excellent-msg" class="excellent-text">Excellent! 🎉 అద్భుతం!</div>
+            <div class="score-text" id="score-text"></div>
+            <button class="btn" onclick="location.reload()">Retry / మళ్లీ ప్రయత్నించు ↻</button>
+        </div>
+    </div>
+    <script>
+        const qData = [
+            { q: "1. The structural and functional unit of the nervous system is? / నాడీ వ్యవస్థ యొక్క నిర్మాణాత్మక మరియు క్రియాత్మక ప్రమాణం?", o: ["Nephron / నెఫ్రాన్", "Neuron / న్యూరాన్", "Alveoli / అల్వియోలై", "Axon / ఆక్సాన్"], a: 1 },
+            { q: "2. The gap between two neurons is called? / రెండు న్యూరాన్ల మధ్య గల ప్రదేశాన్ని ఏమంటారు?", o: ["Synapse / సినాప్స్", "Dendrite / డెండ్రైట్", "Node of Ranvier / రాన్వియర్ కణుపు", "Axon / ఆక్సాన్"], a: 0 },
+            { q: "3. The largest region of the human brain is? / మానవ మెదడులో అతి పెద్ద భాగం?", o: ["Cerebellum / సెరెబెల్లం", "Medulla oblongata / మెడుల్లా అబ్లాంగేటా", "Cerebrum / సెరెబ్రం", "Pons / పాన్స్"], a: 2 },
+            { q: "4. The part of the brain that maintains posture and equilibrium is? / శరీర సమతుల్యతను మరియు భంగిమను కాపాడే మెదడు భాగం?", o: ["Cerebrum / సెరెబ్రం", "Cerebellum / సెరెబెల్లం", "Thalamus / తలామస్", "Hypothalamus / హైపోతలామస్"], a: 1 },
+            { q: "5. Vital activities like heartbeat and respiration are controlled by? / గుండె కొట్టుకోవడం మరియు శ్వాసక్రియను నియంత్రించేది?", o: ["Cerebrum / సెరెబ్రం", "Cerebellum / సెరెబెల్లం", "Medulla oblongata / మెడుల్లా అబ్లాంగేటా", "Spinal cord / వెన్నుపాము"], a: 2 },
+            { q: "6. Insulin hormone is secreted by? / ఇన్సులిన్ హార్మోన్‌ను శ్రవించే గ్రంథి?", o: ["Thyroid / థైరాయిడ్", "Adrenal / అడ్రినల్", "Pancreas / క్లోమం", "Pituitary / పిట్యూటరీ"], a: 2 },
+            { q: "7. The emergency hormone that prepares the body to face stress is? / అత్యవసర హార్మోన్ లేదా పోరాట హార్మోన్ అని దేనిని పిలుస్తారు?", o: ["Insulin / ఇన్సులిన్", "Adrenalin / అడ్రినలిన్", "Thyroxine / థైరాక్సిన్", "Estrogen / ఈస్ట్రోజెన్"], a: 1 },
+            { q: "8. Plant hormone responsible for cell elongation and shoot bending towards light? / మొక్కలలో కణాల పొడవును పెంచి కాంతి వైపు వంచడానికి తోడ్పడే హార్మోన్?", o: ["Gibberellin / జిబ్బరెల్లిన్", "Auxin / ఆక్సిన్", "Cytokinin / సైటోకైనిన్", "Ethylene / ఇథిలీన్"], a: 1 },
+            { q: "9. Plant hormone that promotes fruit ripening is? / పండ్లు పక్వానికి రావడానికి తోడ్పడే వాయురూప హార్మోన్?", o: ["Abscisic acid / అబ్సిసిక్ ఆమ్లం", "Auxin / ఆక్సిన్", "Ethylene / ఇథిలీన్", "Cytokinin / సైటోకైనిన్"], a: 2 },
+            { q: "10. The movement of plant organs in response to light is called? / కాంతికి అనుగుణంగా మొక్క భాగాలు చూపించే చలనం?", o: ["Geotropism / గురుత్వవర్తనం", "Phototropism / కాంతివర్తనం", "Hydrotropism / నీటివర్తనం", "Thigmotropism / స్పర్శవర్తనం"], a: 1 },
+            { q: "11. Touch-me-not (Mimosa pudica) leaves fold when touched due to? / అత్తిపత్తి ఆకులను తాకగానే ముడుచుకోవడానికి కారణం?", o: ["Thigmonasty / థిగ్మోనాస్టి", "Phototropism / కాంతివర్తనం", "Chemotropism / రసాయనవర్తనం", "Geotropism / గురుత్వవర్తనం"], a: 0 },
+            { q: "12. The insulating sheath around an axon is? / ఆక్సాన్ చుట్టూ ఉండే ఇన్సులేటింగ్ తొడుగు పేరు?", o: ["Myelin sheath / మైలిన్ తొడుగు", "Synapse / సినాప్స్", "Ganglion / గాంగ్లియన్", "Dendrite / డెండ్రైట్"], a: 0 },
+            { q: "13. The master control center of the endocrine system is? / అంతఃస్రావి వ్యవస్థపై ప్రధాన నియంత్రణ కలిగిన భాగం?", o: ["Pituitary / పిట్యూటరీ", "Hypothalamus / హైపోతలామస్", "Thyroid / థైరాయిడ్", "Pineal / పీనియల్"], a: 1 },
+            { q: "14. Deficiency of insulin causes which disease? / ఇన్సులిన్ లోపం వల్ల వచ్చే వ్యాధి?", o: ["Goitre / గాయిటర్", "Diabetes mellitus / మధుమేహం (డయాబెటిస్)", "Beriberi / బెరిబెరి", "Scurvy / స్క‌ర్వీ"], a: 1 },
+            { q: "15. The chemical substance discovered by F.W. Went in oat seedlings is? / ఎఫ్.డబ్ల్యు. వెంట్ ఓట్స్ మొలకలలో కనుగొన్న మొదటి హార్మోన్?", o: ["Cytokinin / సైటోకైనిన్", "Auxin / ఆక్సిన్", "Gibberellin / జిబ్బరెల్లిన్", "Abscisic acid / అబ్సిసిక్ ఆమ్లం"], a: 1 },
+            { q: "16. Reflex actions are primarily controlled by? / ప్రతివర్త చర్యలను ప్రధానంగా నియంత్రించేది?", o: ["Brain / మెదడు", "Spinal cord / వెన్నుపాము", "Cerebrum / సెరెబ్రం", "Cerebellum / సెరెబెల్లం"], a: 1 },
+            { q: "17. Nerves that carry messages from sense organs to CNS are? / జ్ఞానాంగాల నుండి కేంద్ర నాడీ వ్యవస్థకు సమాచారాన్ని చేరవేసే నాడులు?", o: ["Motor nerves / కారక నాడులు", "Sensory (Afferent) nerves / జ్ఞాన (అఫరెంట్) నాడులు", "Mixed nerves / మిశ్రమ నాడులు", "Cranial nerves / కపాల నాడులు"], a: 1 },
+            { q: "18. The number of cranial nerves arising from the brain in humans is? / మానవులలో మెదడు నుండి ఉద్భవించే కపాల నాడుల జతల సంఖ్య?", o: ["12 pairs / 12 జతలు", "31 pairs / 31 జతలు", "21 pairs / 21 జతలు", "10 pairs / 10 జతలు"], a: 0 },
+            { q: "19. The hormone responsible for the basal metabolic rate and general growth is? / సాధారణ పెరుగుదల మరియు జీవక్రియలను నియంత్రించే హార్మోన్?", o: ["Insulin / ఇన్సులిన్", "Thyroxine / థైరాక్సిన్", "Adrenalin / అడ్రినలిన్", "Testosterone / టెస్టోಸ್ಟೆరాన్"], a: 1 },
+            { q: "20. Growth-inhibiting plant hormone is? / మొక్కలలో పెరుగుదలను నిరోధించే హార్మోన్ ఏది?", o: ["Auxin / ఆక్సిన్", "Gibberellin / జిబ్బరెల్లిన్", "Abscisic acid / అబ్సిసిక్ ఆమ్లం", "Cytokinin / సైటోకైనిన్"], a: 2 }
+        ];
+
+        const qc = document.getElementById('quiz-container');
+        qData.forEach((q, i) => {
+            let opts = q.o.map((o, j) => `<label class="option-label" id="l-${i}-${j}"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('');
+            qc.innerHTML += `<div class="question-box"><div class="question-text">${q.q}</div><div class="options">${opts}</div></div>`;
+        });
+
+        function calculateScore() {
+            let score = 0, allAns = true;
+            qData.forEach((q, i) => {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!sel) allAns = false;
+                else {
+                    document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.disabled = true);
+                    const v = parseInt(sel.value);
+                    if (v === q.a) { score++; document.getElementById(`l-${i}-${v}`).classList.add('correct-ans'); }
+                    else { document.getElementById(`l-${i}-${v}`).classList.add('wrong-ans'); document.getElementById(`l-${i}-${q.a}`).classList.add('correct-ans'); }
+                }
+            });
+            if (!allAns) return alert("Please answer all questions! / అన్ని ప్రశ్నలకు సమాధానం ఇవ్వండి!");
+            document.getElementById('submit-btn').style.display = "none";
+            document.getElementById('result-container').style.display = "block";
+            document.getElementById('score-text').innerHTML = `Your Score: ${score} / 20`;
+            document.getElementById('excellent-msg').style.display = score === 20 ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
