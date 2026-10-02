@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination - True or False</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #ff0; font-size: 24px; }
+        .creator { color: #0fc; font-size: 16px; font-weight: bold; margin-bottom: 25px; }
+        .quiz-container { background-color: #111; border: 2px solid #ff0; border-radius: 12px; padding: 20px; max-width: 800px; margin: 0 auto; text-align: left; }
+        .q-box { background-color: #222; padding: 15px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #444; }
+        .q-text { font-size: 16px; font-weight: bold; color: #ff0; margin-bottom: 10px; }
+        .opt-label { font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-right:20px; padding:5px; border-radius:5px;}
+        .opts { display: flex; }
+        input[type="radio"] { transform: scale(1.2); }
+        .correct-ans { color: #0f0 !important; font-weight: bold; }
+        .wrong-ans { color: #f00 !important; font-weight: bold; }
+        .btn { width: 100%; background-color: #ff0; color: #000; padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+        #res-box { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Coordination - True/False<br>సమన్వయం - తప్పు/ఒప్పు</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div class="quiz-container">
+        <div id="q-list"></div>
+        <button class="btn" id="chk-btn" onclick="check()">Submit / సమర్పించు</button>
+        <button class="btn" id="rty-btn" style="display:none; background-color:#0fc;" onclick="location.reload()">Retry / మళ్లీ ప్రయత్నించు ↻</button>
+        <div id="res-box"></div>
+    </div>
+    <script>
+        const data = [
+            { q: "1. Neuron is the structural and functional unit of the nervous system. / న్యూరాన్ నాడీ వ్యవస్థ యొక్క నిర్మాణాత్మక ప్రమాణం.", a: "T" },
+            { q: "2. Cerebrum is responsible for body posture and equilibrium. / శరీర సమతుల్యతను సెరెబ్రం కాపాడుతుంది.", a: "F" },
+            { q: "3. Insulin decreases the glucose level in blood. / ఇన్సులిన్ రక్తంలోని గ్లూకోజ్ స్థాయిని తగ్గిస్తుంది.", a: "T" },
+            { q: "4. Medulla oblongata controls heartbeat and respiration. / గుండె స్పందనను మెడుల్లా అబ్లాంగేటా నియంత్రిస్తుంది.", a: "T" },
+            { q: "5. Auxin is a plant growth-inhibiting hormone. / ఆక్సిన్ మొక్కలలో పెరుగుదలను నిరోధించే హార్మోన్.", a: "F" },
+            { q: "6. Ethylene promotes fruit ripening. / ఇథిలీన్ పండ్లు పక్వానికి రావడానికి తోడ్పడుతుంది.", a: "T" },
+            { q: "7. Spinal cord primarily controls reflex actions. / వెన్నుపాము ప్రధానంగా ప్రతివర్త చర్యలను నియంత్రిస్తుంది.", a: "T" },
+            { q: "8. Sensory nerves carry messages from CNS to effectors. / జ్ఞాన నాడులు CNS నుండి కండరాలకు సమాచారాన్ని చేరవేస్తాయి.", a: "F" },
+            { q: "9. Adrenalin is known as the emergency hormone. / అడ్రినలిన్‌ను అత్యవసర హార్మోన్ అంటారు.", a: "T" },
+            { q: "10. Plants possess a well-developed nervous system. / మొక్కలలో బాగా అభివృద్ధి చెందిన నాడీ వ్యవస్థ ఉంటుంది.", a: "F" },
+            { q: "11. F.W. Went discovered the plant hormone auxin. / ఎఫ్.డబ్ల్యు. వెంట్ ఆక్సిన్ హార్మోన్‌ను కనుగొన్నారు.", a: "T" },
+            { q: "12. Touch-me-not plant shows thigmonasty. / అత్తిపత్తి మొక్క థిగ్మోనాస్టి చలనాన్ని చూపుతుంది.", a: "T" },
+            { q: "13. Hypothalamus is the master control center of endocrine system. / హైపోతలామస్ అంతఃస్రావి వ్యవస్థకు ప్రధాన నియంత్రణ కేంద్రం.", a: "T" },
+            { q: "14. Roots show negative geotropism. / వేర్లు రుణాత్మక గురుత్వవర్తనాన్ని చూపుతాయి.", a: "F" },
+            { q: "15. Abscisic acid causes stomata closure. / అబ్సిసిక్ ఆమ్లం పత్రరంధ్రాలు మూసుకునేలా చేస్తుంది.", a: "T" }
+        ];
+        const list = document.getElementById('q-list');
+        data.forEach((d, i) => {
+            list.innerHTML += `<div class="q-box"><div class="q-text">${d.q}</div><div class="opts"><label class="opt-label" id="l-${i}-T"><input type="radio" name="q${i}" value="T"> True (ఒప్పు)</label><label class="opt-label" id="l-${i}-F"><input type="radio" name="q${i}" value="F"> False (తప్పు)</label></div></div>`;
+        });
+        function check() {
+            let score = 0, all = true;
+            data.forEach((d, i) => {
+                let sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if (!sel) all = false;
+                else {
+                    document.querySelectorAll(`input[name="q${i}"]`).forEach(r => r.disabled = true);
+                    if (sel.value === d.a) { score++; document.getElementById(`l-${i}-${sel.value}`).classList.add("correct-ans"); }
+                    else { document.getElementById(`l-${i}-${sel.value}`).classList.add("wrong-ans"); document.getElementById(`l-${i}-${d.a}`).classList.add("correct-ans"); }
+                }
+            });
+            if (!all) return alert("Answer all questions! / అన్నీ పూర్తి చేయండి!");
+            document.getElementById("chk-btn").style.display = "none"; document.getElementById("rty-btn").style.display = "block";
+            let res = document.getElementById("res-box");
+            if (score === 15) res.innerHTML = `<span style="color:#0f0">Excellent! 🎉 అద్భుతం!<br>Score: 15/15</span>`;
+            else res.innerHTML = `<span style="color:#ff0">Score: ${score}/15</span>`;
+        }
+    </script>
+</body>
+</html>
