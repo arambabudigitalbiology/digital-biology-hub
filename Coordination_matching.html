@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordination - Matching</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #ff0; font-size: 22px; }
+        .creator { color: #0fc; font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+        .game-container { background-color: #111; border: 2px solid #ff0; border-radius: 10px; padding: 15px; max-width: 800px; margin: 0 auto; text-align: left; }
+        .match-row { display: flex; justify-content: space-between; align-items: center; background-color: #222; padding: 8px; margin: 8px 0; border-radius: 5px; }
+        .term { color: #ff0; font-weight: bold; width: 35%; font-size: 14px; }
+        select { width: 63%; padding: 6px; background-color: #333; color: #fff; border: 1px solid #555; border-radius: 4px; font-size: 13px; }
+        select.correct { background-color: #008000 !important; color: #fff; }
+        select.wrong { background-color: #f00 !important; color: #fff; }
+        .btn { width: 100%; background-color: #ff0; color: #000; padding: 12px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 20px; border: none; }
+        #result { font-size: 18px; font-weight: bold; margin-top: 20px; color: #0f0; }
+    </style>
+</head>
+<body>
+    <h1>Coordination - Matching<br>సమన్వయం - జతపరుచు ఆట</h1>
+    <div class="creator">Created by A.Rambabu, S.A biology</div>
+    <div class="game-container">
+        <div id="match-list"></div>
+        <button class="btn" id="check-btn" onclick="checkAnswers()">Check Answers / సరిచూసుకోండి</button>
+        <button class="btn" style="display:none; background-color:#0fc;" id="retry-btn" onclick="location.reload()">Retry / మళ్లీ ప్రయత్నించు ↻</button>
+    </div>
+    <div id="result"></div>
+    <script>
+        const mData = [
+            { t: "Cerebrum / సెరెబ్రం", c: "Memory, reasoning & thinking / జ్ఞాపకశక్తి, ఆలోచన" },
+            { t: "Cerebellum / సెరెబెల్లం", c: "Posture and equilibrium / శరీర సమతుల్యత" },
+            { t: "Medulla oblongata / మెడుల్లా", c: "Heartbeat & respiration / గుండె స్పందన, శ్వాసక్రియ" },
+            { t: "Hypothalamus / హైపోతలామస్", c: "Master control of endocrine system / అంతఃస్రావి వ్యవస్థ నియంత్రణ" },
+            { t: "Insulin / ఇన్సులిన్", c: "Lowers blood glucose / రక్తంలో చక్కెర స్థాయి తగ్గింపు" },
+            { t: "Adrenalin / అడ్రినలిన్", c: "Emergency hormone / అత్యవసర హార్మోన్" },
+            { t: "Thyroxine / థైరాక్సిన్", c: "Basal metabolic rate / జీవక్రియ వేగం" },
+            { t: "Auxin / ఆక్సిన్", c: "Cell elongation & phototropism / కణాల పొడవు, కాంతివర్తనం" },
+            { t: "Ethylene / ఇథిలీన్", c: "Fruit ripening / పండ్లు పక్వానికి రావడం" },
+            { t: "Gibberellin / జిబ్బరెల్లిన్", c: "Stem elongation & seed germination / కాండం పెరుగుదల, విత్తన మొలకెత్తడం" },
+            { t: "Abscisic acid / అబ్సిసిక్ ఆమ్లం", c: "Stomata closure & growth inhibition / రంధ్రాల మూసివేత, వృద్ధి నిరోధకం" },
+            { t: "Synapse / సినాప్స్", c: "Junction between two neurons / రెండు న్యూరాన్ల మధ్య అనుసంధానం" },
+            { t: "Sensory nerve / జ్ఞాన నాడి", c: "Carries impulses to CNS / CNS కు సమాచార ప్రసారం" },
+            { t: "Motor nerve / కారக నాడి", c: "Carries impulses from CNS to effectors / కండరాలకు సమాచార చేరవేత" },
+            { t: "Mimosa pudica / అత్తిపత్తి", c: "Thigmonasty / థిగ్మోనాస్టి (స్పర్శ చలనం)" }
+        ];
+        const opts = [...mData.map(i => i.c)].sort(() => Math.random() - 0.5);
+        const list = document.getElementById("match-list");
+        mData.forEach((item, i) => {
+            list.innerHTML += `<div class="match-row"><div class="term">${item.t}</div><select id="s-${i}"><option value="">-- Select --</option>${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>`;
+        });
+        function checkAnswers() {
+            let score = 0, all = true;
+            mData.forEach((item, i) => {
+                let s = document.getElementById(`s-${i}`);
+                if (!s.value) all = false;
+                if (s.value === item.c) { s.className = "correct"; score++; } else { s.className = s.value ? "wrong" : ""; }
+            });
+            if (!all) return document.getElementById("result").innerHTML = "<span style='color:red'>Answer all! / అన్ని జతపరచండి!</span>";
+            document.getElementById("check-btn").style.display = "none";
+            document.getElementById("retry-btn").style.display = "block";
+            let res = document.getElementById("result");
+            if (score === 15) res.innerHTML = `Excellent! / అద్భుతం! 🎉<br>Score: ${score}/15`;
+            else res.innerHTML = `Score: ${score}/15<br><span style="color:#ff0">కొన్ని తప్పులు ఉన్నాయి! (Some are wrong)</span>`;
+        }
+    </script>
+</body>
+</html>
