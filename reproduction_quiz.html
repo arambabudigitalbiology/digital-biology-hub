@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduction - Interactive Quiz</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .quiz-container { max-width: 600px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .question { margin-bottom: 20px; font-size: 16px; }
+        .options button { display: block; width: 100%; margin: 8px 0; padding: 10px; background: #222; color: #fff; border: 1px solid #00ffcc; border-radius: 5px; cursor: pointer; text-align: left; }
+        .options button.correct { background: #28a745 !important; color: #fff; }
+        .options button.wrong { background: #dc3545 !important; color: #fff; }
+        #result { font-size: 20px; font-weight: bold; margin-top: 20px; color: #00ffcc; text-align: center; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Reproduction - 20 MCQs</h2>
+        
+        <div id="quiz"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "1. The process of continuation of life by producing offsprings is called?", o: ["Respiration", "Reproduction", "Excretion", "Digestion"], a: 1 },
+            { q: "2. The method of reproduction in Amoeba during favourable condition is?", o: ["Budding", "Binary fission", "Fragmentation", "Spore formation"], a: 1 },
+            { q: "3. Curdling of milk is due to which bacteria?", o: ["Rhizobium", "Lactobacillus", "Yeast", "Amoeba"], a: 1 },
+            { q: "4. Budding is commonly observed in?", o: ["Amoeba", "Yeast", "Spirogyra", "Planaria"], a: 1 },
+            { q: "5. Fragmentation occurs in?", o: ["Hydra", "Spirogyra", "Human", "Bird"], a: 1 },
+            { q: "6. Development of young ones from unfertilized gametes is called?", o: ["Parthenogenesis", "Parthenocarpy", "Budding", "Fission"], a: 0 },
+            { q: "7. Seedless fruits like watermelon are produced by?", o: ["Parthenogenesis", "Parthenocarpy", "Grafting", "Layering"], a: 1 },
+            { q: "8. Regeneration is best seen in?", o: ["Amoeba", "Planaria", "Paramecium", "Hydra"], a: 1 },
+            { q: "9. Bryophyllum reproduces vegetatively through?", o: ["Roots", "Stems", "Leaves", "Flowers"], a: 2 },
+            { q: "10. In grafting, the plant attached to the soil is called?", o: ["Scion", "Stock", "Bud", "Root"], a: 1 },
+            { q: "11. Bread mold (Rhizopus) reproduces through?", o: ["Spore formation", "Binary fission", "Budding", "Fragmentation"], a: 0 },
+            { q: "12. The fine thread-like projections in Rhizopus are called?", o: ["Hyphae", "Sporangium", "Roots", "Stems"], a: 0 },
+            { q: "13. External fertilization is commonly seen in?", o: ["Humans", "Birds", "Amphibians/Fishes", "Reptiles"], a: 2 },
+            { q: "14. The male reproductive organ in humans is?", o: ["Ovary", "Testis", "Uterus", "Fallopian tube"], a: 1 },
+            { q: "15. Fusion of gametes is known as?", o: ["Pollination", "Fertilization", "Germination", "Fission"], a: 1 },
+            { q: "16. The fertilized egg is called?", o: ["Embryo", "Zygote", "Gamete", "Spore"], a: 1 },
+            { q: "17. Parthenogenesis in ants and bees results in males developing from?", o: ["Fertilized eggs", "Unfertilized eggs", "Buds", "Fragments"], a: 1 },
+            { q: "18. Cutting and Layering are methods of?", o: ["Sexual reproduction", "Artificial vegetative propagation", "Natural propagation", "Micropropagation"], a: 1 },
+            { q: "19. The upper part of a grafted plant without roots is called?", o: ["Stock", "Scion", "Stem", "Branch"], a: 1 },
+            { q: "20. The reproductive cells/units in ferns are called?", o: ["Seeds", "Spores", "Buds", "Gametes"], a: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            if (currentQuestion < quizData.length) {
+                let qData = quizData[currentQuestion];
+                let html = `<div class="question"><strong>${qData.q}</strong></div><div class="options">`;
+                qData.o.forEach((opt, index) => {
+                    html += `<button onclick="checkAnswer(${index}, ${qData.a}, this)">${opt}</button>`;
+                });
+                html += `</div>`;
+                quizDiv.innerHTML = html;
+            } else {
+                quizDiv.innerHTML = "";
+                let msg = score >= 15 ? "Excellent! Great Job!" : "Good Try! Keep Learning!";
+                document.getElementById("result").innerHTML = `Your Score: ${score} / ${quizData.length}<br><span style="color:#ffff00;">${msg}</span><br><br><button onclick="resetQuiz()" style="padding:10px 20px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:5px; cursor:pointer;">Re-Try</button>`;
+            }
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const buttons = document.querySelectorAll('.options button');
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerHTML = "";
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
