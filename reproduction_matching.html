@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduction - Matching Game</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .match-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; background: #1a1a1a; padding: 8px; border-radius: 5px; }
+        select { background: #222; color: #00ffcc; padding: 5px; border: 1px solid #00ffcc; border-radius: 4px; }
+        button { background: #00ffcc; color: #000; font-weight: bold; padding: 10px; width: 100%; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+        #result { margin-top: 15px; font-weight: bold; text-align: center; font-size: 18px; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Reproduction - Matching Exercise</h2>
+        <p style="font-size: 13px; text-align:center; color:#aaa;">సరియైన జతలను సెలెక్ట్ చేయండి (Match the following)</p>
+        
+        <div id="matching-form"></div>
+        <button onclick="checkMatching()">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const pairs = [
+            { term: "1. Amoeba", match: "Binary fission" },
+            { term: "2. Yeast", match: "Budding" },
+            { term: "3. Spirogyra", match: "Fragmentation" },
+            { term: "4. Planaria", match: "Regeneration" },
+            { term: "5. Bryophyllum", match: "Leaf buds" },
+            { term: "6. Rhizopus", match: "Spore formation" },
+            { term: "7. Rose / Hibiscus", match: "Cutting" },
+            { term: "8. Nerium / Jasmine", match: "Layering" },
+            { term: "9. Mango / Apple", match: "Grafting" },
+            { term: "10. Banana", match: "Parthenocarpy" },
+            { term: "11. Honey bees", match: "Parthenogenesis" },
+            { term: "12. Ferns", match: "Sori / Spores" },
+            { term: "13. Testis", match: "Male gamete production" },
+            { term: "14. Zygote", match: "Fertilized egg" },
+            { term: "15. Tissue culture", match: "Modern artificial propagation" }
+        ];
+
+        let formDiv = document.getElementById("matching-form");
+        let shuffledMatches = [...pairs].map(p => p.match).sort(() => Math.random() - 0.5);
+
+        pairs.forEach((p, idx) => {
+            let optionsHTML = `<option value="">-- Select --</option>`;
+            shuffledMatches.forEach(m => {
+                optionsHTML += `<option value="${m}">${m}</option>`;
+            });
+
+            formDiv.innerHTML += `
+                <div class="match-row">
+                    <span>${p.term}</span>
+                    <select id="sel-${idx}" data-correct="${p.match}">
+                        ${optionsHTML}
+                    </select>
+                </div>
+            `;
+        });
+
+        function checkMatching() {
+            let score = 0;
+            pairs.forEach((p, idx) => {
+                let sel = document.getElementById(`sel-${idx}`);
+                if (sel.value === p.match) {
+                    sel.style.background = "#28a745";
+                    sel.style.color = "#fff";
+                    score++;
+                } else {
+                    sel.style.background = "#dc3545";
+                    sel.style.color = "#fff";
+                }
+            });
+
+            let resDiv = document.getElementById("result");
+            let msg = score === 15 ? "Excellent! All Correct!" : "Good Try! Review your answers.";
+            resDiv.innerHTML = `Score: ${score} / 15<br><span style="color:#ffff00;">${msg}</span>`;
+        }
+    </script>
+</body>
+</html>
