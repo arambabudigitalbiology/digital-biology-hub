@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduction - Flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 500px; margin: 0 auto; background: #111; padding: 25px; border-radius: 10px; border: 2px solid #00ffcc; }
+        .card { background: #1a1a1a; border: 1px solid #00ffcc; border-radius: 8px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 18px; cursor: pointer; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,255,204,0.2); }
+        .buttons { display: flex; justify-content: space-between; }
+        button { background: #00ffcc; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="color: #00ffcc;">Reproduction - Flashcards</h2>
+        <p style="font-size: 12px; color: #aaa;">కార్డు మీద క్లిక్ చేసి సమాధానం చూడండి (Click card to flip)</p>
+        
+        <div id="flashcard" class="card" onclick="flipCard()">
+            Loading...
+        </div>
+
+        <div class="buttons">
+            <button onclick="prevCard()">Previous</button>
+            <span id="counter" style="align-self: center; font-weight: bold;"></span>
+            <button onclick="nextCard()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const cards = [
+            { q: "What is Reproduction?", a: "Continuation of life by producing offsprings." },
+            { q: "Binary Fission example", a: "Amoeba and Bacteria" },
+            { q: "Budding example", a: "Yeast" },
+            { q: "Fragmentation example", a: "Spirogyra" },
+            { q: "Regeneration example", a: "Planaria" },
+            { q: "Parthenogenesis example", a: "Ants, Bees, and Wasps" },
+            { q: "Parthenocarpy example", a: "Seedless Banana / Watermelon" },
+            { q: "Leaf Vegetative Propagation", a: "Bryophyllum" },
+            { q: "Spore formation example", a: "Rhizopus (Bread mold)" },
+            { q: "Stock and Scion are used in", a: "Grafting" },
+            { q: "Cutting propagation example", a: "Rose and Hibiscus" },
+            { q: "Layering propagation example", a: "Jasmine and Nerium" },
+            { q: "Fusion of gametes is called", a: "Fertilization" },
+            { q: "Result of fertilization", a: "Zygote (Diploid)" },
+            { q: "Reproductive cells in ferns", a: "Spores produced in Sori" }
+        ];
+
+        let currentIndex = 0;
+        let showingQuestion = true;
+
+        function updateCard() {
+            const card = document.getElementById("flashcard");
+            card.innerHTML = showingQuestion ? cards[currentIndex].q : cards[currentIndex].a;
+            card.style.color = showingQuestion ? "#fff" : "#00ffcc";
+            document.getElementById("counter").innerText = `${currentIndex + 1} / ${cards.length}`;
+        }
+
+        function flipCard() {
+            showingQuestion = !showingQuestion;
+            updateCard();
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        updateCard();
+    </script>
+</body>
+</html>
