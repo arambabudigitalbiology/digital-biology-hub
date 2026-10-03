@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduction - Important Questions</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .q-box { margin-bottom: 15px; padding: 12px; background: #1a1a1a; border-left: 4px solid #00ffcc; border-radius: 5px; }
+        .answer { display: none; margin-top: 8px; color: #00ffcc; font-size: 14px; }
+        .toggle-btn { background: #333; color: #fff; border: 1px solid #00ffcc; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Reproduction - Important Questions</h2>
+        
+        <div id="q-list"></div>
+    </div>
+
+    <script>
+        const questionsList = [
+            { q: "1. What is reproduction?", a: "Reproduction is a necessary life process for the continuation of life by producing offsprings." },
+            { q: "2. What is binary fission?", a: "A process where a single-celled organism splits into two identical daughter cells (e.g., Amoeba, Bacteria)." },
+            { q: "3. Give an example of an organism that reproduces by budding.", a: "Yeast." },
+            { q: "4. What is fragmentation?", a: "A process where an organism breaks into pieces, and each piece grows into a new individual (e.g., Spirogyra)." },
+            { q: "5. Define Parthenogenesis.", a: "The development of young ones from unfertilized gametes (e.g., in ants, bees, and wasps)." },
+            { q: "6. What is Parthenocarpy?", a: "The development of fruits directly from the ovary without fertilization, resulting in seedless fruits (e.g., banana, seedless watermelon)." },
+            { q: "7. What is regeneration?", a: "The ability of an organism to give rise to new individuals from cut or broken body parts (e.g., Planaria)." },
+            { q: "8. What is vegetative propagation?", a: "Reproduction in plants from their vegetative parts like leaves, stems, and roots." },
+            { q: "9. Give an example of leaf vegetative propagation.", a: "Bryophyllum (small plants grow at the edge of leaves)." },
+            { q: "10. What are Stock and Scion in grafting?", a: "Stock is the rooted plant part, and Scion is the cut stem part of another plant joined together." },
+            { q: "11. What are Spores?", a: "Microscopic reproductive units produced in sporangia (e.g., in Rhizopus and Ferns) that germinate under damp conditions." },
+            { q: "12. What is external fertilization?", a: "Fusion of gametes outside the female body, commonly seen in aquatic animals like fishes and amphibians." },
+            { q: "13. What is internal fertilization?", a: "Fusion of gametes inside the female body, seen in land animals and humans." },
+            { q: "14. What is a Zygote?", a: "The diploid cell formed by the fusion of male and female gametes during fertilization." },
+            { q: "15. Mention the main artificial propagation methods in plants.", a: "Cutting, Layering, Grafting, and Tissue Culture." }
+        ];
+
+        let listDiv = document.getElementById("q-list");
+        questionsList.forEach((item, index) => {
+            listDiv.innerHTML += `
+                <div class="q-box">
+                    <strong>${item.q}</strong>
+                    <button class="toggle-btn" onclick="toggleAns(${index})">Answer</button>
+                    <div id="ans-${index}" class="answer">${item.a}</div>
+                </div>
+            `;
+        });
+
+        function toggleAns(i) {
+            let ans = document.getElementById(`ans-${i}`);
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
