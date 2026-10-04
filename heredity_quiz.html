@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heredity and Evolution - Interactive Quiz</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .quiz-container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .question { margin-bottom: 20px; font-size: 16px; color: #ffff00; line-height: 1.5; }
+        .options button { display: block; width: 100%; margin: 8px 0; padding: 10px; background: #222; color: #fff; border: 1px solid #00ffcc; border-radius: 5px; cursor: pointer; text-align: left; }
+        .options button.correct { background: #28a745 !important; color: #fff; }
+        .options button.wrong { background: #dc3545 !important; color: #fff; }
+        #result { font-size: 20px; font-weight: bold; margin-top: 20px; color: #ffff00; text-align: center; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Heredity and Evolution / అనువంశికత - పరిణామం - 20 MCQs</h2>
+        
+        <div id="quiz"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "1. Who is known as the Father of Genetics? / జన్యుశాస్త్ర పితామహుడు ఎవరు?", o: ["Gregor Johann Mendel / గ్రెగర్ జాన్ మెండల్", "Charles Darwin / చార్లెస్ డార్విన్", "Jean Baptiste Lamarck / లామార్క్", "Hugo de Vries / హ్యూగో డి వ్రీస్"], a: 0 },
+            { q: "2. The plant chosen by Mendel for his experiments was / మెండల్ తన ప్రయోగాలకోసం ఎంచుకున్న మొక్క?", o: ["Hibiscus / మందార", "Pisum satum (Garden Pea) / బఠానీ మొక్క", "Tomato / టమోటా", "Maize / మొక్కజొన్న"], a: 1 },
+            { q: "3. Transmission of characters from parents to offsprings is called / తల్లిదండ్రుల నుండి లక్షణాలు సంతానానికి తరలిపోవడాన్ని ఏమంటారు?", o: ["Evolution / పరిణామం", "Heredity / అనువంశికత", "Variation / వైవిధ్యం", "Mutation / ఉత్పరివర్తనం"], a: 1 },
+            { q: "4. The alternate forms of a gene are called / యుగ్మ వికల్పాలు (Alleles) అనగా?", o: ["Chromosomes / వర్ణతంత్రులు", "Genes / జన్యువులు", "Alternative forms of a gene / ఒకే జన్యువు యొక్క వేర్వేరు రూపాలు", "DNA strands / DNA పోగులు"], a: 2 },
+            { q: "5. Genotypic ratio in Mendel's Monohybrid cross is / మెండల్ ఏక సంకర సంకరణంలో జన్యురూప నిష్పత్తి?", o: ["3 : 1", "1 : 2 : 1", "9 : 3 : 3 : 1", "2 : 2"], a: 1 },
+            { q: "6. Phenotypic ratio in Mendel's Monohybrid cross is / ఏక సంకర సంకరణంలో దృశ్యరూప నిష్పత్తి?", o: ["3 : 1 / 3:1", "1 : 2 : 1", "9 : 3 : 3 : 1", "1 : 1"], a: 0 },
+            { q: "7. Who proposed the Theory of Natural Selection? / 'సహజ ఎన్నిక సిద్ధాంతాన్ని' ప్రతిపాదించినది ఎవరు?", o: ["Mendel / మెండల్", "Darwin and Wallace / డార్విన్ మరియు వాలెస్", "Lamarck / లామార్క్", "Watson and Crick / వాట్సన్ మరియు క్రిక్"], a: 1 },
+            { q: "8. The book 'Origin of Species' was written by / 'ఆరిజిన్ ఆఫ్ స్పీషీస్' గ్రంథ రచయిత?", o: ["Charles Darwin / చార్లెస్ డార్విన్", "Gregor Mendel / గ్రెగర్ మెండల్", "Lamarck / లామార్క్", "Aristotle / అరిస్టాటిల్"], a: 0 },
+            { q: "9. Homologous organs have / సమరూప అవయవాలు (Homologous organs) కలిగి ఉండేవి?", o: ["Same structure and same function / ఒకే నిర్మాణం, ఒకే విధి", "Same origin and basic structure, but different functions / ఒకే మూలం మరియు నిర్మాణం, వేర్వేరు విధులు", "Different origin and same function / వేర్వేరు మూలం, ఒకే విధి", "No relation / ఎలాంటి సంబంధం లేదు"], a: 1 },
+            { q: "10. Analogous organs have / సమవృత్తి అవయవాలు (Analogous organs) కలిగి ఉండేవి?", o: ["Same structure / ఒకే నిర్మాణం", "Different structure and origin, but similar function / వేర్వేరు నిర్మాణం, ఒకే విధమైన విధి", "Same embryonic origin / ఒకే పిండచోదక మూలం", "None / ఏదీ కాదు"], a: 1 },
+            { q: "11. Wings of a bird and wings of an insect are examples of / పక్షి రెక్కలు మరియు కీటకం రెక్కలు దేనికి ఉదాహరణ?", o: ["Homologous organs / సమరూప అవయవాలు", "Analogous organs / సమవృత్తి అవయవాలు", "Vestigial organs / అవశేష అవయవాలు", "Fossils / శిలాజాలు"], a: 1 },
+            { q: "12. Forelimbs of a human and a whale are examples of / మానవుని చేతులు మరియు తిమింగలం ముందుకు రుద్దుకునే అవయవాలు?", o: ["Homologous organs / సమరూప అవయవాలు", "Analogous organs / సమవృత్తి అవయవాలు", "Vestigial organs / అవశేష అవయవాలు", "Mutated organs / ఉత్పరివర్తన అవయవాలు"], a: 0 },
+            { q: "13. Vestigial organs in human body include / మానవ శరీరంలో గల అవశేష అవయవం?", o: ["Appendix / అపెండిక్స్", "Heart / గుండె", "Liver / కాలేయం", "Kidney / మూత్రపిండం"], a: 0 },
+            { q: "14. The term 'Genetics' was coined by / 'జెనెటిక్స్' (జన్యుశాస్త్రం) అనే పదాన్ని ప్రవేశపెట్టినది?", o: ["W. Bateson / డబ్ల్యు. బేట్సన్", "Mendel / మెండల్", "Darwin / డార్విన్", "Lamarck / లామార్క్"], a: 0 },
+            { q: "15. Which of the following determines sex in humans? / మానవులలోలింగ నిర్ధారణ చేసేవి?", o: ["Autosomes / ఆటోసోమ్స్", "Sex chromosomes (X and Y) / లైంగిక క్రోమోజోములు (X మరియు Y)", "Mitochondria / మైటోకాండ్రియా", "Cytoplasm / సైటోప్లాజమ్"], a: 1 },
+            { q: "16. The sudden heritable changes in organisms are called / జీవులలో అకస్మాత్తుగా వచ్చే అనువంశిక మార్పులను ఏమంటారు?", o: ["Evolution / పరిణామం", "Mutation / ఉత్పరివర్తనం", "Fertilization / ఫలదీకరణం", "Adaptation / అనుకూలత"], a: 1 },
+            { q: "17. Who proposed the Theory of Inheritance of Acquired Characters? / ఆర్జిత లక్షణాల అనువంశికత సిద్ధాంతాన్ని ప్రతిపాదించినది?", o: ["Lamarck / లామార్క్", "Darwin / డార్విన్", "Mendel / మెండల్", "Hugo de Vries / హ్యూగో డి వ్రీస్"], a: 0 },
+            { q: "18. The study of fossils is known as / శిలాజాల అధ్యయనాన్ని ఏమంటారు?", o: ["Paleontology / పేలియాంటాలజీ (శిలాజ శాస్త్రం)", "Embryology / పిండ శాస్త్రం", "Anatomy / అంతర్నిర్మాణ శాస్త్రం", "Ecology / ఆవరణ శాస్త్రం"], a: 0 },
+            { q: "19. Connection link between reptiles and birds is / సరీసృపాలు మరియు పక్షులకు మధ్య సంధాన సేతువు (Missing link)?", o: ["Archaeopteryx / ఆర్కియప్టెరిక్స్", "Platypus / ప్లాటిపస్", "Lungfish / లంగ్‌ఫిష్", "Amphioxus / ఆంఫియాక్సస్"], a: 0 },
+            { q: "20. The chemical basis of heredity is / అనువంశికతకు రసాయన ప్రాతిపదిక ఏది?", o: ["Protein / ప్రొటీన్", "DNA / డి.ఎన్.ఎ", "Carbohydrate / కార్బోహైడ్రేట్", "Lipid / లిపిడ్"], a: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            if (currentQuestion < quizData.length) {
+                let qData = quizData[currentQuestion];
+                let html = `<div class="question"><strong>${qData.q}</strong></div><div class="options">`;
+                qData.o.forEach((opt, index) => {
+                    html += `<button onclick="checkAnswer(${index}, ${qData.a}, this)">${opt}</button>`;
+                });
+                html += `</div>`;
+                quizDiv.innerHTML = html;
+            } else {
+                quizDiv.innerHTML = "";
+                let msg = score >= 15 ? "Excellent! Great Job!" : "Good Try! Keep Learning!";
+                document.getElementById("result").innerHTML = `Your Score: ${score} / ${quizData.length}<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="resetQuiz()" style="padding:10px 20px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:5px; cursor:pointer;">Re-Try</button>`;
+            }
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const buttons = document.querySelectorAll('.options button');
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerHTML = "";
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
