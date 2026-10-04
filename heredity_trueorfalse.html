@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heredity and Evolution - True or False</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 550px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .tf-box { margin-bottom: 20px; font-size: 15px; background: #1a1a1a; padding: 12px; border-radius: 5px; color: #ffff00; line-height: 1.4; }
+        .tf-buttons { margin-top: 10px; display: flex; gap: 10px; }
+        .tf-buttons button { flex: 1; padding: 8px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-t { background: #28a745; color: #fff; }
+        .btn-f { background: #dc3545; color: #fff; }
+        #result { margin-top: 20px; font-weight: bold; text-align: center; font-size: 18px; color: #ffff00; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Heredity and Evolution / అనువంశికత - పరిణామం - True or False</h2>
+        
+        <div id="tf-container"></div>
+        <button onclick="submitTF()" style="background:#00ffcc; color:#000; font-weight:bold; padding:10px; width:100%; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const tfData = [
+            { q: "1. Gregor Johann Mendel is known as the Father of Genetics. / గ్రెగర్ జాన్ మెండల్ జన్యుశాస్త్ర పితామహుడు.", ans: true },
+            { q: "2. Mendel selected maize plant for his experiments. / మెండల్ తన ప్రయోగాలకు మొక్కజొన్న మొక్కను ఎంచుకున్నారు.", ans: false },
+            { q: "3. The phenotypic ratio of monohybrid cross is 3:1. / ఏక సంకర సంకరణ దృశ్యరూప నిష్పత్తి 3:1.", ans: true },
+            { q: "4. Charles Darwin proposed the Theory of Natural Selection. / చార్లెస్ డార్విన్ సహజ ఎన్నిక సిద్ధాంతాన్ని ప్రతిపాదించారు.", ans: true },
+            { q: "5. Lamarck proposed the Theory of Acquired Characters. / లామార్క్ ఆర్జిత లక్షణాల అనువంశికతను ప్రతిపాదించారు.", ans: true },
+            { q: "6. Wings of birds and insects are homologous organs. / పక్షులు మరియు కీటకాల రెక్కలు సమరూప అవయవాలు.", ans: false },
+            { q: "7. Forelimbs of humans and whales are homologous organs. / మానవులు మరియు తిమింగలాల ముందరి కాళ్లు సమరూప అవయవాలు.", ans: true },
+            { q: "8. Appendix is a vestigial organ in human beings. / అపెండిక్స్ మానవులలో ఒక అవశేష అవయవం.", ans: true },
+            { q: "9. Archaeopteryx is a connecting link between reptiles and birds. / ఆర్కియప్టెరిక్స్ సరీసృపాలు, పక్షుల సంధాన సేతువు.", ans: true },
+            { q: "10. W. Bateson coined the term 'Genetics'. / 'జెనెటిక్స్' పదాన్ని డబ్ల్యు. బేట్సన్ ప్రవేశపెట్టారు.", ans: true },
+            { q: "11. Mutations are sudden heritable changes in organisms. / ఉత్పరివర్తనాలు జీవులలో అకస్మాత్తుగా వచ్చే అనువంశిక మార్పులు.", ans: true },
+            { q: "12. The study of fossils is called embryology. / శిలాజాల అధ్యయనాన్ని పిండ శాస్త్రం అంటారు.", ans: false },
+            { q: "13. DNA is the chemical basis of heredity. / డి.ఎన్.ఎ అనువంశికతకు రసాయన ప్రాతిపదిక.", ans: true },
+            { q: "14. Human males possess XX sex chromosomes. / మానవ పురుషులలో XX లైంగిక క్రోమోజోములు ఉంటాయి.", ans: false },
+            { q: "15. 'Origin of Species' book was written by Charles Darwin. / 'ఆరిజిన్ ఆఫ్ స్పీషీస్' గ్రంథాన్ని చార్లెస్ డార్విన్ రాశారు.", ans: true }
+        ];
+
+        let tfDiv = document.getElementById("tf-container");
+        tfData.forEach((item, idx) => {
+            tfDiv.innerHTML += `
+                <div class="tf-box">
+                    <div>${item.q}</div>
+                    <div class="tf-buttons">
+                        <button class="btn-t" onclick="selectAnswer(${idx}, true, this)">True</button>
+                        <button class="btn-f" onclick="selectAnswer(${idx}, false, this)">False</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        let userAnswers = {};
+        function selectAnswer(index, val, btn) {
+            userAnswers[index] = val;
+            let parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => b.style.outline = "none");
+            btn.style.outline = "3px solid #ffff00";
+        }
+
+        function submitTF() {
+            let score = 0;
+            tfData.forEach((item, idx) => {
+                if (userAnswers[idx] === item.ans) {
+                    score++;
+                }
+            });
+            let msg = score >= 12 ? "Excellent! Outstanding performance!" : "Good Try! Keep it up!";
+            document.getElementById("result").innerHTML = `Your Score: ${score} / 15<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="location.reload()" style="padding:8px 15px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:4px; cursor:pointer;">Re-Try</button>`;
+        }
+    </script>
+</body>
+</html>
