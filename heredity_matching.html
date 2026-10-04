@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heredity and Evolution - Matching Game</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .match-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; background: #1a1a1a; padding: 8px; border-radius: 5px; font-size: 14px; color: #ffff00; }
+        select { background: #222; color: #00ffcc; padding: 5px; border: 1px solid #00ffcc; border-radius: 4px; max-width: 220px; }
+        button { background: #00ffcc; color: #000; font-weight: bold; padding: 10px; width: 100%; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+        #result { margin-top: 15px; font-weight: bold; text-align: center; font-size: 18px; color: #ffff00; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Heredity and Evolution / అనువంశికత - పరిణామం - Matching Exercise</h2>
+        <p style="font-size: 13px; text-align:center; color:#aaa;">సరియైన జతలను సెలెక్ట్ చేయండి (Match the following)</p>
+        
+        <div id="matching-form"></div>
+        <button onclick="checkMatching()">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const pairs = [
+            { term: "1. Gregor Mendel / గ్రెగర్ మెండల్", match: "Father of Genetics / జన్యుశాస్త్ర పితామహుడు" },
+            { term: "2. Charles Darwin / చార్లెస్ డార్విన్", match: "Natural Selection / సహజ ఎన్నిక సిద్ధాంతం" },
+            { term: "3. Jean Lamarck / లామార్క్", match: "Acquired Characters / ఆర్జిత లక్షణాల సిద్ధాంతం" },
+            { term: "4. W. Bateson / డబ్ల్యు. బేట్సన్", match: "Coined 'Genetics' / 'జెనెటిక్స్' పదం" },
+            { term: "5. Monohybrid Phenotype / ఏక సంకర దృశ్యరూపం", match: "3 : 1 ratio / 3:1 నిష్పత్తి" },
+            { term: "6. Monohybrid Genotype / ఏక సంకర జన్యురూపం", match: "1 : 2 : 1 ratio / 1:2:1 నిష్పత్తి" },
+            { term: "7. Homologous organs / సమరూప అవయవాలు", match: "Same structure, diff function / ఒకే నిర్మాణం, వేర్వేరు విధి" },
+            { term: "8. Analogous organs / సమవృత్తి అవయవాలు", match: "Diff structure, same function / వేర్వేరు నిర్మాణం, ఒకే విధి" },
+            { term: "9. Vestigial organ / అవశేష అవయవం", match: "Appendix / అపెండిక్స్" },
+            { term: "10. Archaeopteryx / ఆర్కియప్టెరిక్స్", match: "Missing link / సంధాన సేతువు" },
+            { term: "11. Origin of Species / ఆరిజిన్ ఆఫ్ స్పీషీస్", match: "Darwin's book / డార్విన్ గ్రంథం" },
+            { term: "12. Garden Pea / బఠానీ మొక్క", match: "Pisum sativum / పిసమ్ సటైవమ్" },
+            { term: "13. Mutation / ఉత్పరివర్తనం", match: "Sudden change / అకస్మాత్తుగా వచ్చే మార్పు" },
+            { term: "14. DNA / డి.ఎన్.ఎ", match: "Genetic material / జన్యు పదార్థం" },
+            { term: "15. Paleontology / పేలియాంటాలజీ", match: "Study of fossils / శిలాజాల అధ్యయనం" }
+        ];
+
+        let formDiv = document.getElementById("matching-form");
+        let shuffledMatches = [...pairs].map(p => p.match).sort(() => Math.random() - 0.5);
+
+        pairs.forEach((p, idx) => {
+            let optionsHTML = `<option value="">-- Select --</option>`;
+            shuffledMatches.forEach(m => {
+                optionsHTML += `<option value="${m}">${m}</option>`;
+            });
+
+            formDiv.innerHTML += `
+                <div class="match-row">
+                    <span>${p.term}</span>
+                    <select id="sel-${idx}" data-correct="${p.match}">
+                        ${optionsHTML}
+                    </select>
+                </div>
+            `;
+        });
+
+        function checkMatching() {
+            let score = 0;
+            pairs.forEach((p, idx) => {
+                let sel = document.getElementById(`sel-${idx}`);
+                if (sel.value === p.match) {
+                    sel.style.background = "#28a745";
+                    sel.style.color = "#fff";
+                    score++;
+                } else {
+                    sel.style.background = "#dc3545";
+                    sel.style.color = "#fff";
+                }
+            });
+
+            let resDiv = document.getElementById("result");
+            let msg = score === 15 ? "Excellent! All Correct!" : "Good Try! Review your answers.";
+            resDiv.innerHTML = `Score: ${score} / 15<br><span style="color:#00ffcc;">${msg}</span>`;
+        }
+    </script>
+</body>
+</html>
