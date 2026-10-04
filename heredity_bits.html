@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heredity and Evolution - 20 Bits</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .bit-box { margin-bottom: 15px; padding: 12px; background: #1a1a1a; border-left: 4px solid #00ffcc; border-radius: 5px; color: #ffff00; }
+        .answer { display: none; margin-top: 8px; color: #00ffcc; font-size: 14px; font-weight: bold; }
+        .toggle-btn { background: #333; color: #fff; border: 1px solid #00ffcc; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Heredity and Evolution / అనువంశికత - పరిణామం - 20 Bits</h2>
+        
+        <div id="bits-list"></div>
+    </div>
+
+    <script>
+        const bitsData = [
+            { q: "1. Father of Genetics / జన్యుశాస్త్ర పితామహుడు?", a: "Gregor Johann Mendel / గ్రెగర్ జాన్ మెండల్" },
+            { q: "2. Mendel's experimental plant / మెండల్ ఎంచుకున్న మొక్క?", a: "Garden Pea (Pisum sativum) / బఠానీ మొక్క" },
+            { q: "3. Study of heredity and variations / అనువంశికత, వైవిధ్యాల అధ్యయనం?", a: "Genetics / జన్యుశాస్త్రం" },
+            { q: "4. Phenotypic ratio of monohybrid cross / ఏక సంకర సంకరణ దృశ్యరూప నిష్పత్తి?", a: "3 : 1" },
+            { q: "5. Genotypic ratio of monohybrid cross / ఏక సంకర సంకరణ జన్యురూప నిష్పత్తి?", a: "1 : 2 : 1" },
+            { q: "6. Theory of Natural Selection proposed by / సహజ ఎన్నిక సిద్ధాంత కర్త?", a: "Charles Darwin / చార్లెస్ డార్విన్" },
+            { q: "7. Book written by Darwin / డార్విన్ రచించిన గ్రంథం?", a: "Origin of Species / ఆరిజిన్ ఆఫ్ స్పీషీస్" },
+            { q: "8. Organs with same structure and different function / ఒకే నిర్మాణం, వేర్వేరు విధులు గల అవయవాలు?", a: "Homologous organs / సమరూప అవయవాలు" },
+            { q: "9. Organs with different structure and same function / వేర్వేరు నిర్మాణం, ఒకే విధి గల అవయవాలు?", a: "Analogous organs / సమవృత్తి అవయవాలు" },
+            { q: "10. Vestigial organ in humans / మానవునిలో అవశేష అవయవం?", a: "Appendix / అపెండిక్స్" },
+            { q: "11. Coiner of term 'Genetics' / 'జెనెటిక్స్' పదం ప్రవేశపెట్టినది?", a: "W. Bateson / డబ్ల్యు. బేట్సన్" },
+            { q: "12. Sudden heritable changes / అకస్మాత్తుగా వచ్చే అనువంశిక మార్పులు?", a: "Mutations / ఉత్పరివర్తనాలు" },
+            { q: "13. Connecting link between reptiles and birds / సరీసృపాలు, పక్షుల సంధాన సేతువు?", a: "Archaeopteryx / ఆర్కియప్టెరిక్స్" },
+            { q: "14. Study of fossils / శిలాజాల అధ్యయనం?", a: "Paleontology / పేలియాంటాలజీ" },
+            { q: "15. Theory of Acquired Characters proposed by / ఆర్జిత లక్షణాల సిద్ధాంత కర్త?", a: "Lamarck / లామార్క్" },
+            { q: "16. Chemical basis of heredity / అనువంశికతకు రసాయన ప్రాతిపదిక?", a: "DNA / డి.ఎన్.ఎ" },
+            { q: "17. Human male sex chromosomes / పురుషులలోని లైంగిక క్రోమోజోములు?", a: "XY chromosomes / XY క్రోమోజోములు" },
+            { q: "18. Human female sex chromosomes / స్త్రీలలోని లైంగిక క్రోమోజోములు?", a: "XX chromosomes / XX క్రోమోజోములు" },
+            { q: "19. Unit of heredity / అనువంశికత ప్రమాణం?", a: "Gene / జన్యువు" },
+            { q: "20. Analogous organs example / సమవృత్తి అవయవాలకు ఉదాహరణ?", a: "Wings of bird and insect / పక్షి, కీటకం రెక్కలు" }
+        ];
+
+        let listDiv = document.getElementById("bits-list");
+        bitsData.forEach((item, index) => {
+            listDiv.innerHTML += `
+                <div class="bit-box">
+                    <strong>${item.q}</strong>
+                    <button class="toggle-btn" onclick="toggleAns(${index})">Answer</button>
+                    <div id="ans-${index}" class="answer">${item.a}</div>
+                </div>
+            `;
+        });
+
+        function toggleAns(i) {
+            let ans = document.getElementById(`ans-${i}`);
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
