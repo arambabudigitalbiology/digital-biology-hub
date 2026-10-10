@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Environment - 20 Bits</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .bit-box { margin-bottom: 15px; padding: 12px; background: #1a1a1a; border-left: 4px solid #00ffcc; border-radius: 5px; color: #ffff00; }
+        .answer { display: none; margin-top: 8px; color: #00ffcc; font-size: 14px; font-weight: bold; }
+        .toggle-btn { background: #333; color: #fff; border: 1px solid #00ffcc; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Our Environment / మన పర్యావరణం - 20 Bits</h2>
+        
+        <div id="bits-list"></div>
+    </div>
+
+    <script>
+        const bitsData = [
+            { q: "1. Who coined the term Ecosystem? / 'జీవావరణ వ్యవస్థ' పదాన్నిచ్చినది?", a: "A.G. Tansley / ఎ.జి. టాన్స్లే" },
+            { q: "2. Biotic components example / జీవ ఘటకాలకు ఉదాహరణ?", a: "Plants & Animals / మొక్కలు, జంతువులు" },
+            { q: "3. Abiotic components example / నిర్జీవ ఘటకాలకు ఉదాహరణ?", a: "Soil, Water, Air / నేల, నీరు, గాలి" },
+            { q: "4. Energy flow direction in ecosystem / శక్తి ప్రవాహ దిశ?", a: "Unidirectional / ఏకముఖ దిశ" },
+            { q: "5. Producers in an ecosystem / జీవావరణంలో ఉత్పత్తిదారులు?", a: "Green plants / ఆకుపచ్చని మొక్కలు" },
+            { q: "6. Accumulation of chemicals in trophic levels / ఆహారపు స్థాయిలలో రసాయనాలు చేరడం?", a: "Biological magnification / జీవ వర్ధనం" },
+            { q: "7. Ozone depleting substance / ఓజోన్ పొరను నాశనం చేసేది?", a: "CFCs (క్లోరోఫ్లోరో కార్బన్లు)" },
+            { q: "8. Gas protecting from UV rays / యూవీ కిరణాల నుండి రక్షించే వాయువు?", a: "Ozone / ఓజోన్" },
+            { q: "9. Biodegradable waste example / విచ్ఛిన్నం చెందే వ్యర్థం?", a: "Vegetable peels / కూరగాయల తొక్కలు" },
+            { q: "10. Non-biodegradable waste example / విచ్ఛిన్నం కాని వ్యర్థం?", a: "Plastic / ప్లాస్టిక్" },
+            { q: "11. Interconnected food chains / అనేక ఆహారపు గొలుసుల కలయిక?", a: "Food web / ఆహారపు వల" },
+            { q: "12. Energy transfer percentage rule / శక్తి ప్రవాహ నియమం శాతం?", a: "10% Law / 10% నిబంధన" },
+            { q: "13. Proposer of 10% law / 10% నిబంధన ప్రతిపాదకుడు?", a: "Lindeman / లిండెమాన్" },
+            { q: "14. Decomposers example / విచ్ఛిన్నకారులకు ఉదాహరణ?", a: "Bacteria & Fungi / బ్యాక్టీరియా, శిలీంధ్రాలు" },
+            { q: "15. Trophic level of producers / ఉత్పత్తిదారుల పోషక స్థాయి?", a: "First trophic level / మొదటి పోషక స్థాయి" },
+            { q: "16. Movement to save forests / అడవల రక్షణ ఉద్యమం?", a: "Chipko Movement / చిప్కో ఉద్యమం" },
+            { q: "17. Ozone layer thickness unit / ఓజోన్ మందం కొలిచే ప్రమాణం?", a: "Dobson unit / డాబ్సన్ యూనిట్" },
+            { q: "18. Artificial ecosystem example / కృత్రిమ జీవావరణం?", a: "Crop field / పంట పొలం" },
+            { q: "19. Main source of energy in ecosystem / జీవావరణంలో ప్రధాన శక్తి వనరు?", a: "Sunlight / సూర్యకాంతి" },
+            { q: "20. Harmful UV rays cause / హానికరమైన యూవీ కిరణాలు కలిగించే వ్యాధి?", a: "Skin cancer / చర్మ క్యాన్సర్" }
+        ];
+
+        let listDiv = document.getElementById("bits-list");
+        bitsData.forEach((item, index) => {
+            listDiv.innerHTML += `
+                <div class="bit-box">
+                    <strong>${item.q}</strong>
+                    <button class="toggle-btn" onclick="toggleAns(${index})">Answer</button>
+                    <div id="ans-${index}" class="answer">${item.a}</div>
+                </div>
+            `;
+        });
+
+        function toggleAns(i) {
+            let ans = document.getElementById(`ans-${i}`);
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
