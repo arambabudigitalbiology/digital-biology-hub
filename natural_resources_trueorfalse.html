@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Resources - True or False</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 550px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .tf-box { margin-bottom: 20px; font-size: 15px; background: #1a1a1a; padding: 12px; border-radius: 5px; color: #ffff00; line-height: 1.4; }
+        .tf-buttons { margin-top: 10px; display: flex; gap: 10px; }
+        .tf-buttons button { flex: 1; padding: 8px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-t { background: #28a745; color: #fff; }
+        .btn-f { background: #dc3545; color: #fff; }
+        #result { margin-top: 20px; font-weight: bold; text-align: center; font-size: 18px; color: #ffff00; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Natural Resources / సహజ వనరులు - True or False</h2>
+        
+        <div id="tf-container"></div>
+        <button onclick="submitTF()" style="background:#00ffcc; color:#000; font-weight:bold; padding:10px; width:100%; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const tfData = [
+            { q: "1. Solar energy is a renewable natural resource. / సౌర శక్తి పునరుద్ధరించదగిన సహజ వనరు.", ans: true },
+            { q: "2. Coal and petroleum are inexhaustible resources. / బొగ్గు మరియు పెట్రోలియం ఎప్పటికీ తరగని వనరులు.", ans: false },
+            { q: "3. About 71% of the earth's surface is covered with water. / భూమి ఉపరితలంపై సుమారు 71% నీరు ఉంది.", ans: true },
+            { q: "4. Rainwater harvesting helps to increase groundwater levels. / వర్షపు నీటి నిల్వ భూగర్భ జలాలను పెంచడానికి తోడ్పడుతుంది.", ans: true },
+            { q: "5. Deforestation decreases soil erosion. / అడవుల నరికివేత నేల కోతను తగ్గిస్తుంది.", ans: false },
+            { q: "6. Methane is the main component of biogas. / బయోగ్యాస్‌లో ప్రధానమైనది మీథేన్ వాయువు.", ans: true },
+            { q: "7. Sustainable development considers future generations. / సుస్థిర అభివృద్ధి భవిష్యత్ తరాల అవసరాలను పరిగణలోకి తీసుకుంటుంది.", ans: true },
+            { q: "8. Chipko movement is related to the protection of water bodies. / చిప్కో ఉద్యమం నీటి వనరుల రక్షణకు సంబంధించినది.", ans: false },
+            { q: "9. Plastic bags are environment friendly. / ప్లాస్టిక్ సంచులు పర్యావరణానికి అనుకూలమైనవి.", ans: false },
+            { q: "10. Sun is the ultimate source of energy for life on Earth. / భూమిపై జీవానికి సూర్యుడే ప్రధాన శక్తి వనరు.", ans: true },
+            { q: "11. Aluminum can be efficiently recycled. / అల్యూమినియంను సమర్థవంతంగా రీసైకిల్ చేయవచ్చు.", ans: true },
+            { q: "12. Van Mahotsav is a program for cutting down trees. / వన మహోత్సవం అనేది చెట్లను నరికే కార్యక్రమం.", ans: false },
+            { q: "13. Bishnoi community is known for environmental and wildlife protection. / బిష్ణోయ్ సంఘం పర్యావరణ, వన్యప్రాణుల రక్షణకు ప్రసిద్ధి.", ans: true },
+            { q: "14. Excessive use of groundwater has no side effects. / భూగర్భ జలాలను విపరీతంగా వాడితే ఎలాంటి దుష్ప్రభావాలు ఉండవు.", ans: false },
+            { q: "15. Using public transport helps in conserving natural resources. / ప్రజా రవాణాను ఉపయోగించడం ద్వారా సహజ వనరులను ఆదా చేయవచ్చు.", ans: true }
+        ];
+
+        let tfDiv = document.getElementById("tf-container");
+        tfData.forEach((item, idx) => {
+            tfDiv.innerHTML += `
+                <div class="tf-box">
+                    <div>${item.q}</div>
+                    <div class="tf-buttons">
+                        <button class="btn-t" onclick="selectAnswer(${idx}, true, this)">True</button>
+                        <button class="btn-f" onclick="selectAnswer(${idx}, false, this)">False</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        let userAnswers = {};
+        function selectAnswer(index, val, btn) {
+            userAnswers[index] = val;
+            let parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => b.style.outline = "none");
+            btn.style.outline = "3px solid #ffff00";
+        }
+
+        function submitTF() {
+            let score = 0;
+            tfData.forEach((item, idx) => {
+                if (userAnswers[idx] === item.ans) {
+                    score++;
+                }
+            });
+            let msg = score >= 12 ? "Excellent! Outstanding performance!" : "Good Try! Keep it up!";
+            document.getElementById("result").innerHTML = `Your Score: ${score} / 15<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="location.reload()" style="padding:8px 15px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:4px; cursor:pointer;">Re-Try</button>`;
+        }
+    </script>
+</body>
+</html>
