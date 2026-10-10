@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Environment - Matching Game</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .match-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; background: #1a1a1a; padding: 8px; border-radius: 5px; font-size: 14px; color: #ffff00; }
+        select { background: #222; color: #00ffcc; padding: 5px; border: 1px solid #00ffcc; border-radius: 4px; max-width: 220px; }
+        button { background: #00ffcc; color: #000; font-weight: bold; padding: 10px; width: 100%; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px; }
+        #result { margin-top: 15px; font-weight: bold; text-align: center; font-size: 18px; color: #ffff00; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Our Environment / మన పర్యావరణం - Matching Exercise</h2>
+        <p style="font-size: 13px; text-align:center; color:#aaa;">సరియైన జతలను సెలెక్ట్ చేయండి (Match the following)</p>
+        
+        <div id="matching-form"></div>
+        <button onclick="checkMatching()">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const pairs = [
+            { term: "1. A.G. Tansley / ఎ.జి. టాన్స్లే", match: "Coined 'Ecosystem' / జీవావరణ పదం" },
+            { term: "2. Lindeman / లిండెమాన్", match: "10% Energy Law / 10% శక్తి నియమం" },
+            { term: "3. Green Plants / మొక్కలు", match: "Producers / ఉత్పత్తిదారులు" },
+            { term: "4. Bacteria & Fungi / బ్యాక్టీరియా, శిలీంధ్రాలు", match: "Decomposers / విచ్ఛిన్నకారులు" },
+            { term: "5. Ozone Layer / ఓజోన్ పొర", match: "Protects from UV / యూవీ రక్షణ" },
+            { term: "6. CFCs / సి.ఎఫ్.సి లు", match: "Ozone depletion / ఓజోన్ క్షీణత" },
+            { term: "7. Plastic / ప్లాస్టిక్", match: "Non-biodegradable / విచ్ఛిన్నం కానిది" },
+            { term: "8. Vegetable peels / కూరగాయల తొక్కలు", match: "Biodegradable / విచ్ఛిన్నం చెందేది" },
+            { term: "9. Food Web / ఆహారపు వల", match: "Interconnected food chains / ఆహారపు గొలుసుల వల" },
+            { term: "10. Biological Magnification / జీవ వర్ధనం", match: "Chemical accumulation / రసాయనాల నిల్వ" },
+            { term: "11. Chipko Movement / చిప్కో ఉద్యమం", match: "Forest conservation / అడవల పరిరక్షణ" },
+            { term: "12. Dobson Unit / డాబ్సన్ యూనిట్", match: "Ozone thickness / ఓజోన్ మందం" },
+            { term: "13. Crop Field / పంట పొలం", match: "Artificial ecosystem / కృత్రిమ జీవావరణం" },
+            { term: "14. Sun / సూర్యుడు", match: "Ultimate energy source / ప్రధాన శక్తి వనరు" },
+            { term: "15. Herbivores / శాకాహారులు", match: "Primary consumers / ప్రాథమిక వినియోగదారులు" }
+        ];
+
+        let formDiv = document.getElementById("matching-form");
+        let shuffledMatches = [...pairs].map(p => p.match).sort(() => Math.random() - 0.5);
+
+        pairs.forEach((p, idx) => {
+            let optionsHTML = `<option value="">-- Select --</option>`;
+            shuffledMatches.forEach(m => {
+                optionsHTML += `<option value="${m}">${m}</option>`;
+            });
+
+            formDiv.innerHTML += `
+                <div class="match-row">
+                    <span>${p.term}</span>
+                    <select id="sel-${idx}" data-correct="${p.match}">
+                        ${optionsHTML}
+                    </select>
+                </div>
+            `;
+        });
+
+        function checkMatching() {
+            let score = 0;
+            pairs.forEach((p, idx) => {
+                let sel = document.getElementById(`sel-${idx}`);
+                if (sel.value === p.match) {
+                    sel.style.background = "#28a745";
+                    sel.style.color = "#fff";
+                    score++;
+                } else {
+                    sel.style.background = "#dc3545";
+                    sel.style.color = "#fff";
+                }
+            });
+
+            let resDiv = document.getElementById("result");
+            let msg = score === 15 ? "Excellent! All Correct!" : "Good Try! Review your answers.";
+            resDiv.innerHTML = `Score: ${score} / 15<br><span style="color:#00ffcc;">${msg}</span>`;
+        }
+    </script>
+</body>
+</html>
