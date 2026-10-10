@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Environment - Interactive Quiz</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .quiz-container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .question { margin-bottom: 20px; font-size: 16px; color: #ffff00; line-height: 1.5; }
+        .options button { display: block; width: 100%; margin: 8px 0; padding: 10px; background: #222; color: #fff; border: 1px solid #00ffcc; border-radius: 5px; cursor: pointer; text-align: left; }
+        .options button.correct { background: #28a745 !important; color: #fff; }
+        .options button.wrong { background: #dc3545 !important; color: #fff; }
+        #result { font-size: 20px; font-weight: bold; margin-top: 20px; color: #ffff00; text-align: center; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Our Environment / మన పర్యావరణం - 20 MCQs</h2>
+        
+        <div id="quiz"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "1. The term 'Ecosystem' was coined by / 'జీవావరణ వ్యవస్థ' (Ecosystem) అనే పదాన్ని ప్రవేశపెట్టినది?", o: ["A.G. Tansley / ఎ.జి. టాన్స్లే", "E. Haeckel / ఇ. హేకల్", "Charles Darwin / చార్లెస్ డార్విన్", "Gregor Mendel / గ్రెగర్ మెండల్"], a: 0 },
+            { q: "2. Which of the following is a biotic component? / క్రిందివాటిలో జీవఘటకం (Biotic component) ఏది?", o: ["Soil / నేల", "Water / నీరు", "Plants / మొక్కలు", "Air / గాలి"], a: 2 },
+            { q: "3. An example of an abiotic component is / నిర్జీవ ఘటకానికి (Abiotic component) ఉదాహరణ?", o: ["Bacteria / బ్యాక్టీరియా", "Temperature / ఉష్ణోగ్రత", "Fungi / శిలీంధ్రాలు", "Plants / మొక్కలు"], a: 1 },
+            { q: "4. The flow of energy in an ecosystem is always / జీవావరణంలో శక్తి ప్రవాహం ఎల్లప్పుడూ?", o: ["Bidirectional / ద్విముఖ దిశ", "Cyclic / వలయాకారము", "Unidirectional / ఏకముఖ దిశ", "Multidirectional / బహుముఖ దిశ"], a: 2 },
+            { q: "5. Organisms that produce their own food are called / తమ ఆహారాన్ని తాము తయారుచేసుకునే జీవులను ఏమంటారు?", o: ["Consumers / వినియోగదారులు", "Producers / ఉత్పత్తిదారులు", "Decomposers / కుళ్ళింపజేయునవి", "Parasites / పరాన్నజీవులు"], a: 1 },
+            { q: "6. Green plants act as / ఆకుపచ్చని మొక్కలు ఏ పాత్ర పోషిస్తాయి?", o: ["Primary consumers / ప్రాథమిక వినియోగదారులు", "Secondary consumers / ద్వితీయ వినియోగదారులు", "Producers / ఉత్పత్తిదారులు", "Decomposers / విచ్ఛిన్నకారులు"], a: 2 },
+            { q: "7. Biological magnification refers to / జీవ వర్ధనం (Biological magnification) అనగా?", o: ["Increase in population / జనాభా పెరుగుదల", "Accumulation of harmful chemicals in trophic levels / ఆహారపు స్థాయిలలో హానికారక రసాయనాలు నిల్వవుండటం", "Decrease of energy / శక్తి తగ్గిపోవడం", "Increase in plant growth / మొక్కల పెరుగుదల"], a: 1 },
+            { q: "8. Ozone layer is getting depleted mainly due to / ఓజోన్ పొర క్షీణించడానికి ప్రధాన కారణం?", o: ["Carbon dioxide / కార్బన్ డై ఆక్సైడ్", "CFCs (Chlorofluorocarbons) / క్లోరోఫ్లోరో కార్బన్లు", "Oxygen / ఆక్సిజన్", "Nitrogen / నైట్రోజన్"], a: 1 },
+            { q: "9. Which gas protects us from harmful UV rays? / హానికరమైన యూవీ కిరణాల నుండి మనలను రక్షించే గ్యాస్?", o: ["Oxygen / ఆక్సిజన్", "Ozone / ఓజోన్", "Nitrogen / నైట్రోజన్", "Carbon monoxide / కార్బన్ మోనాక్సైడ్"], a: 1 },
+            { q: "10. Which of the following is biodegradable? / క్రిందివాటిలో సూక్ష్మజీవుల ద్వారా విచ్ఛిన్నం చెందేది (Biodegradable)?", o: ["Plastic bag / ప్లాస్టిక్ సంచి", "Glass bottle / గాజు సీసా", "Vegetable peels / కూరగాయల తొక్కలు", "Polythene / పాలిథిన్"], a: 2 },
+            { q: "11. An example of a non-biodegradable substance is / విచ్ఛిన్నం చెందని పదార్ధానికి ఉదాహరణ?", o: ["Paper / కాగితం", "Cotton cloth / పత్తి గుడ్డ", "Plastic / ప్లాస్టిక్", "Dry leaves / ఎండు ఆకులు"], a: 2 },
+            { q: "12. Food web consists of / ఆహారపు వల (Food web) అనగా?", o: ["Single food chain / ఒకే ఆహారపు గొలుసు", "Interconnected food chains / ఒకదానితో ఒకటి కలిసిన అనేక ఆహారపు గొలుసులు", "Only producers / ఉత్పత్తిదారులు మాత్రమే", "Only carnivores / మాంసాహారులు మాత్రమే"], a: 1 },
+            { q: "13. Energy loss at each trophic level in a food chain is approximately / ప్రతి ఆహారపు స్థాయి వద్ద ఎంత శాతం శక్తి నష్టపోతుంది?", o: ["10%", "50%", "90%", "100%"], a: 2 },
+            { q: "14. The 10% law of energy transfer was proposed by / శక్తి స్థానబదలాయింపు 10% నిబంధనను ప్రతిపాదించినది?", o: ["Lindeman / లిండెమాన్", "Darwin / డార్విన్", "Mendel / మెండల్", "Tansley / టాన్స్లే"], a: 0 },
+            { q: "15. Decomposers include / విచ్ఛిన్నకారులలో ఉండేవి?", o: ["Bacteria and Fungi / బ్యాక్టీరియా మరియు శిలీంధ్రాలు", "Plants / మొక్కలు", "Animals / జంతువులు", "Birds / పక్షులు"], a: 0 },
+            { q: "16. In an ecosystem, green plants occupy the position of / జీవావరణంలో మొక్కల స్థానం?", o: ["First trophic level / మొదటి పోషక స్థాయి", "Second trophic level / రెండవ పోషక స్థాయి", "Third trophic level / మూడవ పోషక స్థాయి", "Top level / అత్యున్నత స్థాయి"], a: 0 },
+            { q: "17. Chipko movement was started to protect / చిప్కో ఉద్యమం దేనిని రక్షించడానికి ప్రారంభించబడింది?", o: ["Water / నీరు", "Forests / అడవులు (చెట్లు)", "Soil / నేల", "Animals / జంతువులు"], a: 1 },
+            { q: "18. Excessive use of fertilizers in agriculture causes / రసాయన ఎరువుల అతివృష్టి వల్ల జరిగేది?", o: ["Eutrophication / పోషక సమృద్ధి (యూట్రోఫికేషన్)", "Soil enrichment / నేలసారం పెరుగుదల", "More rain / ఎక్కువ వర్షం", "Clean water / శుద్ధమైన నీరు"], a: 0 },
+            { q: "19. The unit of ozone layer thickness is / ఓజోన్ పొర మందాన్ని కొలిచే ప్రమాణం?", o: ["Decibel / డెసిబెల్", "Dobson unit / డాబ్సన్ యూనిట్", "Pascal / పాస్కల్", "Hertz / హెర్ట్జ్"], a: 1 },
+            { q: "20. Which of the following is an artificial ecosystem? / కృత్రిమ జీవావరణ వ్యవస్థకు ఉదాహరణ?", o: ["Forest / అడవి", "Pond / చెరువు", "Crop field / పంట పొలం (వ్యవసాయ క్షేత్రం)", "Ocean / సముద్రం"], a: 2 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            if (currentQuestion < quizData.length) {
+                let qData = quizData[currentQuestion];
+                let html = `<div class="question"><strong>${qData.q}</strong></div><div class="options">`;
+                qData.o.forEach((opt, index) => {
+                    html += `<button onclick="checkAnswer(${index}, ${qData.a}, this)">${opt}</button>`;
+                });
+                html += `</div>`;
+                quizDiv.innerHTML = html;
+            } else {
+                quizDiv.innerHTML = "";
+                let msg = score >= 15 ? "Excellent! Great Job!" : "Good Try! Keep Learning!";
+                document.getElementById("result").innerHTML = `Your Score: ${score} / ${quizData.length}<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="resetQuiz()" style="padding:10px 20px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:5px; cursor:pointer;">Re-Try</button>`;
+            }
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const buttons = document.querySelectorAll('.options button');
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerHTML = "";
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
