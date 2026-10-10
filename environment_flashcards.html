@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Environment - Flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 500px; margin: 0 auto; background: #111; padding: 25px; border-radius: 10px; border: 2px solid #00ffcc; }
+        .card { background: #1a1a1a; border: 1px solid #00ffcc; border-radius: 8px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 18px; cursor: pointer; margin-bottom: 20px; text-align: center; color: #ffff00; box-shadow: 0 4px 8px rgba(0,255,204,0.2); }
+        .buttons { display: flex; justify-content: space-between; }
+        button { background: #00ffcc; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="color: #00ffcc;">Our Environment / మన పర్యావరణం - Flashcards</h2>
+        <p style="font-size: 12px; color: #aaa;">కార్డు మీద క్లిక్ చేసి సమాధానం చూడండి (Click card to flip)</p>
+        
+        <div id="flashcard" class="card" onclick="flipCard()">
+            Loading...
+        </div>
+
+        <div class="buttons">
+            <button onclick="prevCard()">Previous</button>
+            <span id="counter" style="align-self: center; font-weight: bold; color: #ffff00;"></span>
+            <button onclick="nextCard()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const cards = [
+            { q: "Who coined 'Ecosystem'? / జీవావరణ పదం తెచ్చినది", a: "A.G. Tansley / ఎ.జి. టాన్స్లే" },
+            { q: "Producers / ఉత్పత్తిదారులు", a: "Green plants / ఆకుపచ్చని మొక్కలు" },
+            { q: "Decomposers / విచ్ఛిన్నకారులు", a: "Bacteria & Fungi / బ్యాక్టీరియా, శిలీంధ్రాలు" },
+            { q: "Energy flow direction / శక్తి ప్రవాహ దిశ", a: "Unidirectional / ఏకముఖ దిశ" },
+            { q: "10% Energy Law / 10% శక్తి నియమం", a: "Lindeman / లిండెమాన్" },
+            { q: "Ozone Layer / ఓజోన్ పొర", a: "Absorbs UV rays / యూవీ కిరణాల శోషణ" },
+            { q: "Ozone Depletion Gas / ఓజోన్ నాశక వాయువు", a: "CFCs / క్లోరోఫ్లోరో కార్బన్లు" },
+            { q: "Biodegradable Waste / విచ్ఛిన్నం చెందే వ్యర్థం", a: "Vegetable peels / కూరగాయల తొక్కలు" },
+            { q: "Non-biodegradable Waste / విచ్ఛిన్నం కాని వ్యర్థం", a: "Plastic / ప్లాస్టిక్" },
+            { q: "Food Web / ఆహారపు వల", a: "Interconnected food chains / ఆహారపు గొలుసుల వల" },
+            { q: "Biological Magnification / జీవ వర్ధనం", a: "Chemical accumulation / రసాయనాల నిల్వ" },
+            { q: "Chipko Movement / చిప్కో ఉద్యమం", a: "Forest conservation / అడవల పరిరక్షణ" },
+            { q: "Ozone Thickness Unit / ఓజోన్ మంద ప్రమాణం", a: "Dobson unit / డాబ్సన్ యూనిట్" },
+            { q: "Artificial Ecosystem / కృత్రిమ జీవావరణం", a: "Crop field / పంట పొలం" },
+            { q: "Ultimate source of energy / ప్రధాన శక్తి వనరు", a: "Sun / సూర్యుడు" }
+        ];
+
+        let currentIndex = 0;
+        let showingQuestion = true;
+
+        function updateCard() {
+            const card = document.getElementById("flashcard");
+            card.innerHTML = showingQuestion ? cards[currentIndex].q : cards[currentIndex].a;
+            card.style.color = showingQuestion ? "#ffff00" : "#00ffcc";
+            document.getElementById("counter").innerText = `${currentIndex + 1} / ${cards.length}`;
+        }
+
+        function flipCard() {
+            showingQuestion = !showingQuestion;
+            updateCard();
+        }
+
+        function nextCard() {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        function prevCard() {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            showingQuestion = true;
+            updateCard();
+        }
+
+        updateCard();
+    </script>
+</body>
+</html>
