@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Environment - True or False</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 550px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .tf-box { margin-bottom: 20px; font-size: 15px; background: #1a1a1a; padding: 12px; border-radius: 5px; color: #ffff00; line-height: 1.4; }
+        .tf-buttons { margin-top: 10px; display: flex; gap: 10px; }
+        .tf-buttons button { flex: 1; padding: 8px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-t { background: #28a745; color: #fff; }
+        .btn-f { background: #dc3545; color: #fff; }
+        #result { margin-top: 20px; font-weight: bold; text-align: center; font-size: 18px; color: #ffff00; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Our Environment / మన పర్యావరణం - True or False</h2>
+        
+        <div id="tf-container"></div>
+        <button onclick="submitTF()" style="background:#00ffcc; color:#000; font-weight:bold; padding:10px; width:100%; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Submit Answers</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const tfData = [
+            { q: "1. A.G. Tansley coined the term Ecosystem. / ఎ.జి. టాన్స్లే 'జీవావరణ వ్యవస్థ' పదాన్ని ప్రవేశపెట్టారు.", ans: true },
+            { q: "2. Green plants act as consumers in an ecosystem. / జీవావరణంలో ఆకుపచ్చని మొక్కలు వినియోగదారులుగా పనిచేస్తాయి.", ans: false },
+            { q: "3. Energy flow in an ecosystem is unidirectional. / జీవావరణంలో శక్తి ప్రవాహం ఏకముఖ దిశలో ఉంటుంది.", ans: true },
+            { q: "4. Lindeman proposed the 10% energy law. / లిండెమాన్ 10% శక్తి నియమాన్ని ప్రతిపాదించారు.", ans: true },
+            { q: "5. Ozone layer protects the earth from harmful UV rays. / ఓజోన్ పొర హానికరమైన యూవీ కిరణాల నుండి రక్షిస్తుంది.", ans: true },
+            { q: "6. CFCs are responsible for ozone layer depletion. / సి.ఎఫ్.సి.లు ఓజోన్ పొర క్షీణతకు కారణం.", ans: true },
+            { q: "7. Plastic is a biodegradable waste. / ప్లాస్టిక్ అనేది విచ్ఛిన్నం చెందే వ్యర్థం.", ans: false },
+            { q: "8. Food web is a network of interconnected food chains. / ఆహారపు వల అనేది అనేక ఆహారపు గొలుసుల కలయిక.", ans: true },
+            { q: "9. Biological magnification decreases at higher trophic levels. / ఉన్నత పోషక స్థాయిలలో జీవ వర్ధనం తగ్గిపోతుంది.", ans: false },
+            { q: "10. Bacteria and fungi act as decomposers. / బ్యాక్టీరియా మరియు శిలీంధ్రాలు విచ్ఛిన్నకారులుగా పనిచేస్తాయి.", ans: true },
+            { q: "11. Chipko movement is related to water conservation. / చిప్కో ఉద్యమం నీటి సంరక్షణకు సంబంధించినది.", ans: false },
+            { q: "12. Dobson unit is used to measure ozone layer thickness. / ఓజోన్ పొర మందాన్ని కొలవడానికి డాబ్సన్ యూనిట్ వాడతారు.", ans: true },
+            { q: "13. Crop field is an example of an artificial ecosystem. / పంట పొలం కృత్రిమ జీవావరణానికి ఉదాహరణ.", ans: true },
+            { q: "14. Sunlight is the ultimate source of energy for all ecosystems. / అన్ని జీవావరణాలకు సూర్యకాంతే ప్రధాన శక్తి వనరు.", ans: true },
+            { q: "15. Herbivores occupy the first trophic level in food chains. / ఆహారపు గొలుసులలో శాకాహారులు మొదటి పోషక స్థాయిని ఆక్రమిస్తాయి.", ans: false }
+        ];
+
+        let tfDiv = document.getElementById("tf-container");
+        tfData.forEach((item, idx) => {
+            tfDiv.innerHTML += `
+                <div class="tf-box">
+                    <div>${item.q}</div>
+                    <div class="tf-buttons">
+                        <button class="btn-t" onclick="selectAnswer(${idx}, true, this)">True</button>
+                        <button class="btn-f" onclick="selectAnswer(${idx}, false, this)">False</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        let userAnswers = {};
+        function selectAnswer(index, val, btn) {
+            userAnswers[index] = val;
+            let parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => b.style.outline = "none");
+            btn.style.outline = "3px solid #ffff00";
+        }
+
+        function submitTF() {
+            let score = 0;
+            tfData.forEach((item, idx) => {
+                if (userAnswers[idx] === item.ans) {
+                    score++;
+                }
+            });
+            let msg = score >= 12 ? "Excellent! Outstanding performance!" : "Good Try! Keep it up!";
+            document.getElementById("result").innerHTML = `Your Score: ${score} / 15<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="location.reload()" style="padding:8px 15px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:4px; cursor:pointer;">Re-Try</button>`;
+        }
+    </script>
+</body>
+</html>
