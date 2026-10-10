@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Resources - Interactive Quiz</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .quiz-container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .question { margin-bottom: 20px; font-size: 16px; color: #ffff00; line-height: 1.5; }
+        .options button { display: block; width: 100%; margin: 8px 0; padding: 10px; background: #222; color: #fff; border: 1px solid #00ffcc; border-radius: 5px; cursor: pointer; text-align: left; }
+        .options button.correct { background: #28a745 !important; color: #fff; }
+        .options button.wrong { background: #dc3545 !important; color: #fff; }
+        #result { font-size: 20px; font-weight: bold; margin-top: 20px; color: #ffff00; text-align: center; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Natural Resources / సహజ వనరులు - 20 MCQs</h2>
+        
+        <div id="quiz"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "1. Which of the following is a renewable resource? / క్రిందివాటిలో పునరుద్ధరించదగిన వనరు (Renewable resource) ఏది?", o: ["Coal / బొగ్గు", "Petroleum / పెట్రోలియం", "Solar energy / సౌర శక్తి", "Natural gas / సహజ వాయువు"], a: 2 },
+            { q: "2. An example of a non-renewable resource is / పునరుద్ధరించలేని వనరుకు (Non-renewable resource) ఉదాహరణ?", o: ["Forests / అడవులు", "Water / నీరు", "Coal and Petroleum / బొగ్గు మరియు పెట్రోలియం", "Wind / గాలి"], a: 2 },
+            { q: "3. What percentage of Earth's surface is covered with water? / భూమి ఉపరితలంపై నీరు ఎంత శాతంలో ఆవరించి ఉంది?", o: ["About 50%", "About 71%", "About 30%", "About 90%"], a: 1 },
+            { q: "4. The main source of fresh water on Earth is / భూమిపై మంచి నీటి ప్రధాన వనరు?", o: ["Oceans / మహాసముద్రங்கள்", "Rain / వర్షం", "Glaciers and ice caps / హిమదీవులు మరియు మంచుకొండలు", "Underground water / భూగర్భ జలం"], a: 2 },
+            { q: "5. Deforestation leads to / అడవుల నరికివేత (Deforestation) వలన ఏమి జరుగుతుంది?", o: ["Soil erosion / నేల కోత", "Increase in rainfall / వర్షాలు పెరగడం", "Oxygen increase / ఆక్సిజన్ పెరుగుదల", "Clean environment / పరిశుభ్రమైన వాతావరణం"], a: 0 },
+            { q: "6. Which of the following is a fossil fuel? / క్రిందివాటిలో శిలాజ ఇంధనం (Fossil fuel) ఏది?", o: ["Wood / కట్టె", "Biogas / బయోగ్యాస్", "Coal / బొగ్గు", "Solar energy / సౌర శక్తి"], a: 2 },
+            { q: "7. Rainwater harvesting helps in / వర్షపు నీటి నిల్వ (Rainwater harvesting) దేనికి తోడ్పడుతుంది?", o: ["Increasing groundwater level / భూగర్భ జలాల మట్టం పెంచడానికి", "Increasing pollution / కాలుష్యం పెంచడానికి", "Deforestation / అడవుల నరికివేతకు", "Soil erosion / నేల కోతకు"], a: 0 },
+            { q: "8. The 3R's principle for environment conservation is / పర్యావరణ పరిరక్షణకు సంబంధించిన 3R సూత్రం?", o: ["Reduce, Reuse, Recycle / తగ్గించు, పునర్వినియోగించు, పునర్వ్రీకీకరించు", "Read, Write, Remember / చదువు, రాయు, గుర్తుంచుకో", "Remove, Replace, Run / తొలగించు, మార్చు, పరుగెత్తు", "Reuse, Run, Reduce / పునర్వినియోగించు, పరుగెత్తు, తగ్గించు"], a: 0 },
+            { q: "9. Which metal is recycled most efficiently? / ఏ లోహాన్ని అత్యంత సమర్థవంతంగా పునర్వ్రీకీకరణ (Recycle) చేయవచ్చు?", o: ["Iron / ఇనుము", "Gold / బంగారం", "Aluminum / అల్యూమినియం", "Mercury / పాదరసం"], a: 2 },
+            { q: "10. Excessive use of groundwater results in / భూగర్భ జలాలను విపరీతంగా తోడటం వల్ల ఏమవుతుంది?", o: ["Water table lowers / భూగర్భ జల మట్టం తగ్గిపోవడం", "Floods / వరదలు రావడం", "Soil fertility / నేల సారం పెరగడం", "More rainfall / ఎక్కువ వర్షాలు"], a: 0 },
+            { q: "11. Biogas mainly consists of / బయోగ్యాస్‌లో ప్రధానంగా ఉండే వాయువు?", o: ["Carbon dioxide / కార్బన్ డై ఆక్సైడ్", "Methane / మీథేన్", "Oxygen / ఆక్సిజన్", "Hydrogen / హైడ్రోజన్"], a: 1 },
+            { q: "12. Which of the following is a clean and green energy source? / క్రిందివాటిలో కాలుష్య రహిత పరిశుభ్రమైన శక్తి వనరు?", o: ["Coal / బొగ్గు", "Diesel / డీజిల్", "Solar energy / సౌర శక్తి", "Petrol / పెట్రోల్"], a: 2 },
+            { q: "13. Sustainable development means / సుస్థిర అభివృద్ధి (Sustainable development) అనగా?", o: ["Using resources carelessly / వనరులను విచక్షణారహితంగా వాడటం", "Meeting present needs without compromising future generations / భవిష్యత్ తరాల అవసరాలకు భంగం వాటిల్లకుండా ప్రస్తుత అవసరాలను తీర్చుకోవడం", "Stopping all developments / అన్ని అభివృద్ధి పనులను ఆపివేయడం", "Using only non-renewable resources / కేవలం పునరుద్ధరించలేని వనరులనే వాడటం"], a: 1 },
+            { q: "14. Chipko movement originated in / చిప్కో ఉద్యమం ఏ రాష్ట్రంలో ప్రారంభమైంది?", o: ["Andhra Pradesh / ఆంధ్రప్రదేశ్", "Uttarakhand (Uttar Pradesh hills) / ఉత్తరాఖండ్", "Kerala / కేరళ", "Punjab / పంజాబ్"], a: 1 },
+            { q: "15. Which of the following is a major cause of water pollution? / నీటి కాలుష్యానికి ప్రధాన కారణం?", o: ["Planting trees / మొక్కలు నాటడం", "Industrial effluents / పరిశ్రమల వ్యర్థాలు", "Rainwater harvesting / వర్షపు నీటి నిల్వ", "Solar panels / సోలార్ ప్యానెల్స్"], a: 1 },
+            { q: "16. Coal and petroleum are formed from / బొగ్గు మరియు పెట్రోలియం వేటి నుండి ఏర్పడతాయి?", o: ["Volcanic lava / అగ్నిపర్వత లావా", "Remains of dead organisms / చనిపోయిన జీవుల అవశేషాలు (శిలాజాలు)", "Rocks / రాళ్ళు", "Atmospheric gases / వాతావరణ వాయువులు"], a: 1 },
+            { q: "17. Van Mahotsav is celebrated for / వన మహోత్సవం దేིనికోసం జరుపుకుంటారు?", o: ["Saving water / నీటి సంరక్షణ", "Planting trees / మొక్కలు నాటడం", "Cleaning rivers / నదుల శుభ్రత", "Saving electricity / విద్యుత్ ఆదా"], a: 1 },
+            { q: "18. Which natural resource is getting exhausted rapidly? / వేగంగా అంతరించిపోతున్న సహజ వనరు?", o: ["Solar energy / సౌర శక్తి", "Wind energy / వాయు శక్తి", "Fossil fuels / శిలాజ ఇంధనాలు", "Water in oceans / సముద్రపు నీరు"], a: 2 },
+            { q: "19. The Bishnoi community of Rajasthan is known for / రాజస్థాన్‌లోని బిష్ణోయ్ సంఘం దేనికి ప్రసిద్ధి చెందింది?", o: ["Wildlife and forest conservation / వన్యప్రాణులు మరియు అడవుల సంరక్షణ", "Mining / మైనింగ్", "Fishing / చేపల పెంపకం", "Industries / పరిశ్రమల ఏర్పాటు"], a: 0 },
+            { q: "20. Which of the following practices is eco-friendly? / క్రిందివాటిలో పర్యావరణ హితమైన పద్ధతి (Eco-friendly)?", o: ["Using polythene bags / పాలిథిన్ సంచులు వాడటం", "Using cloth bags / గుడ్డ సంచులు వాడటం", "Burning plastic / ప్లాస్టిక్ కాల్చడం", "Wasting water / నీటిని వృధా చేయడం"], a: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            const quizDiv = document.getElementById("quiz");
+            if (currentQuestion < quizData.length) {
+                let qData = quizData[currentQuestion];
+                let html = `<div class="question"><strong>${qData.q}</strong></div><div class="options">`;
+                qData.o.forEach((opt, index) => {
+                    html += `<button onclick="checkAnswer(${index}, ${qData.a}, this)">${opt}</button>`;
+                });
+                html += `</div>`;
+                quizDiv.innerHTML = html;
+            } else {
+                quizDiv.innerHTML = "";
+                let msg = score >= 15 ? "Excellent! Great Job!" : "Good Try! Keep Learning!";
+                document.getElementById("result").innerHTML = `Your Score: ${score} / ${quizData.length}<br><span style="color:#00ffcc;">${msg}</span><br><br><button onclick="resetQuiz()" style="padding:10px 20px; background:#00ffcc; color:#000; font-weight:bold; border:none; border-radius:5px; cursor:pointer;">Re-Try</button>`;
+            }
+        }
+
+        function checkAnswer(selected, correct, btn) {
+            const buttons = document.querySelectorAll('.options button');
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score++;
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerHTML = "";
+            loadQuiz();
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
