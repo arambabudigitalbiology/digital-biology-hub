@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Resources - 20 Bits</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+        .container { max-width: 650px; margin: 0 auto; background: #111; padding: 20px; border-radius: 10px; border: 2px solid #00ffcc; text-align: left; }
+        .bit-box { margin-bottom: 15px; padding: 12px; background: #1a1a1a; border-left: 4px solid #00ffcc; border-radius: 5px; color: #ffff00; }
+        .answer { display: none; margin-top: 8px; color: #00ffcc; font-size: 14px; font-weight: bold; }
+        .toggle-btn { background: #333; color: #fff; border: 1px solid #00ffcc; padding: 5px 10px; border-radius: 4px; cursor: pointer; float: right; font-size: 12px; }
+        .creator { font-size: 14px; color: #ff00ff; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="creator">Created by A. Rambabu, SA Biology</div>
+        <h2 style="text-align: center; color: #00ffcc;">Natural Resources / సహజ వనరులు - 20 Bits</h2>
+        
+        <div id="bits-list"></div>
+    </div>
+
+    <script>
+        const bitsData = [
+            { q: "1. Renewable resource example / పునరుద్ధరించదగిన వనరు?", a: "Solar energy / సౌర శక్తి" },
+            { q: "2. Non-renewable resource example / పునరుద్ధరించలేని వనరు?", a: "Coal & Petroleum / బొగ్గు, పెట్రోలియం" },
+            { q: "3. Percentage of water on Earth / భూమిపై నీటి శాతం?", a: "71%" },
+            { q: "4. Fossil fuel example / శిలాజ ఇంధనానికి ఉదాహరణ?", a: "Coal / బొగ్గు" },
+            { q: "5. 3R principle stands for / 3R సూత్రం అనగా?", a: "Reduce, Reuse, Recycle" },
+            { q: "6. Main gas in Biogas / బయోగ్యాస్‌లో ప్రధాన వాయువు?", a: "Methane / మీథేన్" },
+            { q: "7. Sustainable development definition / సుస్థిర అభివృద్ధి అనగా?", a: "Meeting present needs without harming future generations" },
+            { q: "8. Movement for forest protection / అడవల రక్షణ ఉద్యమం?", a: "Chipko Movement / చిప్కో ఉద్యమం" },
+            { q: "9. Community famous for wildlife protection / వన్యప్రాణుల రక్షణకు ప్రసిద్ధమైన సంఘం?", a: "Bishnoi community / బిష్ణోయ్ సంఘం" },
+            { q: "10. Rainwater harvesting helps to / వర్షపు నీటి నిల్వ దేనికి సహాయపడుతుంది?", a: "Increase groundwater table / భూగర్భ జలాల పెంపు" },
+            { q: "11. Deforestation causes / అడవుల నరికివేత వల్ల జరిగేది?", a: "Soil erosion / నేల కోత" },
+            { q: "12. Clean and green energy / పరిశుభ్రమైన శక్తి వనరు?", a: "Solar/Wind energy / సౌర/వాయు శక్తి" },
+            { q: "13. Most efficiently recycled metal / ఎక్కువగా రీసైకిల్ చేసే లోహం?", a: "Aluminum / అల్యూమినియం" },
+            { q: "14. Van Mahotsav is related to / వన మహోత్సవం దేనికి సంబంధించినది?", a: "Planting trees / మొక్కలు నాటడం" },
+            { q: "15. Major cause of water pollution / నీటి కాలుష్య ప్రధాన కారణం?", a: "Industrial effluents / పరిశ్రమల వ్యర్థాలు" },
+            { q: "16. Fresh water main source / మంచి నీటి ప్రధాన వనరు?", a: "Glaciers / హిమదీవులు" },
+            { q: "17. Exhaustible natural resources / అంతరించిపోతున్న వనరులు?", a: "Fossil fuels / శిలాజ ఇంధనాలు" },
+            { q: "18. Eco-friendly bag / పర్యావరణ హితమైన సంచి?", a: "Cloth bag / గుడ్డ సంచి" },
+            { q: "19. Excessive groundwater use leads to / భూగర్భ జలాల అతివృష్టి ఫలితం?", a: "Lowering water table / నీటి మట్టం పడిపోవడం" },
+            { q: "20. State where Chipko movement started / చిప్కో ఉద్యమం పుట్టిన రాష్ట్రం?", a: "Uttarakhand / ఉత్తరాఖండ్" }
+        ];
+
+        let listDiv = document.getElementById("bits-list");
+        bitsData.forEach((item, index) => {
+            listDiv.innerHTML += `
+                <div class="bit-box">
+                    <strong>${item.q}</strong>
+                    <button class="toggle-btn" onclick="toggleAns(${index})">Answer</button>
+                    <div id="ans-${index}" class="answer">${item.a}</div>
+                </div>
+            `;
+        });
+
+        function toggleAns(i) {
+            let ans = document.getElementById(`ans-${i}`);
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>
