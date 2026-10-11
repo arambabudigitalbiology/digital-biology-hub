@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cell_structure_and_functions_quiz</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        .quiz-card {
+            width: 100%;
+            max-width: 650px;
+            background-color: #121212;
+            border: 2px solid #00ffcc;
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .branding {
+            text-align: center;
+            color: #ff00ff;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .header-title {
+            text-align: center;
+            color: #00ffcc;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .q-box {
+            background-color: #1a1a1a;
+            border-left: 4px solid #ffff00;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .q-text {
+            color: #ffff00;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .opt-btn {
+            background-color: #262626;
+            color: #ffffff;
+            border: 1px solid #00ffcc;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+        }
+        .opt-btn:active {
+            transform: scale(0.98);
+        }
+        .opt-btn.correct {
+            background-color: #28a745 !important;
+            color: #ffffff !important;
+            border-color: #28a745 !important;
+        }
+        .opt-btn.wrong {
+            background-color: #dc3545 !important;
+            color: #ffffff !important;
+            border-color: #dc3545 !important;
+        }
+        #result-area {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .score-text {
+            font-size: 22px;
+            color: #ffff00;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .grate-badge {
+            font-size: 24px;
+            color: #00ffcc;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .retry-btn {
+            background-color: #ffff00;
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-card">
+    <div class="branding">created by a Rambabu SA BIOLOGY</div>
+    <h2 class="header-title">Cell Structure & Functions / కణ నిర్మాణం - విధులు</h2>
+
+    <div id="quiz-box"></div>
+    <div id="result-area" style="display: none;"></div>
+</div>
+
+<script>
+const quizQuestions = [
+    {
+        q: "1. Who discovered and named the 'Nucleus' in 1831? / 1831 లో కేంద్రకాన్ని కనుగొని నామకరణం చేసిన శాస్త్రవేత్త ఎవరు?",
+        options: [
+            "Robert Hooke / రాబర్ట్ హుక్",
+            "Robert Brown / రాబర్ట్ బ్రౌన్",
+            "Schleiden / స్లీడన్",
+            "Theodor Schwann / థియోడర్ ష్వాన్"
+        ],
+        ans: 1
+    },
+    {
+        q: "2. Which organelle is known as the 'Powerhouse of the cell'? / కణంలో ఏ కణాంగాన్ని 'కణ శక్త్యాగారాలు' అంటారు?",
+        options: [
+            "Ribosomes / రైబోజోములు",
+            "Mitochondria / మైటోకాండ్రియా",
+            "Plastids / ప్లాస్టిడ్లు",
+            "Golgi apparatus / గాల్జీ సంక్లిష్టం"
+        ],
+        ans: 1
+    },
+    {
+        q: "3. 'Suicidal bags of the cell' are / కణ స్వయం విచ్ఛిత్తి సంచులు అని వేటిని పిలుస్తారు?",
+        options: [
+            "Lysosomes / లైసోజోములు",
+            "Centrosomes / సెంట్రోజోములు",
+            "Vacuoles / రిక్తికలు",
+            "Ribosomes / రైబోజోములు"
+        ],
+        ans: 0
+    },
+    {
+        q: "4. Cell wall of a plant cell is made of / వృక్ష కణకవచం ప్రధానంగా దేనితో నిర్మితమై ఉంటుంది?",
+        options: [
+            "Lipids / లిపిడ్లు",
+            "Proteins / ప్రొటీన్లు",
+            "Cellulose / సెల్యులోజ్",
+            "Lignin / లిగ్నిన్"
+        ],
+        ans: 2
+    },
+    {
+        q: "5. Who originally proposed the 'Cell Theory'? / కణ సిద్ధాంతాన్ని ప్రతిపాదించిన శాస్త్రవేత్తలు ఎవరు?",
+        options: [
+            "Schleiden and Schwann / స్లీడన్ మరియు ష్వాన్",
+            "Watson and Crick / వాట్సన్ మరియు క్రిక్",
+            "Robert Hooke and Brown / రాబర్ట్ హుక్ మరియు బ్రౌన్",
+            "Virchow and Brown / విర్కోవ్ మరియు బ్రౌన్"
+        ],
+        ans: 0
+    },
+    {
+        q: "6. Who stated that 'All cells arise from pre-existing cells'? / 'కణాలన్నీ పూర్వపు కణాల నుంచే ఏర్పడతాయి' అని వివరించినది ఎవరు?",
+        options: [
+            "Robert Brown / రాబర్ట్ బ్రౌన్",
+            "Rudolf Virchow / రుడాల్ఫ్ విర్కోవ్",
+            "Camillo Golgi / కామిల్లో గాల్జీ",
+            "Schleiden / స్లీడన్"
+        ],
+        ans: 1
+    },
+    {
+        q: "7. The site of protein synthesis in a cell is / కణంలో ప్రొటీన్ సంశ్లేషణ జరిగే స్థానం ఏది?",
+        options: [
+            "Lysosomes / లైసోజోములు",
+            "Ribosomes / రైబోజోములు",
+            "Vacuoles / రిక్తికలు",
+            "Mitochondria / మైటోకాండ్రియా"
+        ],
+        ans: 1
+    },
+    {
+        q: "8. The stain used to observe Mitochondria under microscope is / మైటోకాండ్రియాను పరిశీలించడానికి ఉపయోగించే రంజనం ఏది?",
+        options: [
+            "Safranin / సాఫ్రనిన్",
+            "Methylene blue / మిథలీన్ బ్లూ",
+            "Janus Green-B / జానస్ గ్రీన్-బి",
+            "Iodine solution / అయోడిన్ ద్రావణం"
+        ],
+        ans: 2
+    },
+    {
+        q: "9. Colorless plastids in plants are called / మొక్కలలో ఉండే వర్ణరహిత ప్లాస్టిడ్లను ఏమంటారు?",
+        options: [
+            "Chloroplasts / క్లోరోప్లాస్ట్లు",
+            "Chromoplasts / క్రోమోప్లాస్ట్లు",
+            "Leucoplasts / ల్యూకోప్లాస్ట్లు",
+            "Chlorophyll / పత్రహరితం"
+        ],
+        ans: 2
+    },
+    {
+        q: "10. In which cells is the nucleus absent at maturity? / పరిపక్వ దశలో కేంద్రకం ఉండని కణాలు ఏవి?",
+        options: [
+            "Cheek cells / బుగ్గ కణాలు",
+            "Mammalian RBC / క్షీరదాల ఎర్ర రక్తకణాలు",
+            "Nerve cells / నాడీ కణాలు",
+            "Muscle cells / కండర కణాలు"
+        ],
+        ans: 1
+    },
+    {
+        q: "11. The folds of the inner membrane of Mitochondria are called / మైటోకాండ్రియా లోపలి త్వచపు ముడతలను ఏమంటారు?",
+        options: [
+            "Cristae / క్రిస్టే",
+            "Matrix / మాత్రిక",
+            "Grana / గ్రానా",
+            "Stroma / స్ట్రోమా"
+        ],
+        ans: 0
+    },
+    {
+        q: "12. Endoplasmic reticulum with ribosomes on its surface is / ఉపరితలంపై రైబోజోములు కలిగిన అంతర్జీవ ద్రవ్యజాలం ఏది?",
+        options: [
+            "Smooth ER / నునుపు అంతర్జీవ ద్రవ్యజాలం",
+            "Rough ER / గరుకు అంతర్జీవ ద్రవ్యజాలం",
+            "Golgi body / గాల్జీ సంక్లిష్టం",
+            "Plastid / ప్లాస్టిడ్"
+        ],
+        ans: 1
+    },
+    {
+        q: "13. Smooth Endoplasmic Reticulum mainly synthesizes / నునుపు అంతర్జీవ ద్రవ్యజాలం ప్రధానంగా వేటిని సంశ్లేషిస్తుంది?",
+        options: [
+            "Proteins / ప్రొటీన్లు",
+            "Lipids (Fats) / లిపిడ్లు (కొవ్వులు)",
+            "Carbohydrates / పిండిపదార్థాలు",
+            "Vitamins / విటమిన్లు"
+        ],
+        ans: 1
+    },
+    {
+        q: "14. Packaging and secretion of cell products is done by / కణ ఉత్పత్తులను నిల్వచేసి, రవాణా మరియు స్రావాలు చేసే కణాంగం ఏది?",
+        options: [
+            "Golgi complex / గాల్జీ సంక్లిష్టం",
+            "Ribosomes / రైబోజోములు",
+            "Plastids / ప్లాస్టిడ్లు",
+            "Lysosomes / లైసోజోములు"
+        ],
+        ans: 0
+    },
+    {
+        q: "15. The plasma membrane is described as / ప్లాస్మా పొరను ఏ విధమైన త్వచంగా పరిగణిస్తారు?",
+        options: [
+            "Impermeable / అపారగమ్య త్వచం",
+            "Selectively permeable / విచక్షణ స్తరం",
+            "Non-porous / రంధ్రాలు లేని పొర",
+            "Dead layer / నిర్జీవ పొర"
+        ],
+        ans: 1
+    },
+    {
+        q: "16. Which organelle helps in photosynthesis? / కిరణజన్య సంయోగక్రియ నిర్వహించే కణాంగం ఏది?",
+        options: [
+            "Chloroplast / హరితరేణువు (క్లోరోప్లాస్ట్)",
+            "Mitochondria / మైటోకాండ్రియా",
+            "Ribosome / రైబోజోమ్",
+            "Vacuole / రిక్తిక"
+        ],
+        ans: 0
+    },
+    {
+        q: "17. Large central vacuole is typically present in / పెద్ద పరిమాణంలో ఉండే మధ్యస్థ రిక్తిక వేటిలో ఉంటుంది?",
+        options: [
+            "Animal cells / జంతు కణాలు",
+            "Plant cells / వృక్ష కణాలు",
+            "Bacterial cells / బ్యాక్టీరియా కణాలు",
+            "Amoeba / అమీబా"
+        ],
+        ans: 1
+    },
+    {
+        q: "18. Who discovered the Golgi complex in 1898? / 1898 లో గాల్జీ సంక్లిష్టాన్ని కనుగొన్న శాస్త్రవేత్త ఎవరు?",
+        options: [
+            "Robert Brown / రాబర్ట్ బ్రౌన్",
+            "Camillo Golgi / కామిల్లో గాల్జీ",
+            "Rudolf Virchow / రుడాల్ఫ్ విర్కోవ్",
+            "Robert Hooke / రాబర్ట్ హుక్"
+        ],
+        ans: 1
+    },
+    {
+        q: "19. Cells without a distinct nuclear membrane are called / స్పష్టమైన కేంద్రక త్వచం లేని కణాలను ఏమంటారు?",
+        options: [
+            "Eukaryotic cells / నిజకేంద్రక కణాలు",
+            "Prokaryotic cells / కేంద్రక పూర్వకణాలు",
+            "Somatic cells / శారీరక కణాలు",
+            "Typical cells / నమూనా కణాలు"
+        ],
+        ans: 1
+    },
+    {
+        q: "20. The jelly-like substance between plasma membrane and nucleus is / ప్లాస్మా పొరకు, కేంద్రకానికి మధ్య ఉన్న జిగురు లాంటి ద్రవ పదార్థం ఏది?",
+        options: [
+            "Protoplasm / జీవపదార్థం",
+            "Cytoplasm / కణద్రవ్యం",
+            "Nucleoplasm / కేంద్రక ద్రవ్యం",
+            "Matrix / మాత్రిక"
+        ],
+        ans: 1
+    }
+];
+
+let currentIndex = 0;
+let userScore = 0;
+
+function showQuestion() {
+    const box = document.getElementById("quiz-box");
+    if (currentIndex < quizQuestions.length) {
+        const item = quizQuestions[currentIndex];
+        let html = `
+            <div class="q-box">
+                <p class="q-text">${item.q}</p>
+            </div>
+            <div class="options-grid">
+        `;
+        item.options.forEach((text, i) => {
+            html += `<button class="opt-btn" onclick="verifyAnswer(${i}, ${item.ans}, this)">${text}</button>`;
+        });
+        html += `</div>`;
+        box.innerHTML = html;
+    } else {
+        box.innerHTML = "";
+        const res = document.getElementById("result-area");
+        res.style.display = "block";
+        res.innerHTML = `
+            <div class="score-text">Your Score: ${userScore} / ${quizQuestions.length}</div>
+            <span class="grate-badge">GRATE!</span>
+            <button class="retry-btn" onclick="restartTest()">RI TRY</button>
+        `;
+    }
+}
+
+function verifyAnswer(chosen, correct, btn) {
+    const allButtons = document.querySelectorAll('.opt-btn');
+    allButtons.forEach(b => b.disabled = true);
+
+    if (chosen === correct) {
+        btn.classList.add('correct');
+        userScore++;
+    } else {
+        btn.classList.add('wrong');
+        allButtons[correct].classList.add('correct');
+    }
+
+    setTimeout(() => {
+        currentIndex++;
+        showQuestion();
+    }, 1100);
+}
+
+function restartTest() {
+    currentIndex = 0;
+    userScore = 0;
+    document.getElementById("result-area").style.display = "none";
+    showQuestion();
+}
+
+showQuestion();
+</script>
+</body>
+</html>
