@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cell_trueorfalse</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 600px; background: #121212; padding: 20px; border-radius: 12px; border: 2px solid #00ffcc; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .header-title { color: #00ffcc; text-align: center; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .tf-box { background: #1a1a1a; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffff00; }
+        .tf-q { color: #ffff00; font-size: 15px; line-height: 1.4; font-weight: bold; margin: 0 0 10px 0; }
+        .tf-buttons { display: flex; gap: 10px; }
+        .tf-btn { flex: 1; padding: 10px; font-weight: bold; border: 1px solid #444; border-radius: 4px; cursor: pointer; background: #262626; color: #fff; }
+        .tf-btn.selected-correct { background-color: #28a745 !important; color: #fff !important; }
+        .tf-btn.selected-wrong { background-color: #dc3545 !important; color: #fff !important; }
+        .submit-btn { background: #ffff00; color: #000; font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        #result { margin-top: 20px; text-align: center; }
+        .score-text { font-size: 20px; color: #ffff00; font-weight: bold; margin-bottom: 8px; }
+        .badge { font-size: 22px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: block; }
+        .retry-btn { background: #00ffcc; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Cell Structure & Functions - True or False</h2>
+    <div id="tf-container"></div>
+    <button class="submit-btn" onclick="submitTF()">సమాధానాలు సరిచూడండి (SUBMIT)</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const tfData = [
+    { q: "1. Robert Brown discovered the nucleus in 1831. / రాబర్ట్ బ్రౌన్ 1831లో కేంద్రకాన్ని కనుగొన్నారు.", ans: true },
+    { q: "2. Animal cells have a rigid cellulose cell wall. / జంతుకణాలలో సెల్యులోజ్తో కూడిన కణకవచం ఉంటుంది.", ans: false },
+    { q: "3. Mitochondria release energy in the form of ATP. / మైటోకాండ్రియా కణ శ్వాసక్రియ జరిపి శక్తిని విడుదల చేస్తుంది.", ans: true },
+    { q: "4. Lysosomes are known as suicidal bags of the cell. / లైసోజోములను కణ స్వయం విచ్ఛిత్తి సంచులు అంటారు.", ans: true },
+    { q: "5. Prokaryotic cells contain a well-defined nuclear membrane. / కేంద్రక పూర్వకణాలలో స్పష్టమైన కేంద్రక త్వచం ఉంటుంది.", ans: false },
+    { q: "6. Ribosomes are the sites of protein synthesis. / రైబోజోములలో ప్రోటీన్ల సంశ్లేషణ జరుగుతుంది.", ans: true },
+    { q: "7. Leucoplasts are green photosynthetic plastids. / ల్యూకోప్లాస్ట్లు కిరణజన్య సంయోగక్రియ జరిపే ఆకుపచ్చని ప్లాస్టిడ్లు.", ans: false },
+    { q: "8. Mature human red blood cells do not have a nucleus. / మానవుని పరిపక్వ ఎర్ర రక్తకణాలలో కేంద్రకం ఉండదు.", ans: true },
+    { q: "9. Plant cell walls provide mechanical strength and shape. / కణకవచం వృక్షకణానికి రక్షణ మరియు దృఢత్వాన్ని ఇస్తుంది.", ans: true },
+    { q: "10. Smooth ER synthesizes lipids and detoxifies poisons in liver. / నునుపు అంతర్జీవ ద్రవ్యజాలం లిపిడ్ల సంశ్లేషణ, విష నిర్వీర్యంలో తోడ్పడుతుంది.", ans: true },
+    { q: "11. Camillo Golgi discovered the Golgi complex. / కామిల్లో గాల్జీ గాల్జీ సంక్లిష్టాన్ని కనుగొన్నారు.", ans: true },
+    { q: "12. Plant cells possess very small vacuoles compared to animal cells. / వృక్షకణాలలో జంతుకణాల కంటే చిన్న రిక్తికలు ఉంటాయి.", ans: false },
+    { q: "13. Plasma membrane acts as a selectively permeable barrier. / ప్లాస్మా పొర విచక్షణ స్తరంగా వ్యవహరిస్తుంది.", ans: true },
+    { q: "14. Rudolf Virchow proposed that cells arise from pre-existing cells. / పూర్వ కణాల నుండే కొత్త కణాలు ఏర్పడతాయని రుడాల్ఫ్ విర్కోవ్ చెప్పారు.", ans: true },
+    { q: "15. Janus Green-B is used to selectively stain Mitochondria. / మైటోకాండ్రియాను గుర్తించడానికి జానస్ గ్రీన్-బి ఉపయోగిస్తారు.", ans: true }
+];
+
+let userAnswers = {};
+let container = document.getElementById("tf-container");
+
+tfData.forEach((item, idx) => {
+    container.innerHTML += `
+        <div class="tf-box">
+            <p class="tf-q">${item.q}</p>
+            <div class="tf-buttons">
+                <button class="tf-btn" id="btn-t-${idx}" onclick="pickAnswer(${idx}, true)">True (సత్యం)</button>
+                <button class="tf-btn" id="btn-f-${idx}" onclick="pickAnswer(${idx}, false)">False (అసత్యం)</button>
+            </div>
+        </div>
+    `;
+});
+
+function pickAnswer(idx, val) {
+    userAnswers[idx] = val;
+    let btnT = document.getElementById(`btn-t-${idx}`);
+    let btnF = document.getElementById(`btn-f-${idx}`);
+    btnT.style.border = val ? "2px solid #ffff00" : "1px solid #444";
+    btnF.style.border = !val ? "2px solid #ffff00" : "1px solid #444";
+}
+
+function submitTF() {
+    let score = 0;
+    tfData.forEach((item, idx) => {
+        let btnT = document.getElementById(`btn-t-${idx}`);
+        let btnF = document.getElementById(`btn-f-${idx}`);
+        btnT.classList.remove('selected-correct', 'selected-wrong');
+        btnF.classList.remove('selected-correct', 'selected-wrong');
+        
+        let userPick = userAnswers[idx];
+        if (userPick !== undefined) {
+            if (userPick === item.ans) {
+                score++;
+                if (userPick === true) btnT.classList.add('selected-correct');
+                else btnF.classList.add('selected-correct');
+            } else {
+                if (userPick === true) {
+                    btnT.classList.add('selected-wrong');
+                    btnF.classList.add('selected-correct');
+                } else {
+                    btnF.classList.add('selected-wrong');
+                    btnT.classList.add('selected-correct');
+                }
+            }
+        } else {
+            if (item.ans === true) btnT.classList.add('selected-correct');
+            else btnF.classList.add('selected-correct');
+        }
+    });
+
+    let res = document.getElementById("result");
+    let badgeText = score >= 12 ? "EXCELLENT!" : "WELL TRIED!";
+    res.innerHTML = `
+        <div class="score-text">Your Score: ${score} / 15</div>
+        <span class="badge">${badgeText}</span>
+        <button class="retry-btn" onclick="location.reload()">RETRY</button>
+    `;
+}
+</script>
+</body>
+</html>
