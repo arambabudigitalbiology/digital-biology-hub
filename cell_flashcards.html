@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cell_flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 520px; background: #121212; padding: 25px 20px; border-radius: 12px; border: 2px solid #00ffcc; text-align: center; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; font-weight: bold; }
+        .header-title { color: #00ffcc; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .card { background: #1a1a1a; border: 2px solid #ffff00; border-radius: 8px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 17px; cursor: pointer; margin-bottom: 20px; color: #ffff00; line-height: 1.5; font-weight: bold; }
+        .buttons { display: flex; justify-content: space-between; gap: 10px; }
+        .ctrl-btn { background: #00ffcc; color: #000; border: none; padding: 10px 18px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 14px; }
+        .retry-btn { background: #ffff00; color: #000; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 15px; font-size: 15px; text-transform: uppercase; }
+        #counter { align-self: center; font-weight: bold; color: #ffffff; font-size: 16px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Cell Structure & Functions - Flashcards</h2>
+    <p style="font-size: 12px; color: #aaa; margin-top: -5px; margin-bottom: 15px;">కార్డుపై క్లిక్ చేసి జవాబు చూడండి (Click card to flip)</p>
+    
+    <div id="flashcard" class="card" onclick="flipCard()">కార్డు లోడ్ అవుతోంది...</div>
+
+    <div class="buttons">
+        <button class="ctrl-btn" onclick="prevCard()">Previous</button>
+        <span id="counter"></span>
+        <button class="ctrl-btn" onclick="nextCard()">Next</button>
+    </div>
+    
+    <button class="retry-btn" onclick="restartCards()">RETRY (ప్రారంభం నుండి)</button>
+</div>
+
+<script>
+const cards = [
+    { q: "Nucleus Discovery (1831) / కేంద్రకం కనుగొన్నది", a: "Robert Brown / రాబర్ట్ బ్రౌన్" },
+    { q: "Powerhouse of the Cell / కణ శక్త్యాగారాలు", a: "Mitochondria / మైటోకాండ్రియా" },
+    { q: "Suicidal Bags of the Cell / స్వయం విచ్ఛిత్తి సంచులు", a: "Lysosomes / లైసోజోములు" },
+    { q: "Site of Protein Synthesis / ప్రోటీన్ సంశ్లేషణ కేంద్రం", a: "Ribosomes / రైబోజోములు" },
+    { q: "Cell Theory Proposers / కణ సిద్ధాంత ప్రతిపాదకులు", a: "Schleiden & Schwann (1838-39) / స్లీడన్ మరియు ష్వాన్" },
+    { q: "Pre-existing cells concept (1855) / పూర్వ కణాల నుంచి కొత్త కణాలు", a: "Rudolf Virchow / రుడాల్ఫ్ విర్కోవ్" },
+    { q: "Golgi Complex Discovered by (1898) / గాల్జీ సంక్లిష్టం కనుగొన్నది", a: "Camillo Golgi / కామిల్లో గాల్జీ" },
+    { q: "Chemical composition of Cell Wall / వృక్ష కణకవచ పదార్థం", a: "Cellulose / సెల్యులోజ్" },
+    { q: "Folds in Mitochondria / మైటోకాండ్రియా లోపలి త్వచ ముడతలు", a: "Cristae / క్రిస్టే" },
+    { q: "Stain for Mitochondria / మైటోకాండ్రియా పరిశీలన రంజనం", a: "Janus Green-B / జానస్ గ్రీన్-బి" },
+    { q: "Function of Smooth ER / నునుపు అంతర్జీవ ద్రవ్యజాల విధి", a: "Lipid synthesis / లిపిడ్ల సంశ్లేషణ" },
+    { q: "Nature of Plasma Membrane / ప్లాస్మా పొర స్వభావం", a: "Selectively permeable / విచక్షణ స్తరం" },
+    { q: "Plastid in Photosynthesis / కిరణజన్య సంయోగక్రియ ప్లాస్టిడ్", a: "Chloroplast / హరితరేణువు (క్లోరోప్లాస్ట్)" },
+    { q: "Cells lacking nucleus in mammals / కేంద్రకం లేని క్షీరద కణాలు", a: "Mature RBC / పరిపక్వ ఎర్ర రక్తకణాలు" },
+    { q: "Role of Vacuoles in plant cells / మొక్క కణంలో రిక్తికల పాత్ర", a: "Turgidity & Storage / కణ దృఢత్వం, నిల్వ" }
+];
+
+let currIndex = 0;
+let isQ = true;
+
+function renderCard() {
+    const el = document.getElementById("flashcard");
+    el.innerHTML = isQ ? cards[currIndex].q : cards[currIndex].a;
+    el.style.color = isQ ? "#ffff00" : "#00ffcc";
+    el.style.borderColor = isQ ? "#ffff00" : "#00ffcc";
+    document.getElementById("counter").innerText = `${currIndex + 1} / ${cards.length}`;
+}
+
+function flipCard() {
+    isQ = !isQ;
+    renderCard();
+}
+
+function nextCard() {
+    currIndex = (currIndex + 1) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function prevCard() {
+    currIndex = (currIndex - 1 + cards.length) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function restartCards() {
+    currIndex = 0;
+    isQ = true;
+    renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
