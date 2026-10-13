@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>plant tissues matching</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 700px; background: #121212; padding: 20px; border-radius: 12px; border: 2px solid #00ffcc; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .header-title { color: #00ffcc; text-align: center; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .match-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; background: #1a1a1a; padding: 10px; border-radius: 6px; font-size: 14px; color: #ffff00; gap: 10px; }
+        select { background: #262626; color: #ffffff; padding: 8px; border: 1px solid #00ffcc; border-radius: 4px; max-width: 270px; font-size: 13px; outline: none; }
+        .submit-btn { background: #ffff00; color: #000; font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        #result { margin-top: 20px; text-align: center; }
+        .score-text { font-size: 20px; color: #ffff00; font-weight: bold; margin-bottom: 8px; }
+        .badge { font-size: 22px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: block; }
+        .retry-btn { background: #00ffcc; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Plant Tissues - Matching Game / జతపరుచు ఆట</h2>
+    <div id="matching-form"></div>
+    <button class="submit-btn" onclick="checkMatches()">సమాధానాలు సరిచూడండి (SUBMIT)</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const pairs = [
+    { term: "1. Apical meristem / అగ్ర విభాజ్య కణజాలం", match: "Length growth / కొనల పొడవు పెరుగుదల" },
+    { term: "2. Lateral meristem / పార్శ్వ విభాజ్య కణజాలం", match: "Girth growth / కాండం చుట్టుకొలత పెరుగుదల" },
+    { term: "3. Intercalary meristem / మధ్యస్థ విభాజ్య కణజాలం", match: "Nodes and branching / కణుపులు, శాఖల ఉత్పత్తి" },
+    { term: "4. Chlorenchyma / హరిత కణజాలం", match: "Photosynthesis / కిరణజన్య సంయోగక్రియ" },
+    { term: "5. Aerenchyma / వాయుగత కణజాలం", match: "Buoyancy in water / నీటిలో తేలడానికి గాలి గదులు" },
+    { term: "6. Collenchyma / స్థూలకోణ కణజాలం", match: "Flexibility & support / స్థితిస్థాపకత, యాంత్రిక బలం" },
+    { term: "7. Sclerenchyma / దృఢ కణజాలం", match: "Hardness (Coconut husk) / గట్టిదనం (కొబ్బరి పీచు)" },
+    { term: "8. Xylem / దారువు", match: "Water transport / నీరు, లవణాల రవాణా" },
+    { term: "9. Phloem / పోషక కణజాలం", match: "Food transport / ఆహార పదార్థాల రవాణా" },
+    { term: "10. Stomata / పత్రరంధ్రాలు", match: "Transpiration / వాయు మార్పిడి, భాష్పోత్సేకం" },
+    { term: "11. Guard cells / రక్షక కణాలు", match: "Kidney-shaped / మూత్రపిండాకార కణాలు" },
+    { term: "12. Root hairs / మూలకేశాలు", match: "Water absorption / నేల నుండి నీటి శోషణ" },
+    { term: "13. Bark / బెరడు", match: "Protection from pests / బాహ్య రక్షణ కవచం" },
+    { term: "14. Vascular bundle / నాళికాపుంజం", match: "Xylem + Phloem / దారువు + పోషక కణజాలం" },
+    { term: "15. Nehemiah Grew / నెహేమియా గ్రూ", match: "Anatomy of Plants / వృక్ష అంతర్నిర్మాణ శాస్త్ర పిత" }
+];
+
+let formDiv = document.getElementById("matching-form");
+let shuffled = [...pairs].map(p => p.match).sort(() => Math.random() - 0.5);
+
+pairs.forEach((p, idx) => {
+    let opts = `<option value="">-- ఎంచుకోండి (Select) --</option>`;
+    shuffled.forEach(m => {
+        opts += `<option value="${m}">${m}</option>`;
+    });
+    formDiv.innerHTML += `
+        <div class="match-row">
+            <span>${p.term}</span>
+            <select id="sel-${idx}">${opts}</select>
+        </div>
+    `;
+});
+
+function checkMatches() {
+    let score = 0;
+    pairs.forEach((p, idx) => {
+        let sel = document.getElementById(`sel-${idx}`);
+        if (sel.value === p.match) {
+            sel.style.backgroundColor = "#28a745";
+            sel.style.color = "#ffffff";
+            score++;
+        } else {
+            sel.style.backgroundColor = "#dc3545";
+            sel.style.color = "#ffffff";
+        }
+    });
+    let res = document.getElementById("result");
+    let badgeText = score >= 12 ? "EXCELLENT!" : "WELL TRIED!";
+    res.innerHTML = `
+        <div class="score-text">Your Score: ${score} / 15</div>
+        <span class="badge">${badgeText}</span>
+        <button class="retry-btn" onclick="location.reload()">RETRY</button>
+    `;
+}
+</script>
+</body>
+</html>
