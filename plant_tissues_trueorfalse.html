@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>plant tissues true or false</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 620px; background: #121212; padding: 20px; border-radius: 12px; border: 2px solid #00ffcc; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .header-title { color: #00ffcc; text-align: center; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .tf-box { background: #1a1a1a; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffff00; }
+        .tf-q { color: #ffff00; font-size: 15px; line-height: 1.4; font-weight: bold; margin: 0 0 10px 0; }
+        .tf-buttons { display: flex; gap: 10px; }
+        .tf-btn { flex: 1; padding: 10px; font-weight: bold; border: 1px solid #444; border-radius: 4px; cursor: pointer; background: #262626; color: #fff; }
+        .tf-btn.selected-correct { background-color: #28a745 !important; color: #fff !important; }
+        .tf-btn.selected-wrong { background-color: #dc3545 !important; color: #fff !important; }
+        .submit-btn { background: #ffff00; color: #000; font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        #result { margin-top: 20px; text-align: center; }
+        .score-text { font-size: 20px; color: #ffff00; font-weight: bold; margin-bottom: 8px; }
+        .badge { font-size: 22px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: block; }
+        .retry-btn { background: #00ffcc; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Plant Tissues - True or False</h2>
+    <div id="tf-container"></div>
+    <button class="submit-btn" onclick="submitTF()">సమాధానాలు సరిచూడండి (SUBMIT)</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const tfData = [
+    { q: "1. Meristematic cells continuously divide throughout the plant life. / విభాజ్య కణజాలంలోని కణాలు నిరంతరం విభజన చెందే శక్తిని కలిగి ఉంటాయి.", ans: true },
+    { q: "2. Apical meristem increases the girth (thickness) of stem. / అగ్ర విభాజ్య కణజాలం కాండం యొక్క లావు లేదా చుట్టుకొలతను పెంచుతుంది.", ans: false },
+    { q: "3. Stomata are surrounded by kidney-shaped guard cells. / పత్రరంధ్రాలను ఆవరించి మూత్రపిండాకార రక్షక కణాలు ఉంటాయి.", ans: true },
+    { q: "4. Desert plants have a thick waxy coating on their epidermal cells. / ఎడారి మొక్కల బాహ్యచర్మంపై నీటి నష్టాన్ని తగ్గించే దళసరి మైనపు పూత ఉంటుంది.", ans: true },
+    { q: "5. Aerenchyma provides buoyancy to aquatic plants. / వాయుగత కణజాలంలోని గాలి గదులు నీటి మొక్కలు తేలడానికి సహాయపడతాయి.", ans: true },
+    { q: "6. Sclerenchyma cells are living and possess thin walls. / దృఢ కణజాల కణాలు సజీవంగా ఉండి పలుచని కణకవచాలను కలిగి ఉంటాయి.", ans: false },
+    { q: "7. Xylem is responsible for transporting synthesized food materials. / ఆకులలో తయారైన ఆహార పదార్థాలను రవాణా చేసేది దారు కణజాలం.", ans: false },
+    { q: "8. Phloem transports food prepared in leaves to other plant organs. / కిరణజన్య సంయోగక్రియలో తయారైన ఆహారాన్ని ఇతర భాగాలకు సరఫరా చేసేది పోషక కణజాలం.", ans: true },
+    { q: "9. Sieve tube cells of mature phloem lack a nucleus. / పోషక కణజాలంలోని పరిపక్వ చాలనీ నాళాలలో కేంద్రకం ఉండదు.", ans: true },
+    { q: "10. Xylem and phloem together form vascular bundles. / దారువు మరియు పోషక కణజాలం కలిసి నాళికా పుంజాలను ఏర్పరుస్తాయి.", ans: true },
+    { q: "11. Root hairs develop from ground tissue cells. / మొక్కలలో మూలకేశాలు సంధాయక కణజాలం నుంచి ఉద్భవిస్తాయి.", ans: false },
+    { q: "12. Nehemiah Grew published the book 'Anatomy of Plants'. / 'అనాటమీ ఆఫ్ ప్లాంట్స్' అనే ప్రసిద్ధ గ్రంథాన్ని నెహేమియా గ్రూ ప్రచురించారు.", ans: true },
+    { q: "13. Gum in plants like Acacia is secreted by dermal tissue. / తుమ్మ వంటి వృక్షాలలో జిగురు పదార్థం త్వచ కణజాలం నుండి స్రవిస్తుంది.", ans: true },
+    { q: "14. Collenchyma provides mechanical support and flexibility without breaking. / స్థూలకోణ కణజాలం కొమ్మలు విరగకుండా వంగే స్వభావాన్ని మరియు ఆధారాన్ని ఇస్తుంది.", ans: true },
+    { q: "15. Redwoods can transport water up to 330 feet via vascular tissues. / రెడ్‌వుడ్ వంటి ఎత్తైన వృక్షాలలో ప్రసరణ కణజాలాలు 330 అడుగుల వరకు రవాణాను నిర్వర్తిస్తాయి.", ans: true }
+];
+
+let userAnswers = {};
+let container = document.getElementById("tf-container");
+
+tfData.forEach((item, idx) => {
+    container.innerHTML += `
+        <div class="tf-box">
+            <p class="tf-q">${item.q}</p>
+            <div class="tf-buttons">
+                <button class="tf-btn" id="btn-t-${idx}" onclick="pickAnswer(${idx}, true)">True (సత్యం)</button>
+                <button class="tf-btn" id="btn-f-${idx}" onclick="pickAnswer(${idx}, false)">False (అసత్యం)</button>
+            </div>
+        </div>
+    `;
+});
+
+function pickAnswer(idx, val) {
+    userAnswers[idx] = val;
+    let btnT = document.getElementById(`btn-t-${idx}`);
+    let btnF = document.getElementById(`btn-f-${idx}`);
+    btnT.style.border = val ? "2px solid #ffff00" : "1px solid #444";
+    btnF.style.border = !val ? "2px solid #ffff00" : "1px solid #444";
+}
+
+function submitTF() {
+    let score = 0;
+    tfData.forEach((item, idx) => {
+        let btnT = document.getElementById(`btn-t-${idx}`);
+        let btnF = document.getElementById(`btn-f-${idx}`);
+        btnT.classList.remove('selected-correct', 'selected-wrong');
+        btnF.classList.remove('selected-correct', 'selected-wrong');
+        
+        let userPick = userAnswers[idx];
+        if (userPick !== undefined) {
+            if (userPick === item.ans) {
+                score++;
+                if (userPick === true) btnT.classList.add('selected-correct');
+                else btnF.classList.add('selected-correct');
+            } else {
+                if (userPick === true) {
+                    btnT.classList.add('selected-wrong');
+                    btnF.classList.add('selected-correct');
+                } else {
+                    btnF.classList.add('selected-wrong');
+                    btnT.classList.add('selected-correct');
+                }
+            }
+        } else {
+            if (item.ans === true) btnT.classList.add('selected-correct');
+            else btnF.classList.add('selected-correct');
+        }
+    });
+
+    let res = document.getElementById("result");
+    let badgeText = score >= 12 ? "EXCELLENT!" : "WELL TRIED!";
+    res.innerHTML = `
+        <div class="score-text">Your Score: ${score} / 15</div>
+        <span class="badge">${badgeText}</span>
+        <button class="retry-btn" onclick="location.reload()">RETRY</button>
+    `;
+}
+</script>
+</body>
+</html>
