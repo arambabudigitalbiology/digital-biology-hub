@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>plant tissues quiz</title>
+    <style>
+        body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .quiz-card { width: 100%; max-width: 650px; background-color: #121212; border: 2px solid #00ffcc; border-radius: 12px; padding: 20px; box-sizing: border-box; }
+        .branding { text-align: center; color: #ff00ff; font-size: 15px; font-weight: bold; margin-bottom: 10px; }
+        .header-title { text-align: center; color: #00ffcc; font-size: 20px; margin-top: 0; margin-bottom: 20px; }
+        .q-box { background-color: #1a1a1a; border-left: 4px solid #ffff00; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+        .q-text { color: #ffff00; font-size: 16px; font-weight: bold; line-height: 1.5; margin: 0; }
+        .options-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .opt-btn { background-color: #262626; color: #ffffff; border: 1px solid #00ffcc; border-radius: 6px; padding: 12px; font-size: 14px; text-align: left; cursor: pointer; outline: none; transition: 0.2s; }
+        .opt-btn.correct { background-color: #28a745 !important; color: #ffffff !important; border-color: #28a745 !important; }
+        .opt-btn.wrong { background-color: #dc3545 !important; color: #ffffff !important; border-color: #dc3545 !important; }
+        #result-area { text-align: center; padding: 20px 0; }
+        .score-text { font-size: 22px; color: #ffff00; font-weight: bold; margin-bottom: 10px; }
+        .badge { font-size: 24px; color: #00ffcc; font-weight: bold; margin-bottom: 20px; display: block; }
+        .retry-btn { background-color: #ffff00; color: #000000; border: none; border-radius: 6px; padding: 12px 25px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="quiz-card">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Plant Tissues - Interactive Quiz / వృక్ష కణజాలాలు</h2>
+    <div id="quiz-box"></div>
+    <div id="result-area" style="display: none;"></div>
+</div>
+
+<script>
+const quizQuestions = [
+    { q: "1. Which tissue is responsible for growth in the length of plant shoot and root tips? / మొక్క కాండం, వేరు కొనల పొడవు పెరుగుదలకు కారణమయ్యే కణజాలం ఏది?", options: ["Lateral meristem / పార్శ్వ విభాజ్య కణజాలం", "Apical meristem / అగ్ర విభాజ్య కణజాలం", "Intercalary meristem / మధ్యస్థ విభాజ్య కణజాలం", "Dermal tissue / త్వచ కణజాలం"], ans: 1 },
+    { q: "2. The tissue that increases the girth/diameter of the stem is / కాండం యొక్క వర్తులాకార చుట్టుకొలత లేదా లావు పెరగడానికి తోడ్పడే కణజాలం ఏది?", options: ["Apical meristem / అగ్ర విభాజ్య కణజాలం", "Lateral meristem / పార్శ్వ విభాజ్య కణజాలం", "Parenchyma / మృదుకణజాలం", "Collenchyma / స్థూలకోణ కణజాలం"], ans: 1 },
+    { q: "3. Parenchyma containing chloroplasts is known as / హరితరేణువులను కలిగి కిరణజన్య సంయోగక్రియ జరిపే మృదుకణజాలాన్ని ఏమంటారు?", options: ["Aerenchyma / వాయుగత కణజాలం", "Chlorenchyma / హరిత కణజాలం", "Storage tissue / నిల్వచేసే కణజాలం", "Sclerenchyma / దృఢ కణజాలం"], ans: 1 },
+    { q: "4. Air-filled parenchyma found in aquatic plants that provides buoyancy is / నీటి మొక్కలు తేలడానికి గాలి గదులు ఉండే మృదుకణజాలం ఏది?", options: ["Chlorenchyma / హరిత కణజాలం", "Aerenchyma / వాయుగత (వాతయుత) కణజాలం", "Collenchyma / స్థూలకోణ కణజాలం", "Sclerenchyma / దృఢ కణజాలం"], ans: 1 },
+    { q: "5. Pores present on the epidermis of leaves for gas exchange and transpiration are / వాయు మార్పిడి, భాష్పోత్సేకం కోసం ఆకుల బాహ్యచర్మంపై ఉండే రంధ్రాలు ఏవి?", options: ["Lenticels / లెంటిసెల్స్", "Stomata / పత్రరంధ్రాలు", "Hydathodes / జల రంధ్రాలు", "Vessels / నాళాలు"], ans: 1 },
+    { q: "6. Kidney-shaped cells enclosing the stomata are called / పత్రరంధ్రాన్ని ఆవరించి ఉండే మూత్రపిండాకారపు కణాలను ఏమంటారు?", options: ["Companion cells / సహకణాలు", "Guard cells / రక్షక కణాలు", "Subsidiary cells / అనుబంధ కణాలు", "Epidermal cells / బాహ్యచర్మ కణాలు"], ans: 1 },
+    { q: "7. Mechanical support and flexibility to young stems and petioles is provided by / లేత కాండాలు, పత్రవృంతాలకు యాంత్రిక బలం, స్థితిస్థాపకతను ఇచ్చే కణజాలం ఏది?", options: ["Parenchyma / మృదుకణజాలం", "Collenchyma / స్థూలకోణ కణజాలం", "Sclerenchyma / దృఢ కణజాలం", "Aerenchyma / వాతయుత కణజాలం"], ans: 1 },
+    { q: "8. Dead, thick-walled cells providing hardness to coconut husk and nuts belong to / దళసరి గోడలు కలిగి గట్టిదనాన్ని ఇచ్చే కొబ్బరి పీచులోని నిర్జీవ కణజాలం ఏది?", options: ["Sclerenchyma / దృఢ కణజాలం", "Collenchyma / స్థూలకోణ కణజాలం", "Chlorenchyma / హరిత కణజాలం", "Meristem / విభాజ్య కణజాలం"], ans: 0 },
+    { q: "9. Water and mineral salts from roots to leaves are transported by / వేర్లు పీల్చుకున్న నీరు, ఖనిజ లవణాలను ఆకులకు రవాణా చేసే కణజాలం ఏది?", options: ["Phloem / పోషక కణజాలం", "Xylem / దారు కణజాలం (దారువు)", "Collenchyma / స్థూలకోణ కణజాలం", "Cortex / వల్కలం"], ans: 1 },
+    { q: "10. Food synthesized in leaves is transported to all parts of the plant through / కిరణజన్య సంయోగక్రియలో తయారైన ఆహారాన్ని మొక్క భాగాలకు రవాణా చేసేది ఏది?", options: ["Xylem / దారువు", "Phloem / పోషక కణజాలం", "Dermal tissue / త్వచ కణజాలం", "Sclerenchyma / దృఢ కణజాలం"], ans: 1 },
+    { q: "11. Xylem and Phloem together constitute / దారువు మరియు పోషక కణజాలం రెండూ కలిసి దేనిని ఏర్పరుస్తాయి?", options: ["Dermal system / త్వచ వ్యవస్థ", "Vascular bundles / నాళికా పుంజాలు", "Ground system / సంధాయక వ్యవస్థ", "Bark / బెరడు"], ans: 1 },
+    { q: "12. In which phloem component is the nucleus absent at maturity? / పోషక కణజాలంలో పరిపక్వ దశలో కేంద్రకం లేని జీవ కణాలు ఏవి?", options: ["Companion cells / సహకణాలు", "Sieve tube cells / చాలనీ నాళ కణాలు", "Phloem parenchyma / పోషక మృదుకణజాలం", "Phloem fibres / పోషక తంతువులు"], ans: 1 },
+    { q: "13. Secretory gum in trees like Acacia and Neem is produced by / తుమ్మ, వేప చెట్లలో జిగురు పదార్థం ఏ కణజాలం నుంచి స్రవించబడుతుంది?", options: ["Vascular tissue / ప్రసరణ కణజాలం", "Dermal tissue / త్వచ కణజాలం", "Ground tissue / సంధాయక కణజాలం", "Apical meristem / అగ్ర విభాజ్య కణజాలం"], ans: 1 },
+    { q: "14. Who is considered a pioneer in plant anatomy and published 'Anatomy of Plants' in 1682? / 1682 లో 'అనాటమీ ఆఫ్ ప్లాంట్స్' గ్రంథం ప్రచురించి మొక్కల అంతర్నిర్మాణ శాస్త్రానికి పునాది వేసినది ఎవరు?", options: ["Robert Hooke / రాబర్ట్ హుక్", "Nehemiah Grew / నెహేమియా గ్రూ", "Schleiden / స్లీడన్", "Theophrastus / థియోఫ్రాస్టస్"], ans: 1 },
+    { q: "15. The tissue that forms the bulk of the plant body, stores food and provides basic support is / మొక్క శరీరంలో అత్యధిక భాగాన్ని ఏర్పరుస్తూ ఆహారాన్ని నిల్వచేసే కణజాలం ఏది?", options: ["Ground tissue / సంధాయక కణజాలం", "Meristematic tissue / విభాజ్య కణజాలం", "Vascular tissue / ప్రసరణ కణజాలం", "Epidermis / బాహ్యచర్మం"], ans: 0 }
+];
+
+let currentIndex = 0;
+let userScore = 0;
+
+function showQuestion() {
+    const box = document.getElementById("quiz-box");
+    if (currentIndex < quizQuestions.length) {
+        const item = quizQuestions[currentIndex];
+        let html = `<div class="q-box"><p class="q-text">${item.q}</p></div><div class="options-grid">`;
+        item.options.forEach((text, i) => {
+            html += `<button class="opt-btn" onclick="verifyAnswer(${i}, ${item.ans}, this)">${text}</button>`;
+        });
+        html += `</div>`;
+        box.innerHTML = html;
+    } else {
+        box.innerHTML = "";
+        const res = document.getElementById("result-area");
+        res.style.display = "block";
+        res.innerHTML = `
+            <div class="score-text">Your Score: ${userScore} / ${quizQuestions.length}</div>
+            <span class="badge">EXCELLENT!</span>
+            <button class="retry-btn" onclick="restartTest()">RETRY</button>
+        `;
+    }
+}
+
+function verifyAnswer(chosen, correct, btn) {
+    const allButtons = document.querySelectorAll('.opt-btn');
+    allButtons.forEach(b => b.disabled = true);
+    if (chosen === correct) {
+        btn.classList.add('correct');
+        userScore++;
+    } else {
+        btn.classList.add('wrong');
+        allButtons[correct].classList.add('correct');
+    }
+    setTimeout(() => {
+        currentIndex++;
+        showQuestion();
+    }, 1200);
+}
+
+function restartTest() {
+    currentIndex = 0;
+    userScore = 0;
+    document.getElementById("result-area").style.display = "none";
+    showQuestion();
+}
+
+showQuestion();
+</script>
+</body>
+</html>
