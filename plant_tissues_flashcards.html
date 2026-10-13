@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>plant tissues flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 530px; background: #121212; padding: 25px 20px; border-radius: 12px; border: 2px solid #00ffcc; text-align: center; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; font-weight: bold; }
+        .header-title { color: #00ffcc; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .card { background: #1a1a1a; border: 2px solid #ffff00; border-radius: 8px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 17px; cursor: pointer; margin-bottom: 20px; color: #ffff00; line-height: 1.5; font-weight: bold; }
+        .buttons { display: flex; justify-content: space-between; gap: 10px; }
+        .ctrl-btn { background: #00ffcc; color: #000; border: none; padding: 10px 18px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 14px; }
+        .retry-btn { background: #ffff00; color: #000; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 15px; font-size: 15px; text-transform: uppercase; }
+        #counter { align-self: center; font-weight: bold; color: #ffffff; font-size: 16px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Plant Tissues - Flashcards / ఫ్లాష్ కార్డులు</h2>
+    <p style="font-size: 12px; color: #aaa; margin-top: -5px; margin-bottom: 15px;">కార్డుపై క్లిక్ చేసి జవాబు చూడండి (Click card to flip)</p>
+    
+    <div id="flashcard" class="card" onclick="flipCard()">కార్డు లోడ్ అవుతోంది...</div>
+
+    <div class="buttons">
+        <button class="ctrl-btn" onclick="prevCard()">Previous</button>
+        <span id="counter"></span>
+        <button class="ctrl-btn" onclick="nextCard()">Next</button>
+    </div>
+    
+    <button class="retry-btn" onclick="restartCards()">RETRY (మొదటి నుండి)</button>
+</div>
+
+<script>
+const cards = [
+    { q: "Apical Meristem Function / అగ్ర విభాజ్య కణజాల విధి", a: "Growth in length of stem & root / వేర్లు, కాండాల పొడవు పెరుగుదల" },
+    { q: "Lateral Meristem Function / పార్శ్వ విభాజ్య కణజాల విధి", a: "Growth in girth / diametre / కాండం వర్తులాకార చుట్టుకొలత పెరుగుదల" },
+    { q: "Intercalary Meristem Location / మధ్యస్థ విభాజ్య కణజాల ప్రాంతం", a: "Branching nodes and leaf bases / కణుపులు, శాఖలు, పత్రవృంతాలు ఏర్పడే చోటు" },
+    { q: "Chlorenchyma / హరిత కణజాలం", a: "Parenchyma carrying photosynthesis / కిరణజన్య సంయోగక్రియ జరిపే మృదుకణజాలం" },
+    { q: "Aerenchyma / వాయుగత కణజాలం", a: "Air cavities providing buoyancy / నీటి మొక్కలు తేలడానికి గాలి గదులు" },
+    { q: "Collenchyma / స్థూలకోణ కణజాలం", a: "Flexibility & mechanical support / స్థితిస్థాపకత మరియు యాంత్రిక ఆధారం" },
+    { q: "Sclerenchyma / దృఢ కణజాలం", a: "Thick dead cells providing hardness / గట్టిదనాన్నిచ్చే నిర్జీవ కణాలు (కొబ్బరి పీచు)" },
+    { q: "Xylem (Water transport) / దారువు", a: "Transports water and minerals / నీరు, ఖనిజ లవణాల రవాణా" },
+    { q: "Phloem (Food transport) / పోషక కణజాలం", a: "Transports synthesized food / ఆకుల నుంచి ఆహార రవాణా" },
+    { q: "Vascular Bundle / నాళికాపుంజం", a: "Combination of Xylem and Phloem / దారువు + పోషక కణజాలాల కలయిక" },
+    { q: "Guard Cells / రక్షక కణాలు", a: "Regulate opening/closing of stomata / పత్రరంధ్రాలను నియంత్రించే మూత్రపిండాకార కణాలు" },
+    { q: "Root Hairs / మూలకేశాలు", a: "Arise from epidermal cells / బాహ్యచర్మంలో నీటి శోషణకు తోడ్పడే నిర్మాణాలు" },
+    { q: "Bark / బెరడు", a: "Outer dead protective layers / బాహ్య రక్షణనిచ్చే పలు పొరల త్వచం" },
+    { q: "Enucleated Phloem Cells / కేంద్రకం లేని పోషక కణాలు", a: "Mature Sieve tube cells / పరిపక్వ చాలనీ నాళ కణాలు" },
+    { q: "Nehemiah Grew (1682) / నెహేమియా గ్రూ", a: "Published 'Anatomy of Plants' / 'అనాటమీ ఆఫ్ ప్లాంట్స్' గ్రంథ రచయిత" }
+];
+
+let currIndex = 0;
+let isQ = true;
+
+function renderCard() {
+    const el = document.getElementById("flashcard");
+    el.innerHTML = isQ ? cards[currIndex].q : cards[currIndex].a;
+    el.style.color = isQ ? "#ffff00" : "#00ffcc";
+    el.style.borderColor = isQ ? "#ffff00" : "#00ffcc";
+    document.getElementById("counter").innerText = `${currIndex + 1} / ${cards.length}`;
+}
+
+function flipCard() {
+    isQ = !isQ;
+    renderCard();
+}
+
+function nextCard() {
+    currIndex = (currIndex + 1) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function prevCard() {
+    currIndex = (currIndex - 1 + cards.length) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function restartCards() {
+    currIndex = 0;
+    isQ = true;
+    renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
