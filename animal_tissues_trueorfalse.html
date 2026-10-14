@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animal tissues true or false</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 620px; background: #121212; padding: 20px; border-radius: 12px; border: 2px solid #00ffcc; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .header-title { color: #00ffcc; text-align: center; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .tf-box { background: #1a1a1a; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffff00; }
+        .tf-q { color: #ffff00; font-size: 15px; line-height: 1.4; font-weight: bold; margin: 0 0 10px 0; }
+        .tf-buttons { display: flex; gap: 10px; }
+        .tf-btn { flex: 1; padding: 10px; font-weight: bold; border: 1px solid #444; border-radius: 4px; cursor: pointer; background: #262626; color: #fff; }
+        .tf-btn.selected-correct { background-color: #28a745 !important; color: #fff !important; }
+        .tf-btn.selected-wrong { background-color: #dc3545 !important; color: #fff !important; }
+        .submit-btn { background: #ffff00; color: #000; font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        #result { margin-top: 20px; text-align: center; }
+        .score-text { font-size: 20px; color: #ffff00; font-weight: bold; margin-bottom: 8px; }
+        .badge { font-size: 22px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: block; }
+        .retry-btn { background: #00ffcc; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Animal Tissues - True or False</h2>
+    <div id="tf-container"></div>
+    <button class="submit-btn" onclick="submitTF()">సమాధానాలు సరిచూడండి (SUBMIT)</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const tfData = [
+    { q: "1. Epithelial tissue covers external surfaces and internal organs. / ఉపకళా కణజాలం శరీరం బయట మరియు లోపలి అవయవాలను కప్పి ఉంచుతుంది.", ans: true },
+    { q: "2. Blood is a solid connective tissue containing fibers. / రక్తం అనేది తంతువులు కలిగిన ఘనరూప సంయోజక కణజాలం.", ans: false },
+    { q: "3. RBCs in mammals lack a nucleus at maturity. / క్షీరదాల పరిపక్వ ఎర్ర రక్తకణాలలో కేంద్రకం ఉండదు.", ans: true },
+    { q: "4. Neutrophils fight against germs and are called microscopic policemen. / న్యూట్రోఫిల్స్ సూక్ష్మజీవులను ఎదుర్కొంటాయి, వీటిని సూక్ష్మ రక్షక భటులు అంటారు.", ans: true },
+    { q: "5. Platelets play a major role in blood clotting. / రక్తస్రావం కాకుండా రక్తం గడ్డకట్టడంలో రక్త ఫలకికలు ప్రధాన పాత్ర పోషిస్తాయి.", ans: true },
+    { q: "6. Ligaments connect muscles to bones. / సంధి బంధనాలు (లిగమెంట్లు) కండరాలను ఎముకలతో కలుపుతాయి.", ans: false },
+    { q: "7. Tendons connect muscles to bones. / స్నాయుబంధనాలు (టెండాన్లు) కండరాలను ఎముకలతో కలుపుతాయి.", ans: true },
+    { q: "8. Adipose tissue stores fat and acts as an insulation layer. / ఎడిపోజ్ కణజాలం కొవ్వును నిల్వచేసి ఉష్ణనిరోధకంగా పనిచేస్తుంది.", ans: true },
+    { q: "9. Cardiac muscles are voluntary and under our conscious control. / హృదయ కండరాలు మన ఇష్టానుసారం పనిచేసే నియంత్రిత కండరాలు.", ans: false },
+    { q: "10. Striated muscles show alternate dark and light bands (stripes). / రేఖిత కండరాలు అడ్డుచారలను (చీకటి, వెలుతురు పట్టీలను) కలిగి ఉంటాయి.", ans: true },
+    { q: "11. Nervous tissue is specialized for receiving and transmitting impulses. / నాడీ కణజాలం ఉద్దీపనలను గ్రహించి ప్రచోదనాలను ప్రసారం చేస్తుంది.", ans: true },
+    { q: "12. Nerve cells have a high power of regeneration in adult humans. / ప్రౌఢ మానవులలో నాడీ కణాలకు అత్యధిక పునరుత్పత్తి శక్తి ఉంటుంది.", ans: false },
+    { q: "13. Karl Landsteiner discovered the ABO human blood groups. / మానవ రక్త వర్గాలను (ABO) కార్ల్ లాండ్ స్టీనర్ కనుగొన్నారు.", ans: true },
+    { q: "14. Bone is a rigid connective tissue made of calcium phosphate and carbonate. / ఎముక అనేది కాల్షియం ఫాస్పేట్, కార్బోనేట్లతో తయారైన దృఢమైన సంయోజక కణజాలం.", ans: true },
+    { q: "15. Squamous epithelium consists of tall pillar-like cells. / శల్కల ఉపకళా కణజాలం పొడవాటి స్తంభాకార కణాలను కలిగి ఉంటుంది.", ans: false }
+];
+
+let userAnswers = {};
+let container = document.getElementById("tf-container");
+
+tfData.forEach((item, idx) => {
+    container.innerHTML += `
+        <div class="tf-box">
+            <p class="tf-q">${item.q}</p>
+            <div class="tf-buttons">
+                <button class="tf-btn" id="btn-t-${idx}" onclick="pickAnswer(${idx}, true)">True (సత్యం)</button>
+                <button class="tf-btn" id="btn-f-${idx}" onclick="pickAnswer(${idx}, false)">False (అసత్యం)</button>
+            </div>
+        </div>
+    `;
+});
+
+function pickAnswer(idx, val) {
+    userAnswers[idx] = val;
+    let btnT = document.getElementById(`btn-t-${idx}`);
+    let btnF = document.getElementById(`btn-f-${idx}`);
+    btnT.style.border = val ? "2px solid #ffff00" : "1px solid #444";
+    btnF.style.border = !val ? "2px solid #ffff00" : "1px solid #444";
+}
+
+function submitTF() {
+    let score = 0;
+    tfData.forEach((item, idx) => {
+        let btnT = document.getElementById(`btn-t-${idx}`);
+        let btnF = document.getElementById(`btn-f-${idx}`);
+        btnT.classList.remove('selected-correct', 'selected-wrong');
+        btnF.classList.remove('selected-correct', 'selected-wrong');
+        
+        let userPick = userAnswers[idx];
+        if (userPick !== undefined) {
+            if (userPick === item.ans) {
+                score++;
+                if (userPick === true) btnT.classList.add('selected-correct');
+                else btnF.classList.add('selected-correct');
+            } else {
+                if (userPick === true) {
+                    btnT.classList.add('selected-wrong');
+                    btnF.classList.add('selected-correct');
+                } else {
+                    btnF.classList.add('selected-wrong');
+                    btnT.classList.add('selected-correct');
+                }
+            }
+        } else {
+            if (item.ans === true) btnT.classList.add('selected-correct');
+            else btnF.classList.add('selected-correct');
+        }
+    });
+
+    let res = document.getElementById("result");
+    let badgeText = score >= 12 ? "EXCELLENT!" : "WELL TRIED!";
+    res.innerHTML = `
+        <div class="score-text">Your Score: ${score} / 15</div>
+        <span class="badge">${badgeText}</span>
+        <button class="retry-btn" onclick="location.reload()">RETRY</button>
+    `;
+}
+</script>
+</body>
+</html>
