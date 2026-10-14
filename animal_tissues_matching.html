@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animal tissues matching</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 700px; background: #121212; padding: 20px; border-radius: 12px; border: 2px solid #00ffcc; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+        .header-title { color: #00ffcc; text-align: center; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .match-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; background: #1a1a1a; padding: 10px; border-radius: 6px; font-size: 14px; color: #ffff00; gap: 10px; }
+        select { background: #262626; color: #ffffff; padding: 8px; border: 1px solid #00ffcc; border-radius: 4px; max-width: 270px; font-size: 13px; outline: none; }
+        .submit-btn { background: #ffff00; color: #000; font-weight: bold; padding: 12px; width: 100%; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 16px; text-transform: uppercase; }
+        #result { margin-top: 20px; text-align: center; }
+        .score-text { font-size: 20px; color: #ffff00; font-weight: bold; margin-bottom: 8px; }
+        .badge { font-size: 22px; color: #00ffcc; font-weight: bold; margin-bottom: 15px; display: block; }
+        .retry-btn { background: #00ffcc; color: #000; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Animal Tissues - Matching Game / జతపరుచు ఆట</h2>
+    <div id="matching-form"></div>
+    <button class="submit-btn" onclick="checkMatches()">సమాధానాలు సరిచూడండి (SUBMIT)</button>
+    <div id="result"></div>
+</div>
+
+<script>
+const pairs = [
+    { term: "1. Squamous epithelium / శల్కల ఉపకళ", match: "Alveoli & Blood vessels / వాయుగోణులు, రక్తనాళాలు" },
+    { term: "2. Cuboidal epithelium / ఘనాకార ఉపకళ", match: "Kidney tubules / మూత్రనాళాలు" },
+    { term: "3. Neutrophils / న్యూట్రోఫిల్స్", match: "Microscopic policemen / సూక్ష్మ రక్షక భటులు" },
+    { term: "4. Monocytes / మోనోసైట్లు", match: "Scavengers / పారిశుద్ధ్య కార్మికులు" },
+    { term: "5. Blood platelets / రక్త ఫలకికలు", match: "Blood clotting / రక్తం గడ్డకట్టడం" },
+    { term: "6. Ligament / సంధి బంధనం (లిగమెంట్)", match: "Bone to bone / ఎముకను ఎముకతో కలుపును" },
+    { term: "7. Tendon / స్నాయుబంధనం (టెండాన్)", match: "Muscle to bone / కండరాన్ని ఎముకతో కలుపును" },
+    { term: "8. Adipose tissue / ఎడిపోజ్ కణజాలం", match: "Fat storage / కొవ్వు నిల్వ, ఉష్ణనిరోధకం" },
+    { term: "9. Areolar tissue / ఏరియోలార్ కణజాలం", match: "Connects organs / అవయవాలను కలుపుతుంది" },
+    { term: "10. Cardiac muscle / హృదయ కండరం", match: "Involuntary heart contractions / గుండె స్పందన కండరాలు" },
+    { term: "11. Striated muscle / రేఖిత కండరం", match: "Voluntary skeletal movements / చేతి, కాళ్ల కండరాలు" },
+    { term: "12. Neuron / నాడీ కణం", match: "Impulse transmission / ప్రచోదనాల ప్రసారం" },
+    { term: "13. Axon / ఆక్సాన్", match: "Long nerve fiber / నాడీ కణపు పొడవైన తంతువు" },
+    { term: "14. Karl Landsteiner / కార్ల్ లాండ్ స్టీనర్", match: "Blood groups discovery / రక్త వర్గాల గుర్తింపు" },
+    { term: "15. Heparin / హిపారిన్", match: "Prevents internal clotting / రక్తనాళాలలో రక్తం గడ్డకట్టకుండా ఆపుతుంది" }
+];
+
+let formDiv = document.getElementById("matching-form");
+let shuffled = [...pairs].map(p => p.match).sort(() => Math.random() - 0.5);
+
+pairs.forEach((p, idx) => {
+    let opts = `<option value="">-- ఎంచుకోండి (Select) --</option>`;
+    shuffled.forEach(m => {
+        opts += `<option value="${m}">${m}</option>`;
+    });
+    formDiv.innerHTML += `
+        <div class="match-row">
+            <span>${p.term}</span>
+            <select id="sel-${idx}">${opts}</select>
+        </div>
+    `;
+});
+
+function checkMatches() {
+    let score = 0;
+    pairs.forEach((p, idx) => {
+        let sel = document.getElementById(`sel-${idx}`);
+        if (sel.value === p.match) {
+            sel.style.backgroundColor = "#28a745";
+            sel.style.color = "#ffffff";
+            score++;
+        } else {
+            sel.style.backgroundColor = "#dc3545";
+            sel.style.color = "#ffffff";
+        }
+    });
+    let res = document.getElementById("result");
+    let badgeText = score >= 12 ? "EXCELLENT!" : "WELL TRIED!";
+    res.innerHTML = `
+        <div class="score-text">Your Score: ${score} / 15</div>
+        <span class="badge">${badgeText}</span>
+        <button class="retry-btn" onclick="location.reload()">RETRY</button>
+    `;
+}
+</script>
+</body>
+</html>
