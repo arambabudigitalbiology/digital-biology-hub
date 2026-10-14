@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animal tissues flashcards</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; padding: 15px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 530px; background: #121212; padding: 25px 20px; border-radius: 12px; border: 2px solid #00ffcc; text-align: center; box-sizing: border-box; }
+        .branding { font-size: 15px; color: #ff00ff; margin-bottom: 10px; font-weight: bold; }
+        .header-title { color: #00ffcc; font-size: 20px; margin-top: 0; margin-bottom: 15px; }
+        .card { background: #1a1a1a; border: 2px solid #ffff00; border-radius: 8px; height: 180px; display: flex; align-items: center; justify-content: center; padding: 20px; font-size: 17px; cursor: pointer; margin-bottom: 20px; color: #ffff00; line-height: 1.5; font-weight: bold; }
+        .buttons { display: flex; justify-content: space-between; gap: 10px; }
+        .ctrl-btn { background: #00ffcc; color: #000; border: none; padding: 10px 18px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 14px; }
+        .retry-btn { background: #ffff00; color: #000; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 15px; font-size: 15px; text-transform: uppercase; }
+        #counter { align-self: center; font-weight: bold; color: #ffffff; font-size: 16px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Animal Tissues - Flashcards / ఫ్లాష్ కార్డులు</h2>
+    <p style="font-size: 12px; color: #aaa; margin-top: -5px; margin-bottom: 15px;">కార్డుపై క్లిక్ చేసి జవాబు చూడండి (Click card to flip)</p>
+    
+    <div id="flashcard" class="card" onclick="flipCard()">కార్డు లోడ్ అవుతోంది...</div>
+
+    <div class="buttons">
+        <button class="ctrl-btn" onclick="prevCard()">Previous</button>
+        <span id="counter"></span>
+        <button class="ctrl-btn" onclick="nextCard()">Next</button>
+    </div>
+    
+    <button class="retry-btn" onclick="restartCards()">RETRY (మొదటి నుండి)</button>
+</div>
+
+<script>
+const cards = [
+    { q: "Epithelial Tissue Function / ఉపకళా కణజాల విధి", a: "Protection & covering of body organs / శరీర అవయవాలను కప్పి రక్షణ ఇస్తుంది" },
+    { q: "Squamous Epithelium Location / శల్కల ఉపకళ ఉండే చోటు", a: "Blood vessels & alveoli / రక్తనాళాలు, ఊపిరితిత్తుల వాయుగోణులు" },
+    { q: "Cuboidal Epithelium Location / ఘనాకార ఉపకళ ఉండే చోటు", a: "Kidney tubules & salivary glands / మూత్రనాళాలు, లాలాజల గ్రంథులు" },
+    { q: "Fluid Connective Tissue / ద్రవరూప సంయోజక కణజాలం", a: "Blood / రక్తం" },
+    { q: "Hemoglobin Function / హిమోగ్లోబిన్ విధి", a: "Oxygen transport in blood / ఆక్సిజన్ రవాణా" },
+    { q: "Microscopic Policemen / సూక్ష్మ రక్షక భటులు", a: "Neutrophils (WBC) / న్యూట్రోఫిల్స్" },
+    { q: "Scavengers of Blood / పారిశుద్ధ్య కార్మికులు", a: "Monocytes (WBC) / మోనోసైట్లు" },
+    { q: "Universal Donors / సార్వత్రిక దాతలు", a: "'O' Group blood / ఓ-గ్రూప్ రక్తం" },
+    { q: "Universal Recipients / సార్వత్రిక గ్రహీతలు", a: "'AB' Group blood / ఏబీ-గ్రూప్ రక్తం" },
+    { q: "Ligament Function / సంధి బంధన విధి", a: "Connects bone to bone / ఎముకను ఎముకతో కలుపుతుంది" },
+    { q: "Tendon Function / స్నాయుబంధన విధి", a: "Connects muscle to bone / కండరాన్ని ఎముకతో కలుపుతుంది" },
+    { q: "Adipose Tissue / ఎడిపోజ్ కణజాలం", a: "Fat storage & insulation / కొవ్వు నిల్వ, ఉష్ణనిరోధకం" },
+    { q: "Cardiac Muscle / హృదయ కండరం", a: "Involuntary rhythmic heart contractions / గుండె స్పందన కండరాలు" },
+    { q: "Neuron Parts / నాడీ కణ భాగాలు", a: "Cell body, Axon, Dendrites / కణదేహం, ఆక్సాన్, డెండ్రైట్లు" },
+    { q: "Blood Groups Discoverer / రక్త వర్గాల కనుగొన్నది", a: "Karl Landsteiner / కార్ల్ లాండ్ స్టీనర్" }
+];
+
+let currIndex = 0;
+let isQ = true;
+
+function renderCard() {
+    const el = document.getElementById("flashcard");
+    el.innerHTML = isQ ? cards[currIndex].q : cards[currIndex].a;
+    el.style.color = isQ ? "#ffff00" : "#00ffcc";
+    el.style.borderColor = isQ ? "#ffff00" : "#00ffcc";
+    document.getElementById("counter").innerText = `${currIndex + 1} / ${cards.length}`;
+}
+
+function flipCard() {
+    isQ = !isQ;
+    renderCard();
+}
+
+function nextCard() {
+    currIndex = (currIndex + 1) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function prevCard() {
+    currIndex = (currIndex - 1 + cards.length) % cards.length;
+    isQ = true;
+    renderCard();
+}
+
+function restartCards() {
+    currIndex = 0;
+    isQ = true;
+    renderCard();
+}
+
+renderCard();
+</script>
+</body>
+</html>
