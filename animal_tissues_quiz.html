@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animal tissues quiz</title>
+    <style>
+        body { background-color: #000000; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .quiz-card { width: 100%; max-width: 650px; background-color: #121212; border: 2px solid #00ffcc; border-radius: 12px; padding: 20px; box-sizing: border-box; }
+        .branding { text-align: center; color: #ff00ff; font-size: 15px; font-weight: bold; margin-bottom: 10px; }
+        .header-title { text-align: center; color: #00ffcc; font-size: 20px; margin-top: 0; margin-bottom: 20px; }
+        .q-box { background-color: #1a1a1a; border-left: 4px solid #ffff00; padding: 12px; border-radius: 6px; margin-bottom: 15px; }
+        .q-text { color: #ffff00; font-size: 16px; font-weight: bold; line-height: 1.5; margin: 0; }
+        .options-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .opt-btn { background-color: #262626; color: #ffffff; border: 1px solid #00ffcc; border-radius: 6px; padding: 12px; font-size: 14px; text-align: left; cursor: pointer; outline: none; transition: 0.2s; }
+        .opt-btn.correct { background-color: #28a745 !important; color: #ffffff !important; border-color: #28a745 !important; }
+        .opt-btn.wrong { background-color: #dc3545 !important; color: #ffffff !important; border-color: #dc3545 !important; }
+        #result-area { text-align: center; padding: 20px 0; }
+        .score-text { font-size: 22px; color: #ffff00; font-weight: bold; margin-bottom: 10px; }
+        .badge { font-size: 24px; color: #00ffcc; font-weight: bold; margin-bottom: 20px; display: block; }
+        .retry-btn { background-color: #ffff00; color: #000000; border: none; border-radius: 6px; padding: 12px 25px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+<div class="quiz-card">
+    <div class="branding">created by ARambabu SA biology</div>
+    <h2 class="header-title">Animal Tissues - Interactive Quiz / జంతు కణజాలాలు</h2>
+    <div id="quiz-box"></div>
+    <div id="result-area" style="display: none;"></div>
+</div>
+
+<script>
+const quizQuestions = [
+    { q: "1. The tissue that covers the external surface and internal organs of animals is / జంతువుల శరీరం పైభాగాన్ని మరియు లోపలి అవయవాలను కప్పి ఉంచే కణజాలం ఏది?", options: ["Muscular tissue / కండర కణజాలం", "Epithelial tissue / ఉపకళా కణజాలం", "Connective tissue / సంయోజక కణజాలం", "Nervous tissue / నాడీ కణజాలం"], ans: 1 },
+    { q: "2. Flat, tile-like thin epithelial cells found in blood vessels and alveoli are called / రక్తనాళాలు, ఊపిరితిత్తుల వాయుగోణులలో ఉండే బల్లపరుపుటి ఉపకళా కణజాలం ఏది?", options: ["Cuboidal epithelium / ఘనాకార ఉపకళ", "Squamous epithelium / శల్కల ఉపకళ", "Columnar epithelium / స్తంభాకార ఉపకళ", "Glandular epithelium / గ్రంథి ఉపకళ"], ans: 1 },
+    { q: "3. Epithelial tissue found in kidney tubules and salivary glands is / మూత్రనాళాలు మరియు లాలాజల గ్రంథులలో ఉండే ఉపకళా కణజాలం ఏది?", options: ["Squamous / శల్కల ఉపకళ", "Cuboidal epithelium / ఘనాకార ఉపకళ", "Columnar / స్తంభాకార ఉపకళ", "Stratified / స్తరిత ఉపకళ"], ans: 1 },
+    { q: "4. The fluid connective tissue in human body is / మానవ శరీరంలో ద్రవరూపంలో ఉండే సంయోజక కణజాలం ఏది?", options: ["Lymph / శోషరసం", "Blood / రక్తం", "Bone marrow / అస్థిమజ్జ", "Plasma / ప్లాస్మా"], ans: 1 },
+    { q: "5. The protein present in RBC that gives red color and transports oxygen is / ఎర్ర రక్తకణాలలో ఉండి ఆక్సిజన్‌ను రవాణా చేసే వర్ణద్రవ్యం / ప్రొటీన్ ఏది?", options: ["Heparin / హిపారిన్", "Hemoglobin / హిమోగ్లోబిన్", "Collagen / కొల్లాజెన్", "Fibrin / ఫైబ్రిన్"], ans: 1 },
+    { q: "6. Which white blood cells are known as 'Microscopic policemen'? / 'సూక్ష్మ రక్షక భటులు' అని ఏ తెల్ల రక్తకణాలను పిలుస్తారు?", options: ["Lymphocytes / లింఫోసైట్లు", "Neutrophils / న్యూట్రోఫిల్స్", "Monocytes / మోనోసైట్లు", "Eosinophils / ఇసినోఫిల్స్"], ans: 1 },
+    { q: "7. White blood cells acting as scavengers by engulfing foreign particles are / అమీబా వలె కదులుతూ బాహ్య పదార్థాలను భక్షించే తెల్ల రక్తకణాలు ఏవి?", options: ["Monocytes / మోనోసైట్లు", "Basophils / బేసోఫిల్స్", "Neutrophils / న్యూట్రోఫిల్స్", "Erythrocytes / ఎరిత్రోసైట్లు"], ans: 0 },
+    { q: "8. Universal blood donors belong to the blood group / సార్వత్రిక దాతలు (Universal Donors) ఏ రక్త వర్గానికి చెందినవారు?", options: ["AB group", "A group", "O group", "B group"], ans: 2 },
+    { q: "9. Universal recipients of blood are persons with blood group / సార్వత్రిక గ్రహీతలు (Universal Recipients) ఏ రక్త వర్గం వారు?", options: ["O group", "AB group", "A group", "B group"], ans: 1 },
+    { q: "10. The tissue that connects bones together at joints is / ఎముకలను ఎముకలతో కలిపే బంధం (సంధి బంధనం) ఏది?",options: ["Tendon / స్నాయుబంధనం", "Ligament / లిగమెంట్ (సంధి బంధనం)", "Cartilage / మృదులాస్థి", "Adipose tissue / ఎడిపోజ్ కణజాలం"], ans: 1 },
+    { q: "11. Muscles attached to bones that are under our conscious control are / మన ఇష్టానుసారం కదిలే ఎముకలకు అంటిపెట్టుకుని ఉండే కండరాలు ఏవి?", options: ["Involuntary muscles / అనియంత్రిత కండరాలు", "Cardiac muscles / హృదయ కండరాలు", "Voluntary / Skeletal muscles / నియంత్రిత / రేఖిత కండరాలు", "Smooth muscles / మృదు కండరాలు"], ans: 2 },
+    { q: "12. The structural and functional unit of the nervous tissue is / నాడీ కణజాలం యొక్క నిర్మాణ మరియు క్రియాత్మక ప్రమాణం ఏది?", options: ["Nephron / నెఫ్రాన్", "Neuron / నాడీ కణం (న్యూరాన్)", "Axon / ఆక్సాన్", "Dendrite / డెండ్రైట్"], ans: 1 },
+    { q: "13. The insulating sheath covering the axon of a nerve cell is / నాడీ కణంలోని ఆక్సాన్‌ను ఆవరించి ఉండే తొడుగు / త్వచం ఏది?", options: ["Myelin sheath / మయలీన్ త్వచం", "Sarcolemma / సార్కొలెమ్మ", "Nuclear membrane / కేంద్రక త్వచం", "Plasma membrane / ప్లాస్మా పొర"], ans: 0 },
+    { q: "14. Fat-storing connective tissue found beneath the skin is / చర్మం కింద కొవ్వును నిల్వచేసి ఉష్ణనిరోధకంగా పనిచేసే కణజాలం ఏది?", options: ["Areolar tissue / ఏరియోలార్ కణజాలం", "Adipose tissue / ఎడిపోజ్ కణజాలం", "Bone / అస్థి కణజాలం", "Cartilage / మృదులాస్థి"], ans: 1 },
+    { q: "15. Which animal cells lack the power of cell regeneration? / శరీరంలో ఏ కణాలకు పునరుత్పత్తి చేసే శక్తి ఉండదు?", options: ["Skin cells / చర్మ కణాలు", "Muscle cells / కండర కణాలు", "Nerve cells / నాడీ కణాలు", "Blood cells / రక్త కణాలు"], ans: 2 }
+];
+
+let currentIndex = 0;
+let userScore = 0;
+
+function showQuestion() {
+    const box = document.getElementById("quiz-box");
+    if (currentIndex < quizQuestions.length) {
+        const item = quizQuestions[currentIndex];
+        let html = `<div class="q-box"><p class="q-text">${item.q}</p></div><div class="options-grid">`;
+        item.options.forEach((text, i) => {
+            html += `<button class="opt-btn" onclick="verifyAnswer(${i}, ${item.ans}, this)">${text}</button>`;
+        });
+        html += `</div>`;
+        box.innerHTML = html;
+    } else {
+        box.innerHTML = "";
+        const res = document.getElementById("result-area");
+        res.style.display = "block";
+        res.innerHTML = `
+            <div class="score-text">Your Score: ${userScore} / ${quizQuestions.length}</div>
+            <span class="badge">EXCELLENT!</span>
+            <button class="retry-btn" onclick="restartTest()">RETRY</button>
+        `;
+    }
+}
+
+function verifyAnswer(chosen, correct, btn) {
+    const allButtons = document.querySelectorAll('.opt-btn');
+    allButtons.forEach(b => b.disabled = true);
+    if (chosen === correct) {
+        btn.classList.add('correct');
+        userScore++;
+    } else {
+        btn.classList.add('wrong');
+        allButtons[correct].classList.add('correct');
+    }
+    setTimeout(() => {
+        currentIndex++;
+        showQuestion();
+    }, 1200);
+}
+
+function restartTest() {
+    currentIndex = 0;
+    userScore = 0;
+    document.getElementById("result-area").style.display = "none";
+    showQuestion();
+}
+
+showQuestion();
+</script>
+</body>
+</html>
